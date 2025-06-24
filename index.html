@@ -701,13 +701,16 @@ text-align: center;
 
 <!-- start most visited pages -->
 <section class='bg-light-custom px-4 py-5'>
-<div class='container'>
-<div class='row text-center'>
-<div class='col-md-8 col-sm-12 mx-auto pt-4'>
-<h2 class='fs-2 fw-bold'>Mais acessadas</h2>
-</div>
-</div>
+    <div class='container'>
+
+        <div class='row text-center'>
+            <div class='col-md-8 col-sm-12 mx-auto pt-4'>
+                <h2 class='fs-2 fw-bold'>Mais acessadas</h2>
+            </div>
+        </div>
+
 <div class='g-4 row row-cols-lg-3 row-cols-md-3 row-cols-2 text-center pt-4'>
+    
 <!-- content 1/12 -->
 <div class='col text-center p-3'>
 <!-- icon -->
@@ -956,12 +959,14 @@ document.getElementById("btn-back-to-top").addEventListener("click", function (e
 updateFooterStyle();
 updateScrollStyle();
 </script>
+
 <!-- reload ================================================================================================================== -->
 <script>
 setTimeout(function() {
   window.location.reload(1);
 }, 300000); // 5 minuto(s)
 </script>
+
 <!-- img loading delay ================================================================================================================== -->
 <script defer='defer'>
   document.querySelectorAll('.img-fallback').forEach(img => {
