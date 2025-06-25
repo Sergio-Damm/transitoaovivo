@@ -83,7 +83,7 @@ fill: currentColor;
 }
 #btn-back-to-top:hover {
 background: #da3458;
-color: #fff;
+color: #ffffff;
 }
 #btn-back-to-top.on-footer {
 background: #fff;
@@ -91,7 +91,7 @@ color: #da3458;
 }
 #btn-back-to-top.on-footer:hover {
 background: #da3458;
-color: #fff;
+color: #ffffff;
 }
 .hunderline {
 padding-bottom: 10px;
@@ -99,7 +99,7 @@ border-bottom: 0.1rem solid #ffc107;
 display: inline-block;
 }
 .navbar {
-background: #fff;
+background: #ffffff;
 }
 .nav-item {
 position: relative;
@@ -123,10 +123,10 @@ border-color: #fec400;
 padding: 6px;
 }
 .my-footer {
-background-color: #333;
+background-color: #333333;
 }
 .my-bg333333 {
-background-color: #333;
+background-color: #333333;
 }
 .bg-light-custom {
 background-color: #f9f9f9;
