@@ -2,5 +2,5 @@
 title: Trânsito ao Vivo
 email: transitoaovivo.contato@gmail.com
 description: Acompanhe o trânsito em tempo real com câmeras ao vivo em diversas cidades do Brasil
-baseurl: ""
-url: "http://127.0.0.1:4000"
+baseurl: "/transitoaovivo"
+url: "https://sergio-damm.github.io"
