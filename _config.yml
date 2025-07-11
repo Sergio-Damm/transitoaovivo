@@ -7,3 +7,4 @@ url: "https://transitoaovivo.com"
 
 plugins:
   - jekyll-redirect-from
+  - jekyll-sitemap
