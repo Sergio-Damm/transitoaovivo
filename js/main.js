@@ -129,8 +129,17 @@ var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
 
     function _0xupd() {
         for (var _0xi = 0; _0xi < _0xcams.length; _0xi++) {
-            var _0ximg = document[_0xxyz[0]](_0xcams[_0xi].id),
-                _0xtime = new Date()[_0xxyz[1]](),
+            var _0ximg = document[_0xxyz[0]](_0xcams[_0xi].id);
+            
+            // --- INÍCIO DA CORREÇÃO ---
+            // Verifica se o elemento da câmera existe antes de tentar manipulá-lo
+            if (!_0ximg) { 
+                console.warn('Elemento da câmera com ID "' + _0xcams[_0xi].id + '" não encontrado no HTML. Ignorando.');
+                continue; // Pula para a próxima câmera no loop
+            }
+            // --- FIM DA CORREÇÃO ---
+
+            var _0xtime = new Date()[_0xxyz[1]](),
                 _0xsrc = "https://cameras.cetsp.com.br/Cams/" + 
                          _0xcams[_0xi].id.replace('cams', '') + "/" + 
                          _0xcams[_0xi].frame + ".jpg?" + _0xtime + "&nocache=" + Math.random();
