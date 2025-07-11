@@ -116,39 +116,6 @@ setTimeout(function() {
   window.location.reload(1);
 }, 300000); // 5 minutos
 
-// --- kmlentidao ---
-    function atualizarLentidao() {
-        console.log('DOM carregado, iniciando fetch...');
-        fetch('https://veil-dour-carp.glitch.me/transito')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro na requisição: ' + response.status);
-                }
-                console.log('Resposta recebida do Glitch');
-                return response.json();
-            })
-            .then(data => {
-                console.log('Dados recebidos:', data);
-                document.getElementById('totalLentidao').innerText = data.total + " km de lentidão total";
-                const regioesList = document.getElementById('regioes');
-                regioesList.innerHTML = '<li class="list-group-item">Zona Norte: ' + data.regioes.norte + ' km</li>' +
-                                       '<li class="list-group-item">Zona Oeste: ' + data.regioes.oeste + ' km</li>' +
-                                       '<li class="list-group-item">Zona Centro: ' + data.regioes.centro + ' km</li>' +
-                                       '<li class="list-group-item">Zona Leste: ' + data.regioes.leste + ' km</li>' +
-                                       '<li class="list-group-item">Zona Sul: ' + data.regioes.sul + ' km</li>';
-                document.getElementById('dataHora').innerText = "Atualizado em: " + data.dataHora;
-                console.log('Card atualizado com sucesso');
-            })
-            .catch(error => {
-                console.error('Erro ao carregar dados:', error);
-                document.getElementById('totalLentidao').innerText = "Erro ao carregar";
-            });
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-        atualizarLentidao(); // Chama na inicialização
-        setInterval(atualizarLentidao, 300000); // Atualiza a cada 5 minutos
-    });
-
 // --- cet3 ---
 var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
 
