@@ -4,3 +4,6 @@ email: transitoaovivo.contato@gmail.com
 description: Acompanhe o trânsito em tempo real com câmeras ao vivo em diversas cidades do Brasil
 baseurl: ""
 url: "https://transitoaovivo.com"
+
+plugins:
+  - jekyll-redirect-from
