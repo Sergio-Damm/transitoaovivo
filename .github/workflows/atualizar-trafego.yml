@@ -37,7 +37,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add _data/trafego_cetsp.json _data/trafego_artesp.json
+          git add assets/_data/trafego_cetsp.json assets/_data/trafego_artesp.json
           git commit -m "Atualizar dados de tráfego (automatizado)" || echo "Nenhuma alteração para commitar"
           git push origin main
         env:
