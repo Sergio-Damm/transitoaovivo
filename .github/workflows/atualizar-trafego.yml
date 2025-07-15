@@ -3,7 +3,7 @@
 name: Atualizar Dados de Tráfego
 
 on:
-  workflow_dispatch # Permite acionamento manual
+  workflow_dispatch: # Adicionei os dois pontos aqui, caso faltassem novamente
   schedule:
     - cron: '*/5 * * * *' # Executa a cada 5 minutos
 
@@ -20,7 +20,7 @@ jobs:
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x' # Ou '3.9', '3.10', etc.
+          python-version: '3.x' # Garante compatibilidade
 
       - name: Instalar Bibliotecas Python
         run: |
@@ -34,7 +34,7 @@ jobs:
       - name: Executar Script de Scraping Python
         run: |
           python _scripts/scrape_data.py # Executa o script Python real
-        shell: bash
+        shell: bash # Garante que este comando é executado em bash
 
       - name: Commit e Push dos Dados Atualizados
         run: |
