@@ -1,46 +1,45 @@
+# .github/workflows/atualizar-trafego.yml
+
 name: Atualizar Dados de Tráfego
 
 on:
+  workflow_dispatch # Permite acionamento manual
   schedule:
-    # Roda a cada 15 minutos (você pode ajustar depois)
-    # Mais informações sobre cron jobs: https://crontab.guru/
-    - cron: '*/5 * * * *'
-  workflow_dispatch:
+    - cron: '*/5 * * * *' # Executa a cada 5 minutos
 
 jobs:
-  scrape_and_update:
-    permissions:
-        contents: write
+  atualizar_dados:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # ESSENCIAL: Permite que o Action escreva no repositório
+
     steps:
-      - name: Checkout do Código
+      - name: Checkout do Repositório
         uses: actions/checkout@v4
 
-      - name: Configurar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Instalar Bibliotecas Python
+      # Certifica-se de que a pasta de destino para os JSONs exista
+      - name: Criar Pasta de Destino para Dados JSON
         run: |
-          python -m pip install requests beautifulsoup4
+          mkdir -p assets/_data # Cria o diretório se não existir. -p significa "parents" para criar subpastas se necessário.
 
-      - name: Executar Script de Scraping
+      - name: Gerar Dados de Tráfego de Teste (CET-SP)
         run: |
-          # ATENÇÃO: Este é um comando de exemplo!
-          # AQUI VAI O CÓDIGO PYTHON REAL PARA RASPAR E GERAR O JSON
-          # Por enquanto, vamos criar um arquivo de teste
-          echo '{"total": 0, "regioes": {"norte": 0, "oeste": 0, "centro": 0, "leste": 0, "sul": 0}, "dataHora": "Gerado pelo Robô"}' > _data/trafego_cetsp.json
-          echo '{"rodovias": []}' > _data/trafego_artesp.json
+          echo '{"total": 0, "regioes": {"norte": 0, "oeste": 0, "centro": 0, "leste": 0, "sul": 0}, "dataHora": "Gerado pelo Robô em ${{ github.event.repository.pushed_at }}", "runNumber": ${{ github.run_number }}, "teste_cet": true}' | tee assets/_data/trafego_cetsp.json
+        shell: bash # Garante que este comando é executado em bash
+
+      - name: Gerar Dados de Tráfego de Teste (Artesp)
+        run: |
+          echo '{"rodovias": [], "dataHora": "Gerado pelo Robô em ${{ github.event.repository.pushed_at }}", "runNumber": ${{ github.run_number }}, "teste_artesp": true}' | | tee assets/_data/trafego_artesp.json
+        shell: bash # Garante que este comando é executado em bash
 
       - name: Commit e Push dos Dados Atualizados
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-
-          # Adicionar apenas os arquivos JSON gerados pelo robô
-          git add assets/_data/trafego_cetsp.json assets/_data/trafego_artesp.json 
-
+          
+          # Adicionar todos os arquivos JSON na pasta assets/_data
+          git add assets/_data/*.json 
+          
           # Verificar se há alterações para commitar
           if git diff --quiet --cached; then
             echo "Nenhuma alteração detectada para commitar. Ignorando commit."
@@ -50,4 +49,4 @@ jobs:
             echo "Dados de tráfego comitados e enviados com sucesso."
           fi
         env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
