@@ -3,7 +3,7 @@
 name: Atualizar Dados de Tráfego
 
 on:
-  workflow_dispatch: # Permite acionamento manual
+  workflow_dispatch # Permite acionamento manual
   schedule:
     - cron: '*/5 * * * *' # Executa a cada 5 minutos
 
@@ -17,27 +17,31 @@ jobs:
       - name: Checkout do Repositório
         uses: actions/checkout@v4
 
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x' # Ou '3.9', '3.10', etc.
+
+      - name: Instalar Bibliotecas Python
+        run: |
+          python -m pip install requests beautifulsoup4 # Instala bibliotecas para scraping
+      
       # Certifica-se de que a pasta de destino para os JSONs exista
       - name: Criar Pasta de Destino para Dados JSON
         run: |
-          mkdir -p assets/_data # Cria o diretório se não existir. -p significa "parents" para criar subpastas se necessário.
+          mkdir -p assets/data # Cria o diretório se não existir
 
-      - name: Gerar Dados de Tráfego de Teste (CET-SP)
+      - name: Executar Script de Scraping Python
         run: |
-          echo '{"total": 0, "regioes": {"norte": 0, "oeste": 0, "centro": 0, "leste": 0, "sul": 0}, "dataHora": "Gerado pelo Robô em ${{ github.event.repository.pushed_at }}", "runNumber": ${{ github.run_number }}, "teste_cet": true}' | tee assets/data/trafego_cetsp.json
-        shell: bash # Garante que este comando é executado em bash
-
-      - name: Gerar Dados de Tráfego de Teste (Artesp)
-        run: |
-          echo '{"rodovias": [], "dataHora": "Gerado pelo Robô em ${{ github.event.repository.pushed_at }}", "runNumber": ${{ github.run_number }}, "teste_artesp": true}' | tee assets/data/trafego_artesp.json
-        shell: bash # Garante que este comando é executado em bash
+          python _scripts/scrape_data.py # Executa o script Python real
+        shell: bash
 
       - name: Commit e Push dos Dados Atualizados
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           
-          # Adicionar todos os arquivos JSON na pasta assets/_data
+          # Adicionar todos os arquivos JSON na pasta assets/data
           git add assets/data/*.json 
           
           # Verificar se há alterações para commitar
