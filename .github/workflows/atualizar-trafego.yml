@@ -1,0 +1,42 @@
+name: Atualizar Dados de Tráfego
+
+on:
+  schedule:
+    # Roda a cada 15 minutos (você pode ajustar depois)
+    # Mais informações sobre cron jobs: https://crontab.guru/
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  scrape_and_update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Instalar Bibliotecas Python
+        run: |
+          python -m pip install requests beautifulsoup4
+
+      - name: Executar Script de Scraping
+        run: |
+          # ATENÇÃO: Este é um comando de exemplo!
+          # AQUI VAI O CÓDIGO PYTHON REAL PARA RASPAR E GERAR O JSON
+          # Por enquanto, vamos criar um arquivo de teste
+          echo '{"total": 0, "regioes": {"norte": 0, "oeste": 0, "centro": 0, "leste": 0, "sul": 0}, "dataHora": "Gerado pelo Robô"}' > _data/trafego_cetsp.json
+          echo '{"rodovias": []}' > _data/trafego_artesp.json
+
+      - name: Commit e Push dos Dados Atualizados
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add _data/trafego_cetsp.json _data/trafego_artesp.json
+          git commit -m "Atualizar dados de tráfego (automatizado)" || echo "Nenhuma alteração para commitar"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
