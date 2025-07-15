@@ -37,8 +37,17 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add assets/_data/trafego_cetsp.json assets/_data/trafego_artesp.json
-          git commit -m "Atualizar dados de tráfego (automatizado)" || echo "Nenhuma alteração para commitar"
-          git push origin main
+
+          # Adicionar apenas os arquivos JSON gerados pelo robô
+          git add assets/_data/trafego_cetsp.json assets/_data/trafego_artesp.json 
+
+          # Verificar se há alterações para commitar
+          if git diff --quiet --cached; then
+            echo "Nenhuma alteração detectada para commitar. Ignorando commit."
+          else
+            git commit -m "Atualizar dados de tráfego (automatizado)"
+            git push origin main
+            echo "Dados de tráfego comitados e enviados com sucesso."
+          fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
