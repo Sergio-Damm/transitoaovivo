@@ -4,7 +4,7 @@ on:
   schedule:
     # Roda a cada 15 minutos (você pode ajustar depois)
     # Mais informações sobre cron jobs: https://crontab.guru/
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
