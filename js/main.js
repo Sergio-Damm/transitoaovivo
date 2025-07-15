@@ -174,3 +174,82 @@ var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
     setInterval(_0xupd, 1000);
     _0xupd(); // Chama na inicialização
 })();
+
+// _js/main.js
+
+// Função principal para atualizar os dados de trânsito
+function atualizarDadosTransito() {
+    // --- Tenta atualizar dados da CET-SP ---
+    // Verifica se o elemento 'totalLentidao' existe na página atual
+    const totalLentidaoElem = document.getElementById('totalLentidao');
+    if (totalLentidaoElem) {
+        fetch('/_data/trafego_cetsp.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na requisição CET-SP: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                totalLentidaoElem.innerText = data.total + " km de lentidão total";
+                const regioesList = document.getElementById('regioes');
+                if (regioesList) { // Garante que o elemento existe
+                    regioesList.innerHTML = '<li class="list-group-item">Zona Norte: ' + data.regioes.norte + ' km</li>' +
+                                            '<li class="list-group-item">Zona Oeste: ' + data.regioes.oeste + ' km</li>' +
+                                            '<li class="list-group-item">Zona Centro: ' + data.regioes.centro + ' km</li>' +
+                                            '<li class="list-group-item">Zona Leste: ' + data.regioes.leste + ' km</li>' +
+                                            '<li class="list-group-item">Zona Sul: ' + data.regioes.sul + ' km</li>';
+                }
+                const dataHoraElem = document.getElementById('dataHora');
+                if (dataHoraElem) { // Garante que o elemento existe
+                    dataHoraElem.innerText = "Atualizado em: " + data.dataHora;
+                }
+                console.log('Card CET-SP atualizado com sucesso.');
+            })
+            .catch(error => {
+                console.error('Erro ao carregar dados da CET-SP:', error);
+                if (totalLentidaoElem) totalLentidaoElem.innerText = "Erro ao carregar CET";
+                const dataHoraElem = document.getElementById('dataHora');
+                if (dataHoraElem) dataHoraElem.innerText = "Erro.";
+            });
+    }
+
+    // --- Tenta atualizar dados da Artesp ---
+    // Verifica se o elemento 'totalRodoviasInfo' existe na página atual
+    const totalRodoviasInfoElem = document.getElementById('totalRodoviasInfo');
+    if (totalRodoviasInfoElem) {
+        fetch('/_data/trafego_artesp.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na requisição Artesp: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // ATENÇÃO: Conteúdo de teste para Artesp.
+                // Será ajustado com o scraping real para listar as rodovias.
+                totalRodoviasInfoElem.innerText = "Dados de Rodovias disponíveis (teste).";
+                const rodoviasList = document.getElementById('rodoviasList');
+                if (rodoviasList) { // Garante que o elemento existe
+                    rodoviasList.innerHTML = '<li class="list-group-item">Verifique o JSON para detalhes.</li>';
+                }
+                const dataHoraArtespElem = document.getElementById('dataHoraArtesp');
+                if (dataHoraArtespElem) { // Garante que o elemento existe
+                    dataHoraArtespElem.innerText = "Atualizado em: " + data.dataHora;
+                }
+                console.log('Card Artesp atualizado com sucesso.');
+            })
+            .catch(error => {
+                console.error('Erro ao carregar dados da Artesp:', error);
+                if (totalRodoviasInfoElem) totalRodoviasInfoElem.innerText = "Erro ao carregar Artesp";
+                const dataHoraArtespElem = document.getElementById('dataHoraArtesp');
+                if (dataHoraArtespElem) dataHoraArtespElem.innerText = "Erro.";
+            });
+    }
+}
+
+// Garante que o script só roda depois que a página HTML está totalmente carregada
+document.addEventListener('DOMContentLoaded', function() {
+    atualizarDadosTransito(); // Chama na inicialização
+    setInterval(atualizarDadosTransito, 300000); // Atualiza a cada 5 minutos (300000 ms)
+});
