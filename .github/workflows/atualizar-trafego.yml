@@ -9,6 +9,8 @@ on:
 
 jobs:
   scrape_and_update:
+    permissions:
+        contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do Código
