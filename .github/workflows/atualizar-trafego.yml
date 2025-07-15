@@ -24,12 +24,12 @@ jobs:
 
       - name: Gerar Dados de Tráfego de Teste (CET-SP)
         run: |
-          echo '{"total": 0, "regioes": {"norte": 0, "oeste": 0, "centro": 0, "leste": 0, "sul": 0}, "dataHora": "Gerado pelo Robô em ${{ github.event.repository.pushed_at }}", "runNumber": ${{ github.run_number }}, "teste_cet": true}' | tee assets/_data/trafego_cetsp.json
+          echo '{"total": 0, "regioes": {"norte": 0, "oeste": 0, "centro": 0, "leste": 0, "sul": 0}, "dataHora": "Gerado pelo Robô em ${{ github.event.repository.pushed_at }}", "runNumber": ${{ github.run_number }}, "teste_cet": true}' | tee assets/data/trafego_cetsp.json
         shell: bash # Garante que este comando é executado em bash
 
       - name: Gerar Dados de Tráfego de Teste (Artesp)
         run: |
-          echo '{"rodovias": [], "dataHora": "Gerado pelo Robô em ${{ github.event.repository.pushed_at }}", "runNumber": ${{ github.run_number }}, "teste_artesp": true}' | tee assets/_data/trafego_artesp.json
+          echo '{"rodovias": [], "dataHora": "Gerado pelo Robô em ${{ github.event.repository.pushed_at }}", "runNumber": ${{ github.run_number }}, "teste_artesp": true}' | tee assets/data/trafego_artesp.json
         shell: bash # Garante que este comando é executado em bash
 
       - name: Commit e Push dos Dados Atualizados
@@ -38,7 +38,7 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           
           # Adicionar todos os arquivos JSON na pasta assets/_data
-          git add assets/_data/*.json 
+          git add assets/data/*.json 
           
           # Verificar se há alterações para commitar
           if git diff --quiet --cached; then

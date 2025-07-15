@@ -183,7 +183,7 @@ function atualizarDadosTransito() {
     // Verifica se o elemento 'totalLentidao' existe na página atual
     const totalLentidaoElem = document.getElementById('totalLentidao');
     if (totalLentidaoElem) {
-        fetch('/assets/_data/trafego_cetsp.json')
+        fetch('/assets/data/trafego_cetsp.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erro na requisição CET-SP: ' + response.status);
@@ -218,7 +218,7 @@ function atualizarDadosTransito() {
     // Verifica se o elemento 'totalRodoviasInfo' existe na página atual
     const totalRodoviasInfoElem = document.getElementById('totalRodoviasInfo');
     if (totalRodoviasInfoElem) {
-        fetch('/assets/_data/trafego_artesp.json')
+        fetch('/assets/data/trafego_artesp.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erro na requisição Artesp: ' + response.status);
