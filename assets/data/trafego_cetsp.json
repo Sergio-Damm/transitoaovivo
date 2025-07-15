@@ -1,1 +1,11 @@
-{"total": 0, "regioes": {"norte": 0, "oeste": 0, "centro": 0, "leste": 0, "sul": 0}, "dataHora": "Gerado pelo Robô em 2025-07-15T22:45:24Z", "runNumber": 19, "teste_cet": true}
+{
+    "total": 0,
+    "regioes": {
+        "norte": 0,
+        "oeste": 0,
+        "centro": 0,
+        "leste": 0,
+        "sul": 0
+    },
+    "dataHora": "2025-07-15 23:02:04"
+}
