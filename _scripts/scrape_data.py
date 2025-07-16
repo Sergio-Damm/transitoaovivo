@@ -15,8 +15,8 @@ os.makedirs(OUTPUT_DIR, exist_ok=True) # Garante que a pasta exista
 BRASILIA_TZ = pytz.timezone('America/Sao_Paulo')
 
 def scrape_cetsp():
-    # URL base para o scraping da CET-SP (página da zona sul, que contém o JS com os totais)
-    url = "http://www.cetsp.com.br/transito-agora/mapa/zona-sul.aspx"
+    # A URL principal da CET-SP agora exibe o resumo do tráfego
+    url = "https://www.cetsp.com.br" # A URL principal
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
     
     data = {
@@ -28,45 +28,38 @@ def scrape_cetsp():
             "leste": 0,
             "sul": 0
         },
-        "dataHora": datetime.now(BRASILIA_TZ).strftime("%Y-%m-%d %H:%M:%S") # Data/hora em Brasília
+        "dataHora": datetime.now(BRASILIA_TZ).strftime("%Y-%m-%d %H:%M:%S")
     }
 
     try:
         response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status() # Lança um erro para status de erro HTTP (ex: 404, 500)
+        response.raise_for_status() # Lança um erro para status de erro HTTP
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Regex para encontrar os dados de lentidão nas tags <script>
-        # Procura por linhas como: mapa.Lentidao["Norte"] = 10.5;
-        pattern = re.compile(r"mapa\.Lentidao\[\"(\w+)\"\] = (\d+\.?\d*);")
+        # Adaptação do seu código Node.js/Cheerio para Python/BeautifulSoup
+        # Seleciona a div com classe 'info' dentro de uma 'boxZona' e então o h4 dentro dela
+        data["regioes"]["norte"] = int(soup.select_one('.info.norte h4').get_text(strip=True).replace(' km', '')) if soup.select_one('.info.norte h4') else 0
+        data["regioes"]["oeste"] = int(soup.select_one('.info.oeste h4').get_text(strip=True).replace(' km', '')) if soup.select_one('.info.oeste h4') else 0
+        data["regioes"]["centro"] = int(soup.select_one('.info.centro h4').get_text(strip=True).replace(' km', '')) if soup.select_one('.info.centro h4') else 0
+        data["regioes"]["leste"] = int(soup.select_one('.info.leste h4').get_text(strip=True).replace(' km', '')) if soup.select_one('.info.leste h4') else 0
+        data["regioes"]["sul"] = int(soup.select_one('.info.sul h4').get_text(strip=True).replace(' km', '')) if soup.select_one('.info.sul h4') else 0
         
-        script_tags = soup.find_all('script', string=pattern) # Encontra todas as tags script que contêm o padrão
-        
-        current_total_lentidao = 0.0 # Usar float para somas de km
-        if script_tags:
-            for script_tag in script_tags:
-                for line in script_tag.string.split(';'):
-                    match = pattern.search(line)
-                    if match:
-                        region = match.group(1).lower() # Converte para minúsculas (norte, sul, etc.)
-                        lentidao = float(match.group(2)) # Converte para float
-                        
-                        if region in data["regioes"]: # Verifica se a região é uma das esperadas
-                            data["regioes"][region] = lentidao
-                            current_total_lentidao += lentidao
-            data["total"] = round(current_total_lentidao, 2) # Arredonda o total para 2 casas decimais
+        # Calcula o total
+        data["total"] = sum(data["regioes"].values())
 
     except requests.exceptions.RequestException as e:
         print(f"Erro na requisição CET-SP: {e}")
-        # Em caso de erro, os dados permanecerão zerados (como inicializados)
+    except AttributeError: # Captura erro se o seletor não encontrar o elemento (ex: .select_one retorna None)
+        print("Não foi possível encontrar os elementos de lentidão da CET-SP com os seletores atuais. Estrutura HTML pode ter mudado.")
+    except ValueError: # Captura erro se a conversão para int falhar (ex: " km" não foi removido)
+        print("Erro ao converter km para número na CET-SP. Formato pode ter mudado.")
     except Exception as e:
         print(f"Erro inesperado ao processar dados da CET-SP: {e}")
-        # Em caso de erro, os dados permanecerão zerados (como inicializados)
         
     return data
 
 def scrape_artesp():
-    url = "http://www.artesp.sp.gov.br/transporte/rodovias/mapa.html"
+    url = "https://cci.artesp.sp.gov.br/"
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
     
     data = {
@@ -112,8 +105,8 @@ if __name__ == "__main__":
     print(f"Dados CET-SP salvos em {cetsp_file_path}. Conteúdo: {json.dumps(cetsp_data)}") # Imprime o conteúdo
 
     # Scrape Artesp
-    artesp_data = scrape_artesp()
-    artesp_file_path = os.path.join(OUTPUT_DIR, 'trafego_artesp.json')
-    with open(artesp_file_path, 'w', encoding='utf-8') as f:
-        json.dump(artesp_data, f, ensure_ascii=False, indent=4)
-    print(f"Dados Artesp salvos em {artesp_file_path}. Conteúdo: {json.dumps(artesp_data)}") # Imprime o conteúdo
+    # artesp_data = scrape_artesp()
+    # artesp_file_path = os.path.join(OUTPUT_DIR, 'trafego_artesp.json')
+    # with open(artesp_file_path, 'w', encoding='utf-8') as f:
+    #   json.dump(artesp_data, f, ensure_ascii=False, indent=4)
+    # print(f"Dados Artesp salvos em {artesp_file_path}. Conteúdo: {json.dumps(artesp_data)}") # Imprime o conteúdo
