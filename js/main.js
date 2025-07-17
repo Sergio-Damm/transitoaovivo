@@ -201,9 +201,26 @@ function atualizarDadosTransito() {
                                             '<li class="list-group-item">Zona Sul: ' + data.regioes.sul + ' km</li>';
                 }
                 const dataHoraElem = document.getElementById('dataHora');
-                if (dataHoraElem) { // Garante que o elemento existe
-                    dataHoraElem.innerText = "Consulta feita ao site da CET-SP em: " + data.dataHora;
-                }
+                if (dataHoraElem && data.dataHora) { // Garante que o elemento e a data existam
+                    // Cria um objeto Date a partir da string no formato YYYY-MM-DD HH:MM:SS
+                    // Substituímos o espaço por 'T' para garantir que seja interpretado como ISO 8601
+                    // (Isso é importante para compatibilidade com navegadores)
+                    const dateObj = new Date(data.dataHora.replace(' ', 'T'));
+
+                    // Formata a data para o padrão brasileiro
+                    // toLocaleString é excelente para isso, especificando 'pt-BR'
+                    const formattedDate = dateObj.toLocaleString('pt-BR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false // Formato 24 horas
+                    });
+
+                    dataHoraElem.innerText = "Consulta feita ao site da CET-SP em: " + formattedDate;
+}
                 console.log('Card CET-SP atualizado com sucesso.');
             })
             .catch(error => {
@@ -234,9 +251,19 @@ function atualizarDadosTransito() {
                     rodoviasList.innerHTML = '<li class="list-group-item">Verifique o JSON para detalhes.</li>';
                 }
                 const dataHoraArtespElem = document.getElementById('dataHoraArtesp');
-                if (dataHoraArtespElem) { // Garante que o elemento existe
-                    dataHoraArtespElem.innerText = "Consulta feita ao site da CET-SP em: " + data.dataHora;
-                }
+                if (dataHoraArtespElem && data.dataHora) { // Garante que o elemento e a data existam
+                    const dateObj = new Date(data.dataHora.replace(' ', 'T'));
+                    const formattedDate = dateObj.toLocaleString('pt-BR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                    });
+                    dataHoraArtespElem.innerText = "Consulta feita ao site da Artesp em: " + formattedDate;
+}
                 console.log('Card Artesp atualizado com sucesso.');
             })
             .catch(error => {
