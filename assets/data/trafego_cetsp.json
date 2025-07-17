@@ -1,11 +1,11 @@
 {
-    "total": 5,
+    "total": 7,
     "regioes": {
-        "norte": 2,
+        "norte": 1,
         "oeste": 1,
         "centro": 1,
-        "leste": 0,
-        "sul": 1
+        "leste": 2,
+        "sul": 2
     },
-    "dataHora": "2025-07-17 04:53:31"
+    "dataHora": "2025-07-17 05:56:05"
 }
