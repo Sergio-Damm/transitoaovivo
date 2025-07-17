@@ -202,7 +202,7 @@ function atualizarDadosTransito() {
                 }
                 const dataHoraElem = document.getElementById('dataHora');
                 if (dataHoraElem) { // Garante que o elemento existe
-                    dataHoraElem.innerText = "Atualizado em: " + data.dataHora;
+                    dataHoraElem.innerText = "Consulta feita ao site da CET-SP em: " + data.dataHora;
                 }
                 console.log('Card CET-SP atualizado com sucesso.');
             })
@@ -235,7 +235,7 @@ function atualizarDadosTransito() {
                 }
                 const dataHoraArtespElem = document.getElementById('dataHoraArtesp');
                 if (dataHoraArtespElem) { // Garante que o elemento existe
-                    dataHoraArtespElem.innerText = "Atualizado em: " + data.dataHora;
+                    dataHoraArtespElem.innerText = "Consulta feita ao site da CET-SP em: " + data.dataHora;
                 }
                 console.log('Card Artesp atualizado com sucesso.');
             })
