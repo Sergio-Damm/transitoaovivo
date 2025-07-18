@@ -175,6 +175,7 @@ var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
     _0xupd(); // Chama na inicialização
 })();
 
+    // total de lentidao CET-SP
     document.addEventListener('DOMContentLoaded', function() {
         console.log('DOM carregado, iniciando fetch...');
         fetch('https://transito-ao-vivo.onrender.com/transito')
