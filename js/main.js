@@ -175,108 +175,33 @@ var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
     _0xupd(); // Chama na inicialização
 })();
 
-// _js/main.js
-
-// Função principal para atualizar os dados de trânsito
-function atualizarDadosTransito() {
-    // --- Tenta atualizar dados da CET-SP ---
-    // Verifica se o elemento 'totalLentidao' existe na página atual
-    const totalLentidaoElem = document.getElementById('totalLentidao');
-    if (totalLentidaoElem) {
-        fetch('/assets/data/trafego_cetsp.json')
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM carregado, iniciando fetch...');
+        fetch('https://transito-ao-vivo.onrender.com/transito')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Erro na requisição CET-SP: ' + response.status);
+                    throw new Error('Erro na requisição: ' + response.status);
                 }
+                console.log('Resposta recebida do Render');
                 return response.json();
             })
             .then(data => {
-                totalLentidaoElem.innerText = data.total + " km de lentidão total";
+                console.log('Dados recebidos:', data);
+                document.getElementById('totalLentidao').innerText = data.total + " km de lentidão total";
                 const regioesList = document.getElementById('regioes');
-                if (regioesList) { // Garante que o elemento existe
-                    regioesList.innerHTML = '<li class="list-group-item">Zona Norte: ' + data.regioes.norte + ' km</li>' +
-                                            '<li class="list-group-item">Zona Oeste: ' + data.regioes.oeste + ' km</li>' +
-                                            '<li class="list-group-item">Zona Centro: ' + data.regioes.centro + ' km</li>' +
-                                            '<li class="list-group-item">Zona Leste: ' + data.regioes.leste + ' km</li>' +
-                                            '<li class="list-group-item">Zona Sul: ' + data.regioes.sul + ' km</li>';
-                }
-                const dataHoraElem = document.getElementById('dataHora');
-                if (dataHoraElem && data.dataHora) { // Garante que o elemento e a data existam
-                    // Cria um objeto Date a partir da string no formato YYYY-MM-DD HH:MM:SS
-                    // Substituímos o espaço por 'T' para garantir que seja interpretado como ISO 8601
-                    // (Isso é importante para compatibilidade com navegadores)
-                    const dateObj = new Date(data.dataHora.replace(' ', 'T'));
-
-                    // Formata a data para o padrão brasileiro
-                    // toLocaleString é excelente para isso, especificando 'pt-BR'
-                    const formattedDate = dateObj.toLocaleString('pt-BR', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                        hour12: false // Formato 24 horas
-                    });
-
-                    dataHoraElem.innerText = "Consulta feita ao site da CET-SP em: " + formattedDate;
-}
-                console.log('Card CET-SP atualizado com sucesso.');
+                regioesList.innerHTML = '<li class="list-group-item">Zona Norte: ' + data.regioes.norte + ' km</li>' +
+                                       '<li class="list-group-item">Zona Oeste: ' + data.regioes.oeste + ' km</li>' +
+                                       '<li class="list-group-item">Zona Centro: ' + data.regioes.centro + ' km</li>' +
+                                       '<li class="list-group-item">Zona Leste: ' + data.regioes.leste + ' km</li>' +
+                                       '<li class="list-group-item">Zona Sul: ' + data.regioes.sul + ' km</li>';
+                document.getElementById('dataHora').innerText = "Atualizado em: " + data.dataHora;
+                console.log('Card atualizado com sucesso');
             })
             .catch(error => {
-                console.error('Erro ao carregar dados da CET-SP:', error);
-                if (totalLentidaoElem) totalLentidaoElem.innerText = "Erro ao carregar CET";
-                const dataHoraElem = document.getElementById('dataHora');
-                if (dataHoraElem) dataHoraElem.innerText = "Erro.";
+                console.error('Erro ao carregar dados:', error);
+                document.getElementById('totalLentidao').innerText = "Erro ao carregar";
             });
-    }
-
-    // --- Tenta atualizar dados da Artesp ---
-    // Verifica se o elemento 'totalRodoviasInfo' existe na página atual
-    const totalRodoviasInfoElem = document.getElementById('totalRodoviasInfo');
-    if (totalRodoviasInfoElem) {
-        fetch('/assets/data/trafego_artesp.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro na requisição Artesp: ' + response.status);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // ATENÇÃO: Conteúdo de teste para Artesp.
-                // Será ajustado com o scraping real para listar as rodovias.
-                totalRodoviasInfoElem.innerText = "Dados de Rodovias disponíveis (teste).";
-                const rodoviasList = document.getElementById('rodoviasList');
-                if (rodoviasList) { // Garante que o elemento existe
-                    rodoviasList.innerHTML = '<li class="list-group-item">Verifique o JSON para detalhes.</li>';
-                }
-                const dataHoraArtespElem = document.getElementById('dataHoraArtesp');
-                if (dataHoraArtespElem && data.dataHora) { // Garante que o elemento e a data existam
-                    const dateObj = new Date(data.dataHora.replace(' ', 'T'));
-                    const formattedDate = dateObj.toLocaleString('pt-BR', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                        hour12: false
-                    });
-                    dataHoraArtespElem.innerText = "Consulta feita ao site da Artesp em: " + formattedDate;
-}
-                console.log('Card Artesp atualizado com sucesso.');
-            })
-            .catch(error => {
-                console.error('Erro ao carregar dados da Artesp:', error);
-                if (totalRodoviasInfoElem) totalRodoviasInfoElem.innerText = "Erro ao carregar Artesp";
-                const dataHoraArtespElem = document.getElementById('dataHoraArtesp');
-                if (dataHoraArtespElem) dataHoraArtespElem.innerText = "Erro.";
-            });
-    }
-}
-
-// Garante que o script só roda depois que a página HTML está totalmente carregada
-document.addEventListener('DOMContentLoaded', function() {
-    atualizarDadosTransito(); // Chama na inicialização
-    setInterval(atualizarDadosTransito, 300000); // Atualiza a cada 5 minutos (300000 ms)
-});
+        setInterval(function() {
+            fetch('https://transito-ao-vivo.onrender.com/transito');
+        }, 300000); // 5 minutos
+    });
