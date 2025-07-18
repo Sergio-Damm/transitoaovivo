@@ -176,6 +176,9 @@ var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
 })();
 
     // total de lentidao CET-SP
+
+    fetch('https://transito-ao-vivo.onrender.com/transito')
+    
     document.addEventListener('DOMContentLoaded', function() {
         console.log('DOM carregado, iniciando fetch...');
         fetch('https://transito-ao-vivo.onrender.com/transito')
