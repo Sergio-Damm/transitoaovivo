@@ -142,6 +142,18 @@ var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
 // --- total de lentidão CET-SP ---
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM carregado, iniciando fetch...');
+
+  // Verificar se os elementos existem antes de acessá-los
+  const totalLentidao = document.getElementById('totalLentidao');
+  const regioes = document.getElementById('regioes');
+  const dataHora = document.getElementById('dataHora');
+
+  // Se algum elemento não existir, logar e sair
+  if (!totalLentidao || !regioes || !dataHora) {
+    console.warn('Um ou mais elementos (totalLentidao, regioes, dataHora) não foram encontrados na página.');
+    return;
+  }
+
   fetch('https://transito-ao-vivo.onrender.com/transito')
     .then(response => {
       if (!response.ok) throw new Error('Erro na requisição: ' + response.status);
@@ -150,19 +162,19 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(data => {
       console.log('Dados recebidos:', data);
-      document.getElementById('totalLentidao').innerText = data.total + " km de lentidão total";
-      document.getElementById('regioes').innerHTML = '<li class="list-group-item">Zona Norte: ' + data.regioes.norte + ' km</li>' +
-                                                    '<li class="list-group-item">Zona Oeste: ' + data.regioes.oeste + ' km</li>' +
-                                                    '<li class="list-group-item">Zona Centro: ' + data.regioes.centro + ' km</li>' +
-                                                    '<li class="list-group-item">Zona Leste: ' + data.regioes.leste + ' km</li>' +
-                                                    '<li class="list-group-item">Zona Sul: ' + data.regioes.sul + ' km</li>';
-      document.getElementById('dataHora').innerText = "Atualizado em: " + data.dataHora;
+      totalLentidao.innerText = data.total + " km de lentidão total";
+      regioes.innerHTML = '<li class="list-group-item">Zona Norte: ' + data.regioes.norte + ' km</li>' +
+                          '<li class="list-group-item">Zona Oeste: ' + data.regioes.oeste + ' km</li>' +
+                          '<li class="list-group-item">Zona Centro: ' + data.regioes.centro + ' km</li>' +
+                          '<li class="list-group-item">Zona Leste: ' + data.regioes.leste + ' km</li>' +
+                          '<li class="list-group-item">Zona Sul: ' + data.regioes.sul + ' km</li>';
+      dataHora.innerText = "Atualizado em: " + data.dataHora;
       console.log('Card atualizado com sucesso');
     })
     .catch(error => {
       console.error('Erro ao carregar dados:', error);
-      document.getElementById('totalLentidao').innerText = "Dados indisponíveis";
-      document.getElementById('regioes').innerHTML = '<li class="list-group-item">Dados indisponíveis</li>';
-      document.getElementById('dataHora').innerText = "Atualizado em: -";
+      totalLentidao.innerText = "Dados indisponíveis";
+      regioes.innerHTML = '<li class="list-group-item">Dados indisponíveis</li>';
+      dataHora.innerText = "Atualizado em: -";
     });
 });
