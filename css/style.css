@@ -179,16 +179,6 @@ align-items: center;
 .hovereffect img {
 background-color: #f9f9f9;
 }
-.post-title,
-.entry-title,
-.hidden,
-.titlewrapper,
-.Header1,
-.blog-feeds,
-a.home-link,
-.blog-pager {
-display: none;
-}
 .btn-secondary {
 --bs-btn-color: #fff;
 --bs-btn-bg: #da3458;
