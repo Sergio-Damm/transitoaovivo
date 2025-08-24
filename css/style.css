@@ -36,10 +36,10 @@ color: #373a40 !important;
 text-decoration: none;
 }
 .link-interno:hover {
-color: #555555;
+color: #555555 !important;
 }
 .link-externo {
-color: #0000ee;
+color: #0000ee !important;
 text-decoration: none;
 }
 .link-externo:hover {
@@ -137,31 +137,17 @@ padding: 6px;
 .my-footer {
 background-color: #373a40;
 }
-.my-bg373a40 {
-background-color: #373a40;
-}
-.bg-light-custom {
-background-color: #f9f9f9;
-}
-.text-cerise {
-color: #da3458 !important;
-}
-.text-cerise-dark {
-color: #ad0019 !important;
-}
 .card-liftshadow {
-min-height: auto; /* 18.75rem; */
-background-color: #fff;
-border: 1px solid #eee;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-box-shadow: 0 5px 10px rgba(0,0,0,0.05);
-transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: auto;
+  background-color: #fff;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: box-shadow 0.3s ease;
 }
 .card-liftshadow:hover {
-transform: translateY(-10px);
-box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 .card-body {
 flex-grow: 1 !important;
