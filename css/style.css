@@ -3,27 +3,30 @@ font-size: 16px !important;
 }
 body {
 font-family: "Poppins", Arial, sans-serif;
-color: #373a40;
+color: #373a40 !important;
 font-weight: 400;
 font-size: 1.0625rem;
 line-height: 1.6;
 min-height: 100vh;
 }
 h1, h2, h3 {
-color: #373a40 ;
+color: #373a40 !important;
+}
+p {
+color: #373a40 !important;
 }
 a {
-  color: #373a40; 
+color: #373a40 !important;
 }
 .link-navbar {
-color: #373a40;
+color: #373a40 !important;
 text-decoration: none;
 }
 .link-navbar:hover {
 color: #555555;
 }
 .link-interno {
-color: #373a40;
+color: #373a40 !important;
 text-decoration: none;
 }
 .link-interno:hover {
