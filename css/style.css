@@ -16,10 +16,10 @@ p, .card-text {
 color: #373a40 !important;
 }
 a {
-color: #373a40 !important;
+color: #373a40;
 }
 .link-navbar {
-color: #373a40 !important;
+color: #373a40;
 text-decoration: none;
 }
 .link-navbar:hover {
