@@ -3,24 +3,27 @@ font-size: 16px !important;
 }
 body {
 font-family: "Poppins", Arial, sans-serif;
-color: #333333;
+color: #373a40;
 font-weight: 400;
 font-size: 1.0625rem;
 line-height: 1.6;
 min-height: 100vh;
 }
 h1, h2, h3 {
-color: #1a1a1a;
+color: #373a40 ;
+}
+a {
+  color: #373a40; 
 }
 .link-navbar {
-color: #333333;
+color: #373a40;
 text-decoration: none;
 }
 .link-navbar:hover {
 color: #555555;
 }
 .link-interno {
-color: #333333;
+color: #373a40;
 text-decoration: none;
 }
 .link-interno:hover {
@@ -123,10 +126,10 @@ border-color: #fec400;
 padding: 6px;
 }
 .my-footer {
-background-color: #333333;
+background-color: #373a40;
 }
-.my-bg333333 {
-background-color: #333333;
+.my-bg373a40 {
+background-color: #373a40;
 }
 .bg-light-custom {
 background-color: #f9f9f9;
