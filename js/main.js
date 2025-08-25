@@ -168,7 +168,9 @@ document.addEventListener('DOMContentLoaded', function() {
                           '<li class="list-group-item">Zona Centro: ' + data.regioes.centro + ' km</li>' +
                           '<li class="list-group-item">Zona Leste: ' + data.regioes.leste + ' km</li>' +
                           '<li class="list-group-item">Zona Sul: ' + data.regioes.sul + ' km</li>';
-      dataHora.innerText = "Atualizado em: " + data.dataHora.replace("São Paulo, ", "");
+      const novaDataHora = data.dataHora.replace("São Paulo, ", "");
+      console.log('Texto após replace:', novaDataHora); // Novo log para verificar
+      dataHora.innerText = "Atualizado em: " + novaDataHora;
       console.log('Card atualizado com sucesso');
     })
     .catch(error => {
