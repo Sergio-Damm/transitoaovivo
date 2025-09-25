@@ -99,7 +99,7 @@ setTimeout(function() {
 var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
 (function() {
   var _0xcams = [
-    { id: 'cams31', frame: 1 },
+    { id: 'cams64', frame: 1 },
     { id: 'cams225', frame: 1 },
     { id: 'cams184', frame: 1 }
   ],
