@@ -181,7 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// <![CDATA[
 async function carregarAutoesporte() {
   document.getElementById('lista1').innerHTML = '';
   document.getElementById('loading1').style.display = 'block';
@@ -240,9 +239,7 @@ async function carregarAutoesporte() {
 }
 carregarAutoesporte();
 setInterval(carregarAutoesporte, 300000);
-// ]]>
 
-// <![CDATA[
 async function carregarNewsMotor() {
   document.getElementById('lista3').innerHTML = '';
   document.getElementById('loading3').style.display = 'block';
@@ -299,9 +296,7 @@ async function carregarNewsMotor() {
 }
 carregarNewsMotor();
 setInterval(carregarNewsMotor, 300000);
-// ]]>
 
-// <![CDATA[
 async function carregarEstadao() {
   document.getElementById('lista5').innerHTML = '';
   document.getElementById('loading5').style.display = 'block';
@@ -365,4 +360,3 @@ async function carregarEstadao() {
 }
 carregarEstadao();
 setInterval(carregarEstadao,300000);
-// ]]>
