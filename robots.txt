@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Permite que o Google indexe tudo normalmente
+# Bloqueia apenas o uso do seu conteúdo para treinar IA (opcional, mas recomendado)
+User-agent: Google-Extended
+Disallow: /
+
+# Bloqueia outros robôs de IA conhecidos
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: OmniExplorer
+Disallow: /
+
+# Seu sitemap (se você tiver um — se não tiver, pode deixar mesmo assim)
+Sitemap: https://transitoaovivo.com/sitemap.xml
