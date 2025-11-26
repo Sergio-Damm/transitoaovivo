@@ -181,6 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// auto esporte
 async function carregarAutoesporte() {
   document.getElementById('lista1').innerHTML = '';
   document.getElementById('loading1').style.display = 'block';
@@ -240,6 +241,7 @@ async function carregarAutoesporte() {
 carregarAutoesporte();
 setInterval(carregarAutoesporte, 300000);
 
+// news motor
 async function carregarNewsMotor() {
   document.getElementById('lista3').innerHTML = '';
   document.getElementById('loading3').style.display = 'block';
@@ -297,23 +299,33 @@ async function carregarNewsMotor() {
 carregarNewsMotor();
 setInterval(carregarNewsMotor, 300000);
 
+// estadao carros — versão segura (não quebra se o HTML estiver comentado)
 async function carregarEstadao() {
-  document.getElementById('lista5').innerHTML = '';
-  document.getElementById('loading5').style.display = 'block';
+  const lista = document.getElementById('lista5');
+  const loading = document.getElementById('loading5');
+
+  // Se o bloco está comentado ou não existe no HTML → sai silenciosamente (sem erro!)
+  if (!lista || !loading) {
+    console.log('Bloco Estadão Carros desativado (HTML ausente ou comentado) → ignorando execução');
+    return;
+  }
+
+  lista.innerHTML = '';
+  loading.style.display = 'block';
 
   try {
     const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/jornal-do-carro/');
     const data = await res.json();
     if (data.status !== 'ok') throw 'erro';
 
-    // Pega até 15 itens e filtra os que provavelmente têm paywall
+    // Pega até 15 itens e filtra paywall
     let itens = data.items.slice(0,15);
     itens = itens.filter(item => {
       const t = item.title.toLowerCase();
       return !t.includes('prêmio') && !t.includes('exclusivo') && !t.includes('assinante') && !t.includes('mobilidade 202');
     }).slice(0,6);
 
-    itens.forEach((item,index) => {
+    itens.forEach(item => {
       let fonte = 'Estadão';
 
       let thumb = 'https://via.placeholder.com/400x260/CC0000/ffffff?text=ES';
@@ -331,7 +343,7 @@ async function carregarEstadao() {
         }
       }
 
-      const diff = Math.floor((Date.now() - new Date(item.pubDate) + 10800000) / 1000);  // +3h para BRT
+      const diff = Math.floor((Date.now() - new Date(item.pubDate) + 10800000) / 1000);  // +3h BRT
       const tempo = diff < 3600 ? Math.floor(diff/60)+' min atrás' :
                     diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
                     diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
@@ -350,13 +362,17 @@ async function carregarEstadao() {
           '</a>'+
         '</div>';
 
-      document.getElementById('lista5').innerHTML += card;
+      lista.innerHTML += card;
     });
 
   } catch(e) {
-    document.getElementById('lista5').innerHTML = '<div class="col-12 text-center py-5 text-danger">Estadão indisponível no momento</div>';
+    lista.innerHTML = '<div class="col-12 text-center py-5 text-danger">Estadão indisponível no momento</div>';
   }
-  document.getElementById('loading5').style.display = 'none';
+  loading.style.display = 'none';
 }
-carregarEstadao();
-setInterval(carregarEstadao,300000);
+
+// Só tenta executar se o bloco existir
+if (document.getElementById('lista5')) {
+  carregarEstadao();
+  setInterval(carregarEstadao, 300000);
+}
