@@ -231,3 +231,6 @@ font-size: 1rem; /* Tamanho do texto */
 color: #666; /* Cor cinza suave */
 text-align: center;
 }
+.text-cerise {
+  color: #da3458 !important;
+}
