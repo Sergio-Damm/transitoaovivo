@@ -189,89 +189,93 @@ document.addEventListener('DOMContentLoaded', function() {
 // Serve para qualquer feed do planeta
 // FUNÇÃO ÚNICA E AGORA 100% ESTÁVEL
 async function carregarFeed(config) {
-  const lista = document.getElementById(config.listaId);
-  const loading = document.getElementById(config.loadingId);
-  if (!lista || !loading) return;
+    const lista = document.getElementById(config.listaId);
+    const loading = document.getElementById(config.loadingId);
+    if (!lista || !loading) return;
 
-  lista.innerHTML = '';
-  loading.style.display = 'block';
+    // Inicialização: Limpa a lista e mostra o loading
+    lista.innerHTML = ''; 
+    loading.style.display = 'block';
 
-  // Placeholders fixos em base64 (100% seguros)
-  const placeholders = {
-    'AE': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NmNjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BRTwvdGV4dD48L3N2Zz4=',
-    'NM': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5OTTwvdGV4dD48L3N2Zz4=',
-    'ES': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2MwMDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FUzwvdGV4dD48L3N2Zz4='
-  };
-  const placeholder = placeholders[config.letras] || placeholders['AE'];
+    // Placeholders fixos em base64 (100% seguros)
+    const placeholders = {
+        'AE': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NmNjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BRTwvdGV4dD48L3N2Zz4=',
+        'NM': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5OTTwvdGV4dD48L3N2Zz4=',
+        'ES': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2MwMDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FUzwvd2d0PjwvZz4='
+    };
+    const placeholder = placeholders[config.letras] || placeholders['AE'];
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8500);
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8500);
 
-    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(config.rss)}`, {
-      signal: controller.signal,
-      cache: 'no-store'
-    });
-    clearTimeout(timeoutId);
-    if (!res.ok) throw 1;
+        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(config.rss)}`, {
+            signal: controller.signal,
+            cache: 'no-store'
+        });
+        clearTimeout(timeoutId);
+        if (!res.ok) throw 1;
 
-    const data = await res.json();
-    if (data.status !== 'ok') throw 1;
+        const data = await res.json();
+        if (data.status !== 'ok') throw 1;
 
-    let itens = data.items.filter(i => i.title && i.link);
+        let itens = data.items.filter(i => i.title && i.link);
 
-    if (config.filtroPaywall) {
-      itens = itens.filter(i => {
-        const t = i.title.toLowerCase();
-        return !t.includes('prêmio') && !t.includes('exclusivo') && !t.includes('assinante') && !t.includes('mobilidade 202');
-      });
-    }
+        if (config.filtroPaywall) {
+            itens = itens.filter(i => {
+                const t = i.title.toLowerCase();
+                return !t.includes('prêmio') && !t.includes('exclusivo') && !t.includes('assinante') && !t.includes('mobilidade 202');
+            });
+        }
 
-    itens.slice(0, 6).forEach(item => {
-      let thumb = placeholder;
-      if (item.enclosure?.url && item.enclosure.type?.includes('image')) thumb = item.enclosure.url;
-      else if (item.thumbnail) thumb = item.thumbnail;
-      else if (item.description) {
-        const m = item.description.match(/src=["']([^"']+\.(jpe?g|png|gif|webp))["']/i);
-        if (m) thumb = m[1];
-      }
+        // NOVO: Array para construir o HTML fora do DOM
+        let htmlItens = []; 
 
-      const diff = Math.floor((Date.now() - new Date(item.pubDate || Date.now()) + 10800000) / 1000);
-      const tempo = diff < 3600 ? Math.floor(diff/60)+' min atrás' :
-                    diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
-                    diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
+        itens.slice(0, 6).forEach(item => {
+            let thumb = placeholder;
+            if (item.enclosure?.url && item.enclosure.type?.includes('image')) thumb = item.enclosure.url;
+            else if (item.thumbnail) thumb = item.thumbnail;
+            else if (item.description) {
+                const m = item.description.match(/src=["']([^"']+\.(jpe?g|png|gif|webp))["']/i);
+                if (m) thumb = m[1];
+            }
 
-      lista.innerHTML +=
-        '<div class="col-md-6 col-lg-4">' +
-          '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
-            '<div class="card card-liftshadow border-light-subtle h-100">' +
-              '<img alt="'+item.title.trim()+'" src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" ' +
-                   'onerror="this.onerror=null; this.src=\''+placeholder+'\'">' +
-              '<div class="card-body d-flex flex-column">' +
+            const diff = Math.floor((Date.now() - new Date(item.pubDate || Date.now()) + 10800000) / 1000);
+            const tempo = diff < 3600 ? Math.floor(diff/60)+' min atrás' :
+                            diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
+                            diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
+
+            // Adiciona a string HTML ao array
+            htmlItens.push(
+                '<div class="col-md-6 col-lg-4">' +
+                '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
+                '<div class="card card-liftshadow border-light-subtle h-100">' +
+                // CORREÇÃO: Uso de item.title.trim() no atributo alt
+                '<img alt="'+item.title.trim()+'" src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" ' +
+                        'onerror="this.onerror=null; this.src=\''+placeholder+'\'">' +
+                '<div class="card-body d-flex flex-column">' +
                 '<p class="card-title link-interno mb-2">'+item.title.trim()+'</p>' +
                 '<p class="card-text mt-auto text-cerise">'+config.nome+' • '+tempo+'</p>' +
-              '</div>' +
-            '</div>' +
-          '</a>' +
-        '</div>';
-    });
+                '</div>' +
+                '</div>' +
+                '</a>' +
+                '</div>'
+            );
+        });
 
-  } catch {
-    lista.innerHTML = `<div class="col-12 text-center py-5 text-danger">${config.nome} indisponível no momento</div>`;
-  } finally {
-    loading.style.display = 'none';
-  }
+        // OTIMIZAÇÃO: Injeta todo o HTML de uma só vez
+        lista.innerHTML = htmlItens.join('');
+
+    } catch {
+        lista.innerHTML = `<div class="col-12 text-center py-5 text-danger">${config.nome} indisponível no momento</div>`;
+    } finally {
+        loading.style.display = 'none';
+    }
 }
 
 // EXECUÇÃO E ATUALIZAÇÃO
 document.addEventListener('DOMContentLoaded', () => {
-  carregarFeed({listaId:'lista1', loadingId:'loading1', rss:'https://pox.globo.com/rss/autoesporte/', nome:'Autoesporte', letras:'AE'});
-  carregarFeed({listaId:'lista3', loadingId:'loading3', rss:'https://newsmotor.com.br/feed/', nome:'NewsMotor', letras:'NM'});
-  carregarFeed({listaId:'lista5', loadingId:'loading5', rss:'https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/jornal-do-carro/', nome:'Estadão', letras:'ES', filtroPaywall:true});
-
-  setInterval(() => {
-    carregarFeed({listaId:'lista1', loadingId:'loading1', rss:'https://pox.globo.com/rss/autoesporte/', nome:'Autoesporte', letras:'AE'});
-    carregarFeed({listaId:'lista3', loadingId:'loading3', rss:'https://newsmotor.com.br/feed/', nome:'NewsMotor', letras:'NM'});
-    carregarFeed({listaId:'lista5', loadingId:'loading5', rss:'https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/jornal-do-carro/', nome:'Estadão', letras:'ES', filtroPaywall:true});
-  }, 300000);
+carregarFeed({listaId:'lista1', loadingId:'loading1', rss:'https://pox.globo.com/rss/autoesporte/', nome:'Autoesporte', letras:'AE'});
+carregarFeed({listaId:'lista3', loadingId:'loading3', rss:'https://newsmotor.com.br/feed/', nome:'NewsMotor', letras:'NM'});
+carregarFeed({listaId:'lista5', loadingId:'loading5', rss:'https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/jornal-do-carro/', nome:'Estadão', letras:'ES', filtroPaywall:true});
 });
