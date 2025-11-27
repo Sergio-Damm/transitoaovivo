@@ -245,7 +245,7 @@ async function carregarFeed(config) {
         '<div class="col-md-6 col-lg-4">' +
           '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
             '<div class="card card-liftshadow border-light-subtle h-100">' +
-              '<img src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" ' +
+              '<img alt="'+tituloNoticia+'" src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" ' +
                    'onerror="this.onerror=null; this.src=\''+placeholder+'\'">' +
               '<div class="card-body d-flex flex-column">' +
                 '<p class="card-title link-interno mb-2">'+item.title.trim()+'</p>' +
