@@ -181,106 +181,53 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ==================== AUTOESPORTE (layout seu + blindado) ====================
-async function carregarAutoesporte() {
-  const lista = document.getElementById('lista1');
-  const loading = document.getElementById('loading1');
-  if (!lista || !loading) return; // não quebra se bloco comentado
-
-  lista.innerHTML = '';
-  loading.style.display = 'block';
-
-  // Placeholder em base64 → nunca falha, nunca dá erro no console
-  const placeholderAE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NmNjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BRTwvdGV4dD48L3N2Zz4=';
-
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 9000);
-    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://pox.globo.com/rss/autoesporte/', { signal: controller.signal });
-    clearTimeout(timeout);
-    if (!res.ok) throw 'erro';
-    const data = await res.json();
-    if (data.status !== 'ok') throw 'erro';
-
-    data.items.slice(0, 6).forEach(item => {
-      let fonte = 'Autoesporte';
-      let thumb = placeholderAE;
-
-      if (item.enclosure && item.enclosure.url) thumb = item.enclosure.url;
-      else if (item.thumbnail) thumb = item.thumbnail;
-      else if (item.description) {
-        const desc = item.description;
-        const start = desc.indexOf('src="') !== -1 ? desc.indexOf('src="') + 5 : desc.indexOf("src='") + 5;
-        if (start > 5) {
-          const end = desc.indexOf(desc.charAt(desc.indexOf('src') + 4), start);
-          if (end > start) {
-            const url = desc.substring(start, end);
-            if (/\.(jpe?g|png|gif|webp)/i.test(url)) thumb = url;
-          }
-        }
-      }
-
-      const diff = Math.floor((Date.now() - new Date(item.pubDate) + 10800000) / 1000);
-      const tempo = diff < 3600 ? Math.floor(diff/60)+' min atrás' :
-                    diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
-                    diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
-
-      const card =
-        '<div class="col-md-6 col-lg-4">' +
-          '<a href="' + item.link + '" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
-            '<div class="card card-liftshadow border-light-subtle h-100">' +
-              '<img src="' + thumb + '" class="card-img-top" style="height:200px;object-fit:cover;" ' +
-                   'onerror="this.onerror=null; this.src=\'' + placeholderAE + '\'">' +
-              '<div class="card-body d-flex flex-column">' +
-                '<p class="card-title link-interno mb-2">' + item.title.trim() + '</p>' +
-                '<p class="card-text mt-auto text-cerise">' + fonte + ' • ' + tempo + '</p>' +
-              '</div>' +
-            '</div>' +
-          '</a>' +
-        '</div>';
-
-      lista.innerHTML += card;
-    });
-  } catch (e) {
-    lista.innerHTML = '<div class="col-12 text-center py-5 text-danger">Autoesporte indisponível</div>';
-  }
-  loading.style.display = 'none';
-}
-
-// ==================== NEWSMOTOR (layout seu + blindado) ====================
-async function carregarNewsMotor() {
-  const lista = document.getElementById('lista3');
-  const loading = document.getElementById('loading3');
+// ==================== FUNÇÃO ÚNICA E TOTALMENTE PADRONIZADA ====================
+// Serve para qualquer feed do planeta
+async function carregarFeed(config) {
+  const lista = document.getElementById(config.listaId);
+  const loading = document.getElementById(config.loadingId);
   if (!lista || !loading) return;
 
   lista.innerHTML = '';
   loading.style.display = 'block';
 
-  const placeholderNM = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5OTTwvdGV4dD48L3N2Zz4=';
+  // Placeholder em base64 com cor e texto personalizados
+  const placeholder = `data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIj${config.cor}\"/><dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1zaXplPSI0MCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPi${btoa(config.letras)}</dGV4dD48L3N2Zz4=`;
 
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 9000);
-    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://newsmotor.com.br/feed/', { signal: controller.signal });
-    clearTimeout(timeout);
-    if (!res.ok) throw 'erro';
+    const timeoutId = setTimeout(() => controller.abort(), 8500);
+
+    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(config.rss)}`, {
+      signal: controller.signal,
+      cache: 'no-store'
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) throw 1;
     const data = await res.json();
-    if (data.status !== 'ok') throw 'erro';
+    if (data.status !== 'ok') throw 1;
 
-    data.items.slice(0, 6).forEach(item => {
-      let fonte = 'NewsMotor';
-      let thumb = placeholderNM;
+    let itens = data.items.filter(i => i.title && i.link);
 
-      if (item.description) {
-        const desc = item.description;
-        const start = desc.indexOf('src="') !== -1 ? desc.indexOf('src="') + 5 : desc.indexOf("src='") + 5;
-        if (start > 5) {
-          const end = desc.indexOf(desc.charAt(desc.indexOf('src') + 4), start);
-          if (end > start) {
-            const url = desc.substring(start, end);
-            if (/\.(jpe?g|png|gif|webp)/i.test(url)) thumb = url;
-          }
-        }
+    // FILTRO OPCIONAL DE PAYWALL (só Estadão usa, os outros ignoram)
+    if (config.filtroPaywall) {
+      itens = itens.filter(i => {
+        const t = i.title.toLowerCase();
+        return !t.includes('prêmio') && !t.includes('exclusivo') && !t.includes('assinante') && !t.includes('mobilidade 202');
+      });
+    }
+
+    itens = itens.slice(0, 6);
+
+    itens.forEach(item => {
+      let thumb = placeholder;
+
+      if (item.enclosure?.url && item.enclosure.type?.includes('image')) thumb = item.enclosure.url;
+      else if (item.thumbnail) thumb = item.thumbnail;
+      else if (item.description) {
+        const m = item.description.match(/src=["']([^"']+\.(jpe?g|png|gif|webp))["']/i);
+        if (m) thumb = m[1];
       }
 
       const diff = Math.floor((Date.now() - new Date(item.pubDate || Date.now()) + 10800000) / 1000);
@@ -290,13 +237,13 @@ async function carregarNewsMotor() {
 
       const card =
         '<div class="col-md-6 col-lg-4">' +
-          '<a href="' + item.link + '" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
+          '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
             '<div class="card card-liftshadow border-light-subtle h-100">' +
-              '<img src="' + thumb + '" class="card-img-top" style="height:200px;object-fit:cover;" ' +
-                   'onerror="this.onerror=null; this.src=\'' + placeholderNM + '\'">' +
+              '<img src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" ' +
+                   'onerror="this.onerror=null; this.src=\''+placeholder+'\'">' +
               '<div class="card-body d-flex flex-column">' +
-                '<p class="card-title link-interno mb-2">' + item.title.trim() + '</p>' +
-                '<p class="card-text mt-auto text-cerise">' + fonte + ' • ' + tempo + '</p>' +
+                '<p class="card-title link-interno mb-2">'+item.title.trim()+'</p>' +
+                '<p class="card-text mt-auto text-cerise">'+config.nome+' • '+tempo+'</p>' +
               '</div>' +
             '</div>' +
           '</a>' +
@@ -304,90 +251,42 @@ async function carregarNewsMotor() {
 
       lista.innerHTML += card;
     });
-  } catch (e) {
-    lista.innerHTML = '<div class="col-12 text-center py-5 text-danger">NewsMotor indisponível</div>';
+
+  } catch {
+    lista.innerHTML = `<div class="col-12 text-center py-5 text-danger">${config.nome} indisponível no momento</div>`;
+  } finally {
+    loading.style.display = 'none'; // NUNCA mais looping
   }
-  loading.style.display = 'none';
 }
 
-// ==================== ESTADÃO CARROS (mantive seu layout exato + melhorias) ====================
-async function carregarEstadao() {
-  const lista = document.getElementById('lista5');
-  const loading = document.getElementById('loading5');
-  if (!lista || !loading) return;
-
-  lista.innerHTML = '';
-  loading.style.display = 'block';
-
-  const placeholderES = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2MwMDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FUzwvdGV4dD48L3N2Zz4=';
-
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 9000);
-    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/jornal-do-carro/', { signal: controller.signal });
-    clearTimeout(timeout);
-    if (!res.ok) throw 'erro';
-    const data = await res.json();
-    if (data.status !== 'ok') throw 'erro';
-
-    let itens = data.items.slice(0,15).filter(item => {
-      const t = item.title.toLowerCase();
-      return !t.includes('prêmio') && !t.includes('exclusivo') && !t.includes('assinante') && !t.includes('mobilidade 202');
-    }).slice(0,6);
-
-    itens.forEach(item => {
-      let fonte = 'Estadão';
-      let thumb = placeholderES;
-
-      if (item.enclosure?.url && item.enclosure.type?.includes('image')) {
-        thumb = item.enclosure.url;
-      } else if (item.description) {
-        const d = item.description;
-        const s = d.indexOf('src="') !== -1 ? d.indexOf('src="')+5 : d.indexOf("src='")+5;
-        if (s > 5) {
-          const e = d.indexOf(d.charAt(d.indexOf('src')+4), s);
-          if (e > s) {
-            const u = d.substring(s,e);
-            if (/\.(jpe?g|png|gif|webp)/i.test(u)) thumb = u;
-          }
-        }
-      }
-
-      const diff = Math.floor((Date.now() - new Date(item.pubDate) + 10800000) / 1000);
-      const tempo = diff < 3600 ? Math.floor(diff/60)+' min atrás' :
-                    diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
-                    diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
-
-      const card = 
-        '<div class="col-md-6 col-lg-4">'+
-          '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">'+
-            '<div class="card card-liftshadow border-light-subtle h-100">'+
-              '<img src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" '+
-                   'onerror="setTimeout(()=>{this.src=\''+placeholderES+'\'},1500); this.onerror=null;">'+
-              '<div class="card-body d-flex flex-column">'+
-                '<p class="card-title link-interno mb-2">'+item.title.trim()+'</p>'+
-                '<p class="card-text mt-auto text-cerise">'+fonte+' • '+tempo+'</p>'+
-              '</div>'+
-            '</div>'+
-          '</a>'+
-        '</div>';
-
-      lista.innerHTML += card;
-    });
-
-  } catch(e) {
-    lista.innerHTML = '<div class="col-12 text-center py-5 text-danger">Estadão indisponível no momento</div>';
-  }
-  loading.style.display = 'none';
-}
-
-// ==================== EXECUÇÃO SEGURA ====================
+// ==================== EXECUÇÃO E ATUALIZAÇÃO AUTOMÁTICA (os 3 de uma vez) ====================
 document.addEventListener('DOMContentLoaded', () => {
-  carregarAutoesporte();
-  carregarNewsMotor();
-  if (document.getElementById('lista5')) carregarEstadao();
+  // Autoesporte
+  carregarFeed({
+    listaId: 'lista1', loadingId: 'loading1',
+    rss: 'https://pox.globo.com/rss/autoesporte/',
+    nome: 'Autoesporte', cor: '0066cc', letras: 'AE'
+  });
 
-  setInterval(carregarAutoesporte, 300000);
-  setInterval(carregarNewsMotor, 300000);
-  if (document.getElementById('lista5')) setInterval(carregarEstadao, 300000);
+  // NewsMotor
+  carregarFeed({
+    listaId: 'lista3', loadingId: 'loading3',
+    rss: 'https://newsmotor.com.br/feed/',
+    nome: 'NewsMotor', cor: '006400', letras: 'NM'
+  });
+
+  // Estadão Carros (com filtro de paywall)
+  carregarFeed({
+    listaId: 'lista5', loadingId: 'loading5',
+    rss: 'https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/jornal-do-carro/',
+    nome: 'Estadão', cor: 'cc0000', letras: 'ES',
+    filtroPaywall: true   // ← só ele tem isso, os outros ignoram
+  });
+
+  // Atualiza a cada 5 minutos — TODOS OS 3
+  setInterval(() => {
+    carregarFeed({listaId:'lista1',loadingId:'loading1',rss:'https://pox.globo.com/rss/autoesporte/',nome:'Autoesporte',cor:'0066cc',letras:'AE'});
+    carregarFeed({listaId:'lista3',loadingId:'loading3',rss:'https://newsmotor.com.br/feed/',nome:'NewsMotor',cor:'006400',letras:'NM'});
+    carregarFeed({listaId:'lista5',loadingId:'loading5',rss:'https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/jornal-do-carro/',nome:'Estadão',cor:'cc0000',letras:'ES',filtroPaywall:true});
+  }, 300000);
 });
