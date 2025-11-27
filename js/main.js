@@ -181,20 +181,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// auto esporte
+// ==================== AUTOESPORTE (layout seu + blindado) ====================
 async function carregarAutoesporte() {
-  document.getElementById('lista1').innerHTML = '';
-  document.getElementById('loading1').style.display = 'block';
+  const lista = document.getElementById('lista1');
+  const loading = document.getElementById('loading1');
+  if (!lista || !loading) return; // não quebra se bloco comentado
+
+  lista.innerHTML = '';
+  loading.style.display = 'block';
+
+  // Placeholder em base64 → nunca falha, nunca dá erro no console
+  const placeholderAE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NmNjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BRTwvdGV4dD48L3N2Zz4=';
 
   try {
-    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://pox.globo.com/rss/autoesporte/');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 9000);
+    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://pox.globo.com/rss/autoesporte/', { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) throw 'erro';
     const data = await res.json();
     if (data.status !== 'ok') throw 'erro';
 
     data.items.slice(0, 6).forEach(item => {
       let fonte = 'Autoesporte';
+      let thumb = placeholderAE;
 
-      let thumb = 'https://via.placeholder.com/400x260/0066cc/ffffff?text=AE';
       if (item.enclosure && item.enclosure.url) thumb = item.enclosure.url;
       else if (item.thumbnail) thumb = item.thumbnail;
       else if (item.description) {
@@ -204,57 +215,62 @@ async function carregarAutoesporte() {
           const end = desc.indexOf(desc.charAt(desc.indexOf('src') + 4), start);
           if (end > start) {
             const url = desc.substring(start, end);
-            const lower = url.toLowerCase();
-            if (lower.indexOf('.jpg') > -1 || lower.indexOf('.jpeg') > -1 || lower.indexOf('.png') > -1 || lower.indexOf('.gif') > -1) {
-              thumb = url;
-            }
+            if (/\.(jpe?g|png|gif|webp)/i.test(url)) thumb = url;
           }
         }
       }
 
-      const diff = Math.floor((Date.now() - new Date(item.pubDate) + 10800000) / 1000);  // +3h para BRT
+      const diff = Math.floor((Date.now() - new Date(item.pubDate) + 10800000) / 1000);
       const tempo = diff < 3600 ? Math.floor(diff/60)+' min atrás' :
                     diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
                     diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
 
-      const card = 
+      const card =
         '<div class="col-md-6 col-lg-4">' +
           '<a href="' + item.link + '" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
             '<div class="card card-liftshadow border-light-subtle h-100">' +
               '<img src="' + thumb + '" class="card-img-top" style="height:200px;object-fit:cover;" ' +
-                   'onerror="this.src=\'https://via.placeholder.com/400x260/0066cc/ffffff?text=AE\'">' +
+                   'onerror="this.onerror=null; this.src=\'' + placeholderAE + '\'">' +
               '<div class="card-body d-flex flex-column">' +
                 '<p class="card-title link-interno mb-2">' + item.title.trim() + '</p>' +
-                '<p class="card-text mt-auto mt-auto text-cerise">' + fonte + ' • ' + tempo + '</p>' +
+                '<p class="card-text mt-auto text-cerise">' + fonte + ' • ' + tempo + '</p>' +
               '</div>' +
             '</div>' +
           '</a>' +
         '</div>';
 
-      document.getElementById('lista1').innerHTML += card;
+      lista.innerHTML += card;
     });
-  } catch(e) {
-    document.getElementById('lista1').innerHTML = '<div class="col-12 text-center py-5 text-danger">Autoesporte indisponível</div>';
+  } catch (e) {
+    lista.innerHTML = '<div class="col-12 text-center py-5 text-danger">Autoesporte indisponível</div>';
   }
-  document.getElementById('loading1').style.display = 'none';
+  loading.style.display = 'none';
 }
-carregarAutoesporte();
-setInterval(carregarAutoesporte, 300000);
 
-// news motor
+// ==================== NEWSMOTOR (layout seu + blindado) ====================
 async function carregarNewsMotor() {
-  document.getElementById('lista3').innerHTML = '';
-  document.getElementById('loading3').style.display = 'block';
+  const lista = document.getElementById('lista3');
+  const loading = document.getElementById('loading3');
+  if (!lista || !loading) return;
+
+  lista.innerHTML = '';
+  loading.style.display = 'block';
+
+  const placeholderNM = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5OTTwvdGV4dD48L3N2Zz4=';
 
   try {
-    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://newsmotor.com.br/feed/');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 9000);
+    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://newsmotor.com.br/feed/', { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) throw 'erro';
     const data = await res.json();
     if (data.status !== 'ok') throw 'erro';
 
     data.items.slice(0, 6).forEach(item => {
       let fonte = 'NewsMotor';
+      let thumb = placeholderNM;
 
-      let thumb = 'https://via.placeholder.com/400x260/006400/ffffff?text=NM';
       if (item.description) {
         const desc = item.description;
         const start = desc.indexOf('src="') !== -1 ? desc.indexOf('src="') + 5 : desc.indexOf("src='") + 5;
@@ -262,74 +278,68 @@ async function carregarNewsMotor() {
           const end = desc.indexOf(desc.charAt(desc.indexOf('src') + 4), start);
           if (end > start) {
             const url = desc.substring(start, end);
-            const lower = url.toLowerCase();
-            if (lower.indexOf('.jpg') > -1 || lower.indexOf('.jpeg') > -1 || lower.indexOf('.png') > -1 || lower.indexOf('.gif') > -1) {
-              thumb = url;
-            }
+            if (/\.(jpe?g|png|gif|webp)/i.test(url)) thumb = url;
           }
         }
       }
 
-      const diff = Math.floor((Date.now() - new Date(item.pubDate) + 10800000) / 1000);  // +3h para BRT
+      const diff = Math.floor((Date.now() - new Date(item.pubDate || Date.now()) + 10800000) / 1000);
       const tempo = diff < 3600 ? Math.floor(diff/60)+' min atrás' :
                     diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
                     diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
 
-      const card = 
+      const card =
         '<div class="col-md-6 col-lg-4">' +
           '<a href="' + item.link + '" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
             '<div class="card card-liftshadow border-light-subtle h-100">' +
               '<img src="' + thumb + '" class="card-img-top" style="height:200px;object-fit:cover;" ' +
-                   'onerror="this.src=\'https://via.placeholder.com/400x260/006400/ffffff?text=NM\'">' +
+                   'onerror="this.onerror=null; this.src=\'' + placeholderNM + '\'">' +
               '<div class="card-body d-flex flex-column">' +
                 '<p class="card-title link-interno mb-2">' + item.title.trim() + '</p>' +
-                '<p class="card-text mt-auto mt-auto text-cerise">' + fonte + ' • ' + tempo + '</p>' +
+                '<p class="card-text mt-auto text-cerise">' + fonte + ' • ' + tempo + '</p>' +
               '</div>' +
             '</div>' +
           '</a>' +
         '</div>';
 
-      document.getElementById('lista3').innerHTML += card;
+      lista.innerHTML += card;
     });
-  } catch(e) {
-    document.getElementById('lista3').innerHTML = '<div class="col-12 text-center py-5 text-danger">NewsMotor indisponível</div>';
+  } catch (e) {
+    lista.innerHTML = '<div class="col-12 text-center py-5 text-danger">NewsMotor indisponível</div>';
   }
-  document.getElementById('loading3').style.display = 'none';
+  loading.style.display = 'none';
 }
-carregarNewsMotor();
-setInterval(carregarNewsMotor, 300000);
 
-// estadao carros — versão segura (não quebra se o HTML estiver comentado)
+// ==================== ESTADÃO CARROS (mantive seu layout exato + melhorias) ====================
 async function carregarEstadao() {
   const lista = document.getElementById('lista5');
   const loading = document.getElementById('loading5');
-
-  // Se o bloco está comentado ou não existe no HTML → sai silenciosamente (sem erro!)
-  if (!lista || !loading) {
-    console.log('Bloco Estadão Carros desativado (HTML ausente ou comentado) → ignorando execução');
-    return;
-  }
+  if (!lista || !loading) return;
 
   lista.innerHTML = '';
   loading.style.display = 'block';
 
+  const placeholderES = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2MwMDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FUzwvdGV4dD48L3N2Zz4=';
+
   try {
-    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/jornal-do-carro/');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 9000);
+    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/jornal-do-carro/', { signal: controller.signal });
+    clearTimeout(timeout);
+    if (!res.ok) throw 'erro';
     const data = await res.json();
     if (data.status !== 'ok') throw 'erro';
 
-    // Pega até 15 itens e filtra paywall
-    let itens = data.items.slice(0,15);
-    itens = itens.filter(item => {
+    let itens = data.items.slice(0,15).filter(item => {
       const t = item.title.toLowerCase();
       return !t.includes('prêmio') && !t.includes('exclusivo') && !t.includes('assinante') && !t.includes('mobilidade 202');
     }).slice(0,6);
 
     itens.forEach(item => {
       let fonte = 'Estadão';
+      let thumb = placeholderES;
 
-      let thumb = 'https://via.placeholder.com/400x260/CC0000/ffffff?text=ES';
-      if (item.enclosure && item.enclosure.url && item.enclosure.type && item.enclosure.type.includes('image')) {
+      if (item.enclosure?.url && item.enclosure.type?.includes('image')) {
         thumb = item.enclosure.url;
       } else if (item.description) {
         const d = item.description;
@@ -338,12 +348,12 @@ async function carregarEstadao() {
           const e = d.indexOf(d.charAt(d.indexOf('src')+4), s);
           if (e > s) {
             const u = d.substring(s,e);
-            if (/\.(jpe?g|png|gif)/i.test(u)) thumb = u;
+            if (/\.(jpe?g|png|gif|webp)/i.test(u)) thumb = u;
           }
         }
       }
 
-      const diff = Math.floor((Date.now() - new Date(item.pubDate) + 10800000) / 1000);  // +3h BRT
+      const diff = Math.floor((Date.now() - new Date(item.pubDate) + 10800000) / 1000);
       const tempo = diff < 3600 ? Math.floor(diff/60)+' min atrás' :
                     diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
                     diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
@@ -353,7 +363,7 @@ async function carregarEstadao() {
           '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">'+
             '<div class="card card-liftshadow border-light-subtle h-100">'+
               '<img src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" '+
-                   'onerror="setTimeout(()=>{this.src=\'https://via.placeholder.com/400x260/CC0000/ffffff?text=ES\'},2000)">'+
+                   'onerror="setTimeout(()=>{this.src=\''+placeholderES+'\'},1500); this.onerror=null;">'+
               '<div class="card-body d-flex flex-column">'+
                 '<p class="card-title link-interno mb-2">'+item.title.trim()+'</p>'+
                 '<p class="card-text mt-auto text-cerise">'+fonte+' • '+tempo+'</p>'+
@@ -371,8 +381,13 @@ async function carregarEstadao() {
   loading.style.display = 'none';
 }
 
-// Só tenta executar se o bloco existir
-if (document.getElementById('lista5')) {
-  carregarEstadao();
-  setInterval(carregarEstadao, 300000);
-}
+// ==================== EXECUÇÃO SEGURA ====================
+document.addEventListener('DOMContentLoaded', () => {
+  carregarAutoesporte();
+  carregarNewsMotor();
+  if (document.getElementById('lista5')) carregarEstadao();
+
+  setInterval(carregarAutoesporte, 300000);
+  setInterval(carregarNewsMotor, 300000);
+  if (document.getElementById('lista5')) setInterval(carregarEstadao, 300000);
+});
