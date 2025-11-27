@@ -1,3 +1,7 @@
+// Cache-Control para forçar atualização rápida
+const cacheBuster = Date.now();
+console.log('main.js loaded - version: ' + cacheBuster);
+
 // --- adsensespace ---
 var adContainers = document.querySelectorAll('.ad-container-wrapper');
 
@@ -199,7 +203,7 @@ async function carregarFeed(config) {
     'ES': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2MwMDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FUzwvdGV4dD48L3N2Zz4='
   };
   const placeholder = placeholders[config.letras] || placeholders['AE'];
-  
+
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8500);
