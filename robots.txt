@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Bloqueia bots de IA para treinamento (diretivas padrão e seguras)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+# Sitemap (ajuda no SEO)
+Sitemap: https://transitoaovivo.com/sitemap.xml
