@@ -70,7 +70,7 @@ updateScrollStyle();
 // --- imgloadingdelay ---
 // Esta função controla o carregamento de imagens com timeout.
 document.addEventListener('DOMContentLoaded', () => {
-  const timeoutDuration = 3000; // Tempo máximo de espera: 3 segundos
+  const timeoutDuration = 5000; // Tempo máximo de espera: 5 segundos
   const transparentBase64 = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
   document.querySelectorAll('.img-fallback').forEach(img => {
