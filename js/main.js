@@ -132,49 +132,53 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- reloadpage ---
 setInterval(() => window.location.reload(1), 300000); // 5 minutos
 
-// --- cet3 ---
-var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
-(function() {
-  var _0xcams = [
-    { id: 'cams220', frame: 1 },
-    { id: 'cams225', frame: 1 },
-    { id: 'cams184', frame: 1 }
-  ],
-  _0xmax = 25;
+// --- cet3 (câmeras) ---
+// Só executa se houver pelo menos uma câmera na página
+if (document.querySelector('#cams220, #cams225, #cams184')) {
+  var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
+  (function() {
+    var _0xcams = [
+      { id: 'cams220', frame: 1 },
+      { id: 'cams225', frame: 1 },
+      { id: 'cams184', frame: 1 }
+    ],
+    _0xmax = 25;
 
-  function _0xupd() {
-    for (var _0xi = 0; _0xi < _0xcams.length; _0xi++) {
-      var _0ximg = document[_0xxyz[0]](_0xcams[_0xi].id);
-      if (!_0ximg) {
-        console.error('Elemento da câmera com ID "' + _0xcams[_0xi].id + '" não encontrado no HTML. Ignorando.');
-        continue;
-      }
-      var _0xtime = new Date()[_0xxyz[1]](),
-          _0xsrc = "https://cameras.cetsp.com.br/Cams/" +
-                   _0xcams[_0xi].id.replace('cams', '') + "/" +
-                   _0xcams[_0xi].frame + ".jpg?" + _0xtime + "&nocache=" + Math.random();
-      _0ximg[_0xxyz[3]].remove('error');
-      _0ximg[_0xxyz[2]] = _0xsrc;
-      console.log("Tentando carregar " + _0xcams[_0xi].id + " - Frame: " + _0xcams[_0xi].frame + " - URL: " + _0xsrc);
-      _0ximg.onerror = function() {
-        this[_0xxyz[3]].add('error');
-        console.error("Erro ao carregar: " + this.src);
-      };
-      _0ximg.onload = function() {
-        if (this.naturalWidth === 0 || this.naturalHeight === 0) {
-          this[_0xxyz[3]].add('error');
-          console.error("Imagem inválida (vazia): " + this.src);
-        } else {
-          this[_0xxyz[3]].remove('error');
-          console.log("Carregado com sucesso: " + this.src);
+    function _0xupd() {
+      for (var _0xi = 0; _0xi < _0xcams.length; _0xi++) {
+        var _0ximg = document[_0xxyz[0]](_0xcams[_0xi].id);
+        if (!_0ximg) {
+          // console.error removido aqui dentro do if principal
+          continue;
         }
-      };
-      _0xcams[_0xi].frame = (_0xcams[_0xi].frame % _0xmax) + 1;
+        // ... resto do código exatamente igual ao seu ...
+        var _0xtime = new Date()[_0xxyz[1]](),
+            _0xsrc = "https://cameras.cetsp.com.br/Cams/" +
+                     _0xcams[_0xi].id.replace('cams', '') + "/" +
+                     _0xcams[_0xi].frame + ".jpg?" + _0xtime + "&nocache=" + Math.random();
+        _0ximg[_0xxyz[3]].remove('error');
+        _0ximg[_0xxyz[2]] = _0xsrc;
+
+        _0ximg.onerror = function() {
+          this[_0xxyz[3]].add('error');
+          console.error("Erro ao carregar: " + this.src);
+        };
+        _0ximg.onload = function() {
+          if (this.naturalWidth === 0 || this.naturalHeight === 0) {
+            this[_0xxyz[3]].add('error');
+            console.error("Imagem inválida (vazia): " + this.src);
+          } else {
+            this[_0xxyz[3]].remove('error');
+            console.log("Carregado com sucesso: " + this.src);
+          }
+        };
+        _0xcams[_0xi].frame = (_0xcams[_0xi].frame % _0xmax) + 1;
+      }
     }
-  }
-  setInterval(_0xupd, 5000); // 5 segundos
-  _0xupd();
-})();
+    setInterval(_0xupd, 5000); // recarrega imagens a cada 5 segundos 
+    _0xupd();
+  })();
+}
 
 // --- total de lentidão CET-SP ---
 document.addEventListener('DOMContentLoaded', function() {
