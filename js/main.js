@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const originalSrc = img.getAttribute('data-src');
 
     if (!originalSrc) {
-      console.warn('Elemento .img-fallback ignorado: falta o atributo data-src.');
+      console.error('Elemento .img-fallback ignorado: falta o atributo data-src.');
       return;
     }
 
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Define o timeout ANTES de iniciar o carregamento.
     const timeout = setTimeout(() => {
-      console.warn(`[TIMEOUT] - ${originalSrc}`);
+      console.error(`[TIMEOUT] - ${originalSrc}`);
       
       // Tenta interromper o carregamento do tempImg
       tempImg.src = transparentBase64; 
@@ -130,9 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- reloadpage ---
-setTimeout(function() {
-  window.location.reload(1);
-}, 300000); // 5 minutos
+setInterval(() => window.location.reload(1), 300000); // 5 minutos
 
 // --- cet3 ---
 var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
@@ -148,7 +146,7 @@ var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
     for (var _0xi = 0; _0xi < _0xcams.length; _0xi++) {
       var _0ximg = document[_0xxyz[0]](_0xcams[_0xi].id);
       if (!_0ximg) {
-        console.warn('Elemento da câmera com ID "' + _0xcams[_0xi].id + '" não encontrado no HTML. Ignorando.');
+        console.error('Elemento da câmera com ID "' + _0xcams[_0xi].id + '" não encontrado no HTML. Ignorando.');
         continue;
       }
       var _0xtime = new Date()[_0xxyz[1]](),
@@ -160,12 +158,12 @@ var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
       console.log("Tentando carregar " + _0xcams[_0xi].id + " - Frame: " + _0xcams[_0xi].frame + " - URL: " + _0xsrc);
       _0ximg.onerror = function() {
         this[_0xxyz[3]].add('error');
-        console.log("Erro ao carregar: " + this.src);
+        console.error("Erro ao carregar: " + this.src);
       };
       _0ximg.onload = function() {
         if (this.naturalWidth === 0 || this.naturalHeight === 0) {
           this[_0xxyz[3]].add('error');
-          console.log("Imagem inválida (vazia): " + this.src);
+          console.error("Imagem inválida (vazia): " + this.src);
         } else {
           this[_0xxyz[3]].remove('error');
           console.log("Carregado com sucesso: " + this.src);
@@ -182,24 +180,21 @@ var _0xxyz = ['getElementById', 'getTime', 'src', 'classList'];
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM carregado, iniciando fetch...');
 
-  // Verificar se os elementos existem antes de acessá-los
   const totalLentidao = document.getElementById('totalLentidao');
   const regioes = document.getElementById('regioes');
   const dataHora = document.getElementById('dataHora');
 
-  // Se algum elemento não existir, logar e sair
   if (!totalLentidao || !regioes || !dataHora) {
     console.warn('Um ou mais elementos (totalLentidao, regioes, dataHora) não foram encontrados na página.');
     return;
   }
 
-  fetch('https://transito-ao-vivo.onrender.com/transito')
-    .then(response => {
+  async function atualizarCard(attempts = 3) {
+    try {
+      const response = await fetch('https://transito-ao-vivo.onrender.com/transito', { cache: 'no-store' });
       if (!response.ok) throw new Error('Erro na requisição: ' + response.status);
       console.log('Resposta recebida do Render');
-      return response.json();
-    })
-    .then(data => {
+      const data = await response.json();
       console.log('Dados recebidos:', data);
       totalLentidao.innerText = data.total + " km de lentidão total";
       regioes.innerHTML = '<li class="list-group-item">Zona Norte: ' + data.regioes.norte + ' km</li>' +
@@ -208,21 +203,27 @@ document.addEventListener('DOMContentLoaded', function() {
                           '<li class="list-group-item">Zona Leste: ' + data.regioes.leste + ' km</li>' +
                           '<li class="list-group-item">Zona Sul: ' + data.regioes.sul + ' km</li>';
       const novaDataHora = data.dataHora.replace("São Paulo, ", "");
-      console.log('Texto após replace:', novaDataHora); // Novo log para verificar
+      console.log('Texto após replace:', novaDataHora);
       dataHora.innerText = "Atualizado em: " + novaDataHora;
       console.log('Card atualizado com sucesso');
-    })
-    .catch(error => {
+    } catch (error) {
       console.error('Erro ao carregar dados:', error);
-      totalLentidao.innerText = "Dados indisponíveis";
-      regioes.innerHTML = '<li class="list-group-item">Dados indisponíveis</li>';
-      dataHora.innerText = "Atualizado em: -";
-    });
+      if (attempts > 1) {
+        console.log('Tentando de novo... tentativas restantes: ' + (attempts - 1));
+        atualizarCard(attempts - 1); // Tenta de novo até 3 vezes
+      } else {
+        totalLentidao.innerText = "Dados indisponíveis";
+        regioes.innerHTML = '<li class="list-group-item">Dados indisponíveis</li>';
+        dataHora.innerText = "Atualizado em: -";
+      }
+    }
+  }
+
+  atualizarCard(); // Roda na hora
+  setInterval(atualizarCard, 300000); // Roda a cada 5 minutos
 });
 
-// ==================== FUNÇÃO ÚNICA E TOTALMENTE PADRONIZADA ====================
-// Serve para qualquer feed do planeta
-// FUNÇÃO ÚNICA E AGORA 100% ESTÁVEL
+// ==================== feed de noticias ====================
 async function carregarFeed(config) {
     const lista = document.getElementById(config.listaId);
     const loading = document.getElementById(config.loadingId);
