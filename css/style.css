@@ -226,10 +226,11 @@ font-size: 6rem;
 color: #da3458;
 }
 .fallback-message {
-margin-top: 15px; /* Espaço de 15px abaixo do ícone */
+margin-top: 10px; /* Espaço de 10px abaixo do ícone */
 font-size: 1rem; /* Tamanho do texto */
 color: #666; /* Cor cinza suave */
 text-align: center;
+display: block;
 }
 .text-cerise {
   color: #da3458 !important;

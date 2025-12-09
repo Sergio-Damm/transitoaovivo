@@ -68,65 +68,58 @@ updateFooterStyle();
 updateScrollStyle();
 
 // --- imgloadingdelay ---
-// Esta função controla o carregamento de imagens com timeout.
 document.addEventListener('DOMContentLoaded', () => {
-  const timeoutDuration = 5000; // Tempo máximo de espera: 5 segundos
-  const transparentBase64 = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  const timeoutDuration = 5000; // 5 segundos
+  const transparentBase64 = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
-  document.querySelectorAll('.img-fallback').forEach(img => {
-    // CORREÇÃO: Lê o atributo data-src corretamente (sem asteriscos)
-    const originalSrc = img.getAttribute('data-src');
+  document.querySelectorAll('.img-fallback').forEach(img => {
+    const originalSrc = img.getAttribute('data-src');
+    if (!originalSrc) {
+      console.error('Elemento .img-fallback ignorado: falta o atributo data-src.');
+      return;
+    }
 
-    if (!originalSrc) {
-      console.error('Elemento .img-fallback ignorado: falta o atributo data-src.');
-      return;
-    }
+    // Cria um container para a mensagem (se ainda não existir)
+    let messageSpan = img.parentElement.querySelector('.fallback-message');
+    if (!messageSpan) {
+      messageSpan = document.createElement('span');
+      messageSpan.className = 'fallback-message';
+      messageSpan.textContent = 'Imagem temporariamente indisponível';
+      messageSpan.style.display = 'none'; // escondido por padrão
+      img.parentElement.appendChild(messageSpan);
+    }
 
-    // Inicializa um objeto Image para gerenciar o carregamento de forma programática.
-    const tempImg = new Image();
-    
-    // Define o timeout ANTES de iniciar o carregamento.
-    const timeout = setTimeout(() => {
-      console.error(`[TIMEOUT] - ${originalSrc}`);
-      
-      // Tenta interromper o carregamento do tempImg
-      tempImg.src = transparentBase64; 
-        
-      // Aplica o fallback visual no elemento DOM: adiciona as classes de erro
-      img.classList.add('timeout', 'error');
-      img.classList.remove('loaded');
+    const tempImg = new Image();
 
-      // Mantém o elemento visível, mas com src transparente para o CSS funcionar
-      img.src = transparentBase64; 
-      // REMOVIDO: img.style.display = 'none';
-    }, timeoutDuration);
+    const timeout = setTimeout(() => {
+      console.error(`[TIMEOUT] - ${originalSrc}`);
+      tempImg.src = transparentBase64;
+      img.src = transparentBase64;
+      img.classList.add('timeout', 'error');
+      img.classList.remove('loaded');
+      messageSpan.style.display = 'block';   // ← mostra a mensagem
+    }, timeoutDuration);
 
-    // Define a função de Carregamento Bem-Sucedido
-    tempImg.onload = () => {
-      clearTimeout(timeout); // Cancela o timeout
-      img.src = originalSrc; // Transfere a URL carregada para o elemento DOM
-      img.classList.add('loaded'); // O CSS fará a imagem aparecer (opacity: 1)
-      img.classList.remove('timeout', 'error');
-      console.log(`[SUCESSO] - ${originalSrc}`);
-    };
+    tempImg.onload = () => {
+      clearTimeout(timeout);
+      img.src = originalSrc;
+      img.classList.add('loaded');
+      img.classList.remove('timeout', 'error');
+      messageSpan.style.display = 'none';    // ← esconde a mensagem
+      console.log(`[SUCESSO] - ${originalSrc}`);
+    };
 
-    // Define a função de Erro de Carregamento
-    tempImg.onerror = () => {
-      clearTimeout(timeout); // Cancela o timeout
-      console.error(`[ERRO] - ${originalSrc}`);
-        
-      // Aplica o fallback visual no elemento DOM
-      img.classList.add('error');
-      img.classList.remove('loaded', 'timeout');
-      
-      // Mantém o elemento visível, mas com src transparente
-      img.src = transparentBase64; 
-      // REMOVIDO: img.style.display = 'none';
-    };
+    tempImg.onerror = () => {
+      clearTimeout(timeout);
+      console.error(`[ERRO] - ${originalSrc}`);
+      img.src = transparentBase64;
+      img.classList.add('error');
+      img.classList.remove('loaded', 'timeout');
+      messageSpan.style.display = 'block';   // ← mostra a mensagem
+    };
 
-    // INICIA O CARREGAMENTO
-    tempImg.src = originalSrc;
-  });
+    tempImg.src = originalSrc;
+  });
 });
 
 // --- reloadpage ---
