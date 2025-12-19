@@ -184,54 +184,69 @@ background-color: #f9f9f9;
 --bs-btn-hover-bg: #c02e4f;
 --bs-btn-hover-border-color: #ae2a46;
 }
+
 .img-wrapper {
-position: relative;
-display: inline-block; /* Ajusta-se ao tamanho do conteúdo (a imagem) */
-background: #f9f9f9;
-overflow: hidden;
-max-width: 100%; /* Garante responsividade */
-line-height: 0; /* Remove espaço extra causado por inline-block */
+  position: relative;
+  display: block;
+  max-width: 640px;
+  margin: 0 auto;
+  background: #f9f9f9;
+  overflow: hidden;
+  line-height: 0;
 }
-.img-fallback {
-display: block;
-max-width: 100%;
-height: auto; /* Mantém proporção */
-opacity: 0;
-transition: opacity 0.3s ease;
+
+.img-fallback,
+.video-fallback {
+  display: block;
+  max-width: 640px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #f9f9f9;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  margin: 0 auto;
 }
-.img-fallback.loaded {
-opacity: 1;
+
+.img-fallback.loaded,
+.video-fallback.loaded {
+  opacity: 1;
+  background: none;
 }
+
 .img-fallback-icon {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-display: flex;
-flex-direction: column; /* Organiza ícone e mensagem verticalmente */
-justify-content: center;
-align-items: center;
-opacity: 0;
-transition: opacity 0.3s ease;
-pointer-events: none;
-z-index: 1;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+  background: #f9f9f9;
 }
-.img-fallback.error ~ .img-fallback-icon,
-.img-fallback.timeout ~ .img-fallback-icon {
-opacity: 1;
+
+.img-fallback.loaded ~ .img-fallback-icon,
+.video-fallback.loaded ~ .img-fallback-icon,
+.img-wrapper:has(.img-fallback.loaded) .img-fallback-icon,
+.img-wrapper:has(.video-fallback.loaded) .img-fallback-icon {
+  opacity: 0;
 }
+
 .img-fallback-icon i {
-font-size: 6rem;
-color: #da3458;
+  font-size: 6rem;
+  color: #da3458;
 }
+
 .fallback-message {
-margin-top: 10px; /* Espaço de 10px abaixo do ícone */
-font-size: 1rem; /* Tamanho do texto */
-color: #666; /* Cor cinza suave */
-text-align: center;
-display: block;
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
 }
+
 .text-cerise {
   color: #da3458 !important;
 }
