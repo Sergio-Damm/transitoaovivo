@@ -70,55 +70,177 @@ updateScrollStyle();
 // --- imgloadingdelay ---
 document.addEventListener('DOMContentLoaded', () => {
   const timeoutDuration = 5000; // 5 segundos
-  const transparentBase64 = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  const placeholderSrc = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
   document.querySelectorAll('.img-fallback').forEach(img => {
     const originalSrc = img.getAttribute('data-src');
+
     if (!originalSrc) {
-      console.error('Elemento .img-fallback ignorado: falta o atributo data-src.');
+      console.warn('Imagem sem data-src, carregando normalmente:', img.src);
       return;
     }
 
-    // Cria um container para a mensagem (se ainda não existir)
-    let messageSpan = img.parentElement.querySelector('.fallback-message');
-    if (!messageSpan) {
-      messageSpan = document.createElement('span');
-      messageSpan.className = 'fallback-message';
-      messageSpan.textContent = 'Imagem temporariamente indisponível';
-      messageSpan.style.display = 'none'; // escondido por padrão
-      img.parentElement.appendChild(messageSpan);
+    img.src = placeholderSrc;
+    img.classList.remove('loaded', 'error', 'timeout');
+
+    const wrapper = img.closest('.img-wrapper');
+    const iconWrapper = wrapper ? wrapper.querySelector('.img-fallback-icon') : null;
+
+    if (iconWrapper) {
+      iconWrapper.style.opacity = '1';
     }
+    img.classList.add('timeout');
 
     const tempImg = new Image();
 
     const timeout = setTimeout(() => {
-      console.error(`[TIMEOUT] - ${originalSrc}`);
-      tempImg.src = transparentBase64;
-      img.src = transparentBase64;
-      img.classList.add('timeout', 'error');
+      console.error(`[TIMEOUT 5s] ${originalSrc}`);
+      cleanup();
+      img.classList.add('timeout');
       img.classList.remove('loaded');
-      messageSpan.style.display = 'block';   // ← mostra a mensagem
     }, timeoutDuration);
 
-    tempImg.onload = () => {
+    const cleanup = () => {
       clearTimeout(timeout);
+      tempImg.onload = tempImg.onerror = null;
+    };
+
+    const showImage = () => {
       img.src = originalSrc;
       img.classList.add('loaded');
       img.classList.remove('timeout', 'error');
-      messageSpan.style.display = 'none';    // ← esconde a mensagem
-      console.log(`[SUCESSO] - ${originalSrc}`);
+      if (iconWrapper) {
+        iconWrapper.style.opacity = '0';
+      }
+      console.log(`[SUCESSO] ${originalSrc}`);
+    };
+
+    tempImg.onload = () => {
+      cleanup();
+      showImage();
     };
 
     tempImg.onerror = () => {
-      clearTimeout(timeout);
-      console.error(`[ERRO] - ${originalSrc}`);
-      img.src = transparentBase64;
+      cleanup();
+      console.error(`[ERRO] ${originalSrc}`);
       img.classList.add('error');
       img.classList.remove('loaded', 'timeout');
-      messageSpan.style.display = 'block';   // ← mostra a mensagem
     };
 
     tempImg.src = originalSrc;
+  });
+});
+
+// --- HLS.js para vídeos com fallback integrado ---
+const cameras = [
+  { id: 'video1', url: 'https://34.104.32.249.nip.io/SP123-KM046/stream.m3u8', description: 'SP123 KM046' },
+  { id: 'video2', url: 'https://34.104.32.249.nip.io/SP125-KM014/stream.m3u8', description: 'SP125 KM014' },
+  { id: 'video3', url: 'https://34.104.32.249.nip.io/SP125-KM093B/stream.m3u8', description: 'SP125 KM093B' },
+  { id: 'video4', url: 'https://34.104.32.249.nip.io/SP055-KM211A/stream.m3u8', description: 'SP055 KM211A' }
+];
+
+function setupCamera(videoElement, videoSrc) {
+  const wrapper = videoElement.closest('.img-wrapper');
+  const iconWrapper = wrapper ? wrapper.querySelector('.img-fallback-icon') : null;
+
+  // Mostra fallback imediatamente (se não já estiver)
+  if (iconWrapper) iconWrapper.style.opacity = '1';
+  videoElement.classList.remove('loaded', 'error');
+  videoElement.classList.add('timeout');  // para fallback inicial
+
+  if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource(videoSrc);
+    hls.attachMedia(videoElement);
+    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+      videoElement.play().catch(function(error) {
+        console.log('Erro ao iniciar o vídeo automaticamente:', error);
+      });
+      // Sucesso: esconde fallback
+      videoElement.classList.add('loaded');
+      videoElement.classList.remove('timeout', 'error');
+      if (iconWrapper) iconWrapper.style.opacity = '0';
+      console.log(`[SUCESSO VÍDEO] ${videoSrc}`);
+    });
+    hls.on(Hls.Events.ERROR, function(event, data) {
+      console.error(`[ERRO VÍDEO] ${videoSrc}:`, data);
+      // Erro: mantém fallback
+      videoElement.classList.add('error');
+      videoElement.classList.remove('loaded');
+      if (iconWrapper) iconWrapper.style.opacity = '1';
+    });
+  } else if (videoElement.canPlayType('application/x-mpegURL')) {
+    videoElement.src = videoSrc;
+    videoElement.addEventListener('loadedmetadata', function() {
+      videoElement.play().catch(function(error) {
+        console.log('Erro ao iniciar o vídeo automaticamente:', error);
+      });
+      // Sucesso: esconde fallback
+      videoElement.classList.add('loaded');
+      videoElement.classList.remove('timeout', 'error');
+      if (iconWrapper) iconWrapper.style.opacity = '0';
+      console.log(`[SUCESSO VÍDEO] ${videoSrc}`);
+    });
+    videoElement.addEventListener('error', function(error) {
+      console.error(`[ERRO VÍDEO] ${videoSrc}:`, error);
+      // Erro: mantém fallback
+      videoElement.classList.add('error');
+      videoElement.classList.remove('loaded');
+      if (iconWrapper) iconWrapper.style.opacity = '1';
+    });
+  } else {
+    console.log('HLS não suportado no navegador para', videoElement.id);
+    // Fallback para erro de suporte
+    videoElement.classList.add('error');
+    if (iconWrapper) iconWrapper.style.opacity = '1';
+  }
+}
+
+// Inicializa todas as câmeras após o DOM carregar
+document.addEventListener('DOMContentLoaded', () => {
+  cameras.forEach(camera => {
+    const videoElement = document.getElementById(camera.id);
+    if (videoElement) {
+      setupCamera(videoElement, camera.url);
+    }
+  });
+});
+
+// --- Suporte para vídeos MP4 simples (Nittrans Rio) com fallback ---
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('video.video-fallback').forEach(video => {
+    const wrapper = video.closest('.img-wrapper');
+    const iconWrapper = wrapper ? wrapper.querySelector('.img-fallback-icon') : null;
+
+    // Fallback visível inicialmente
+    if (iconWrapper) iconWrapper.style.opacity = '1';
+    video.classList.remove('loaded', 'error');
+
+    // Sucesso: quando o vídeo começa a tocar ou pode tocar
+    const successHandler = () => {
+      video.classList.add('loaded');
+      video.classList.remove('error');
+      if (iconWrapper) iconWrapper.style.opacity = '0';
+      console.log(`[SUCESSO VÍDEO MP4] ${video.querySelector('source').src}`);
+    };
+
+    video.addEventListener('canplay', successHandler);
+    video.addEventListener('playing', successHandler);
+    video.addEventListener('loadedmetadata', successHandler); // backup
+
+    // Erro no carregamento
+    video.addEventListener('error', () => {
+      video.classList.add('error');
+      video.classList.remove('loaded');
+      if (iconWrapper) iconWrapper.style.opacity = '1';
+      console.error(`[ERRO VÍDEO MP4] ${video.querySelector('source').src}`);
+    });
+
+    // Força tentativa de play (para contornar bloqueios autoplay)
+    video.play().catch(err => {
+      console.warn('Autoplay bloqueado ou erro:', err);
+      // Se falhar autoplay, ainda tenta detectar carregamento
+    });
   });
 });
 
