@@ -40,7 +40,7 @@ color: #808080 !important;
 }
 .link-externo {
 color: #250863 !important;
-text-decoration: none;
+text-decoration: underline;
 }
 .link-externo:hover {
 color: #1d4ed8;
