@@ -2,7 +2,7 @@
 const cacheBuster = Date.now();
 console.log('Main script loaded - v' + cacheBuster);
 
-// --- 1. ADSENSE SPACE CONTROL ---
+// --- 1. Adsense space control ---
 document.addEventListener('DOMContentLoaded', function() {
     var adContainers = document.querySelectorAll('.ad-container-wrapper');
     adContainers.forEach(function(adContainer) {
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// --- 2. BACK TO TOP BUTTON ---
+// --- 2. back to top button ---
 function updateScrollEffects() {
     var button = document.getElementById('btn-back-to-top');
     var footer = document.getElementById('my-footer');
@@ -52,7 +52,7 @@ document.getElementById('btn-back-to-top')?.addEventListener('click', function(e
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// --- 3. IMAGENS (FALLBACK E DELAY DE 5 SEG) ---
+// --- 3. imagens (fallback e delay de 5 segundos) ---
 document.addEventListener('DOMContentLoaded', () => {
     const timeoutDuration = 5000;
     const placeholder = '';
@@ -85,7 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
             cleanup();
             img.src = originalSrc;
             img.classList.add('loaded');
-            if (iconWrapper) iconWrapper.style.display = 'none';
+            if (iconWrapper) {
+                iconWrapper.style.display = 'none';
+            }
         };
 
         tempImg.onerror = () => {
@@ -99,10 +101,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// --- 4. VÍDEOS (HLS E MP4) ---
+// --- 4. videos (hls e mp4) ---
 function toggleVideoStatus(videoElement, isError) {
     const wrapper = videoElement.closest('.img-wrapper');
     const iconWrapper = wrapper ? wrapper.querySelector('.img-fallback-icon') : null;
+    
     if (isError) {
         if (iconWrapper) {
             iconWrapper.style.display = 'flex';
@@ -110,7 +113,9 @@ function toggleVideoStatus(videoElement, isError) {
         }
     } else {
         videoElement.classList.add('loaded');
-        if (iconWrapper) iconWrapper.style.display = 'none';
+        if (iconWrapper) {
+            iconWrapper.style.display = 'none';
+        }
     }
 }
 
@@ -149,12 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('video.video-fallback').forEach(v => {
         if (v.id.startsWith('video')) return;
         v.addEventListener('loadeddata', () => toggleVideoStatus(v, false));
+        v.addEventListener('playing', () => toggleVideoStatus(v, false));
         v.addEventListener('error', () => toggleVideoStatus(v, true));
         v.play().catch(() => {});
     });
 });
 
-// --- 5. LENTIDÃO CET-SP (RENDER API) ---
+// --- 5. lentidao cetp-sp (render api) ---
 async function atualizarCardLentidao(attempts = 3) {
     const totalLentidao = document.getElementById('totalLentidao');
     const regioes = document.getElementById('regioes');
@@ -184,18 +190,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- 6. FEED DE NOTÍCIAS (RSS) - VERSÃO COMPLETA E RESTAURADA ---
-
+// --- 6. feed de noticias (rss) ---
 async function carregarFeed(config) {
     const lista = document.getElementById(config.listaId);
     const loading = document.getElementById(config.loadingId);
     if (!lista || !loading) return;
 
-    // Inicialização: Limpa a lista e mostra o loading
     lista.innerHTML = ''; 
     loading.style.display = 'block';
 
-    // Placeholders fixos em base64 (SVG proporcional 4:3)
     const placeholders = {
         'AE': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NmNjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BRTwvdGV4dD48L3N2Zz4=',
         'NM': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5OTTwvdGV4dD48L3N2Zz4=',
@@ -231,7 +234,6 @@ async function carregarFeed(config) {
         itens.slice(0, 6).forEach(item => {
             let thumb = placeholder;
             
-            // Lógica de captura de imagem
             if (item.enclosure?.link && item.enclosure.type?.includes('image')) {
                 thumb = item.enclosure.link;
             } else if (item.thumbnail) {
@@ -241,7 +243,6 @@ async function carregarFeed(config) {
                 if (m) thumb = m[1];
             }
 
-            // Cálculo de tempo relativo
             const diff = Math.floor((Date.now() - new Date(item.pubDate || Date.now())) / 1000);
             const tempo = diff < 3600 ? Math.floor(Math.max(1, diff/60))+' min atrás' :
                           diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
@@ -273,7 +274,7 @@ async function carregarFeed(config) {
     }
 }
 
-// --- EXECUÇÃO DAS CHAMADAS (ESSENCIAL) ---
+// --- Feed - execucao das chamadas ---
 document.addEventListener('DOMContentLoaded', () => {
     // Autoesporte
     carregarFeed({
@@ -293,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         letras: 'NM'
     });
 
-    // Estadão (Jornal do Carro)
+    // Estadao (Jornal do Carro)
     carregarFeed({
         listaId: 'lista5', 
         loadingId: 'loading5', 
@@ -304,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// --- 7. CÂMERAS CET-SP (OBFUSCATED) ---
+// --- 7. cameras cet-sp (obfuscated) ---
 if (document.querySelector('#cams220, #cams225, #cams184')) {
     (function() {
         var cams = [{id:'cams220',f:1},{id:'cams225',f:1},{id:'cams184',f:1}];
@@ -321,5 +322,5 @@ if (document.querySelector('#cams220, #cams225, #cams184')) {
     })();
 }
 
-// Auto-refresh geral
+// auto-refresh geral
 setInterval(() => window.location.reload(), 300000);
