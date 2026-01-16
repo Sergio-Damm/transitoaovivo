@@ -324,3 +324,61 @@ if (document.querySelector('#cams220, #cams225, #cams184')) {
 
 // auto-refresh geral
 setInterval(() => window.location.reload(), 300000);
+
+// weather forecast
+(async function () {
+  const card = document.getElementById("weather-card");
+
+  if (!card) return;
+
+  const city = card.dataset.city;
+  const lat = card.dataset.lat;
+  const lon = card.dataset.lon;
+
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&hourly=precipitation_probability&timezone=America%2FSao_Paulo`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const temp = data.current.temperature_2m;
+    const code = data.current.weather_code;
+    const rainPercent = data.hourly.precipitation_probability[0];
+
+    const condition = getCondition(code);
+    const rainRisk = getRainRisk(rainPercent);
+
+    document.getElementById("weather-temp").innerHTML =
+      `<strong>Temperatura</strong>: ${temp} °C`;
+
+    document.getElementById("weather-condition").innerHTML =
+      `<strong>Condição</strong>: ${condition}`;
+
+    document.getElementById("weather-rain").innerHTML =
+      `<strong>Risco de chuva</strong>: ${rainRisk}`;
+
+  } catch (e) {
+    console.error("Erro ao carregar previsão do tempo", e);
+  }
+
+  // Converte código do tempo em texto
+  function getCondition(code) {
+    if (code === 0) return "Céu limpo";
+    if ([1, 2].includes(code)) return "Parcialmente nublado";
+    if (code === 3) return "Nublado";
+    if ([45, 48].includes(code)) return "Nevoeiro";
+    if (code >= 51 && code <= 67) return "Chuva fraca";
+    if (code >= 80 && code <= 82) return "Pancadas de chuva";
+    if (code >= 95) return "Tempestade";
+    return "Condição indefinida";
+  }
+
+  // Converte percentual em risco (REGRA SIMPLES E HONESTA)
+  function getRainRisk(percent) {
+    if (percent <= 30) return "Baixo";
+    if (percent <= 60) return "Moderado";
+    return "Elevado";
+  }
+
+})();
+
