@@ -343,10 +343,11 @@ setInterval(() => window.location.reload(), 300000);
 
     const temp = data.current.temperature_2m;
     const code = data.current.weather_code;
-    const rainPercent = data.hourly.precipitation_probability[0];
-
+    const rainChance = data.hourly.precipitation_probability[0];
     const condition = getCondition(code);
-    const rainRisk = getRainRisk(rainPercent);
+
+    document.getElementById("weather-city").innerHTML =
+      `Previsão do tempo — ${city}`;
 
     document.getElementById("weather-temp").innerHTML =
       `<strong>Temperatura</strong>: ${temp} °C`;
@@ -355,13 +356,12 @@ setInterval(() => window.location.reload(), 300000);
       `<strong>Condição</strong>: ${condition}`;
 
     document.getElementById("weather-rain").innerHTML =
-      `<strong>Risco de chuva</strong>: ${rainRisk}`;
+      `<strong>Chance de chuva</strong>: ${rainChance}%`;
 
   } catch (e) {
     console.error("Erro ao carregar previsão do tempo", e);
   }
 
-  // Converte código do tempo em texto
   function getCondition(code) {
     if (code === 0) return "Céu limpo";
     if ([1, 2].includes(code)) return "Parcialmente nublado";
@@ -372,13 +372,5 @@ setInterval(() => window.location.reload(), 300000);
     if (code >= 95) return "Tempestade";
     return "Condição indefinida";
   }
-
-  // Converte percentual em risco (REGRA SIMPLES E HONESTA)
-  function getRainRisk(percent) {
-    if (percent <= 30) return "Baixo";
-    if (percent <= 60) return "Moderado";
-    return "Elevado";
-  }
-
 })();
 
