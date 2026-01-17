@@ -3,12 +3,12 @@ html {
 }
 
 body {
-    font-family: "Poppins", Arial, sans-serif;
-    color: #373a40 !important;
-    font-weight: 400;
-    font-size: 1.0625rem;
-    line-height: 1.6;
-    min-height: 100vh;
+  font-family: "Poppins", system-ui, Arial, sans-serif;
+  color: #373a40 !important;
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
 h1, h2, h3, p, .card-text {
