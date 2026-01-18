@@ -1,6 +1,6 @@
 // Cache-Control para versão
-const cacheBuster = Date.now();
-console.log('Main script loaded - v' + cacheBuster);
+// const cacheBuster = Date.now();
+// console.log('Main script loaded - v' + cacheBuster);
 
 // --- 1. Adsense space control ---
 document.addEventListener('DOMContentLoaded', function() {
