@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
         listaId: 'lista3', 
         loadingId: 'loading3', 
         rss: 'https://newsmotor.com.br/feed/', 
-        nome: 'NewsMotor', 
+        nome: 'News Motor', 
         letras: 'NM'
     });
 
