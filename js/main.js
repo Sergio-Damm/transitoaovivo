@@ -27,30 +27,51 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // --- 2. back to top button ---
-function updateScrollEffects() {
-    var button = document.getElementById('btn-back-to-top');
-    var footer = document.getElementById('my-footer');
-    if (!button) return;
-    
-    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    if (scrollTop > 20) {
-        document.body.classList.add('scrolled');
-    } else {
-        document.body.classList.remove('scrolled');
-    }
+// --- Botão Voltar ao Topo ---
+function updateFooterStyle() {
+  const button = document.getElementById("btn-back-to-top");
+  const footer = document.getElementById("my-footer");
+  if (!button || !footer) return;
 
-    if (footer && (scrollTop + window.innerHeight >= footer.offsetTop)) {
-        button.classList.add('on-footer');
-    } else {
-        button.classList.remove('on-footer');
-    }
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const footerOffset = footer.offsetTop;
+  const winHeight = window.innerHeight;
+
+  if (scrollTop + winHeight >= footerOffset) {
+    button.classList.add("on-footer");
+  } else {
+    button.classList.remove("on-footer");
+  }
 }
 
-window.onscroll = updateScrollEffects;
-document.getElementById('btn-back-to-top')?.addEventListener('click', function(e) {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+function updateScrollStyle() {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  if (scrollTop > 20) {
+    document.body.classList.add("scrolled");
+  } else {
+    document.body.classList.remove("scrolled");
+  }
+}
+
+window.addEventListener("scroll", function () {
+  updateFooterStyle();
+  updateScrollStyle();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const button = document.getElementById("btn-back-to-top");
+  if (!button) return;
+
+  button.addEventListener("click", function (e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  // Inicialização
+  updateFooterStyle();
+  updateScrollStyle();
+});
+
 
 // --- 3. imagens (fallback e delay de 5 segundos) ---
 document.addEventListener('DOMContentLoaded', () => {
