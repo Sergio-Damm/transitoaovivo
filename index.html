@@ -10,13 +10,13 @@ permalink: /
 		<div class="col-xl-8 mx-auto">
 			<h1 class="mb-4">Trânsito ao Vivo</h1>
 				<p class="mb-4">Acompanhe em tempo real as condições do trânsito com câmeras ao vivo em diversas cidades do Brasil, como São Paulo e Rio de Janeiro. Veja imagens atualizadas e planeje seu trajeto para não ficar parado no trânsito.</p>
-			<div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+			<div class="d-flex flex-wrap gap-3 justify-content-center justify-content-xl-start">
 				<a href="/transito-cetsp-1/" class="btn btn-secondary d-flex align-items-center justify-content-center">Ver câmeras - SP</a>
 				<a href="/transito-rio-de-janeiro/" class="btn btn-dark"> Ver câmeras - RJ</a>
 			</div>
 		</div>
 
-		<div class="col-md-4 mx-auto py-lg-0 d-none d-xl-block text-center">
+		<div class="col-md-4 py-lg-0 d-none d-xl-block text-center">
 			<svg height="200px" width="200px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1024">
 				<path d="M433.2 816.8c-14.2 0-25.8-11.6-25.8-25.8 0-14.2 11.6-25.8 25.8-25.8 14.2 0 25.8 11.6 25.8 25.8 0.1 14.2-11.6 25.8-25.8 25.8z" fill="#da3458" />
 				<path d="M600.5 736.7c0 5.1-4.2 9.3-9.3 9.3h-316c-5.1 0-9.3-4.2-9.3-9.3V260.4c0-5.1 4.2-9.3 9.3-9.3h315.9c5.1 0 9.3 4.2 9.3 9.3v476.3h0.1z" fill="#E6E6E6" />
@@ -36,7 +36,7 @@ permalink: /
 <!-- ================================================================================================================= -->
 <section class="container">
 		<div class="row">
-			<div class="col-lg-10 mx-auto">
+			<div class="col-12 col-md-10 mx-auto text-center">
 
 				<div class="ad-container-wrapper text-center">
 					<!-- display_topo -->
@@ -58,7 +58,7 @@ permalink: /
 <section class="py-5">
     <div class="container">
   		<div class="row">
-        	<div class="col mx-auto text-center">
+        	<div class="col-12 col-md-10 mx-auto text-center">
   				<h2 class="fs-2 fw-bold mb-5">Câmeras de Trânsito ao Vivo</h2>
 			</div>
   		</div>
@@ -133,41 +133,42 @@ permalink: /
 <section class="bg-light-subtle">
 	<div class="container py-5">
 		<div class="row justify-content-center text-center">
-			<div class="col-12 col-md-6 pt-3 mb-0">
+			<div class="col-12 col-md-10 mx-auto text-center mb-4">
 				<svg height="40px" width="40px" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
 					<path fill="#da3458" d="m300-40 36-100h-76l50-140h100l-43 100h83L340-40h-40Zm270-40 28-80h-78l43-120h100l-35 80h82L610-80h-40ZM290-340q-86.86 0-148.43-61.52Q80-463.04 80-549.83 80-629 136.5-691 193-753 277-759q32-56 84.5-88.5T480.42-880q90.58 0 152.08 57.5Q694-765 708-680q79 4 125.5 53.5T880-510.38Q880-440 830.42-390 780.83-340 710-340H290Zm0-60h420q46.2 0 78.1-32.5 31.9-32.5 31.9-78T788.1-588q-31.9-32-78.1-32h-60v-30q0-71-49.5-120.5T480.21-820q-51.48 0-93.84 27.5Q344-765 324-718l-8 18h-28q-62 2-105 45.39-43 43.4-43 104.47Q140-488 183.93-444T290-400Zm190-210Z"/>
 				</svg>
 			</div>
   				<p class="mb-2">Previsão do tempo?</p>
-			<div class="col-auto d-flex align-items-center">
+			<div class="col-12 col-md-10 mx-auto text-center">
 				<p class="me-1">Veja na <a class="link-externo" href="{{ site.baseurl }}/previsao-do-tempo/">imagem de satélite</a>.</p>
 			</div>
 		</div>
 	</div>
 </section>
 <!-- ============================================================================================= -->
-<section class="py-5">
-	<div class="container">
-		<div class="row">
-			<div class="col mx-auto">
-				<div class="mb-0">
-					<a aria-label="Notícias Autoesporte" class="link-interno" href="https://autoesporte.globo.com/">
-					<h2 class="fs-2 border-bottom border-black border-3 pb-2 mb-4 text-cerise">Autoesporte</h2></a>
-						<div id="loading1" class="text-center py-4 text-muted">
-							<div class="spinner-border spinner-border-sm text-black me-2" role="status">
-							</div> Carregando...
-						</div>
-        			<div id="lista1" class="row g-4">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
- </section>
+ <section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mx-auto">
+                <a aria-label="Notícias Autoesporte" class="link-interno" href="https://autoesporte.globo.com/">
+                    <h2 class="fs-2 border-bottom border-black border-3 pb-2 mb-4 text-cerise">Autoesporte</h2>
+                </a>
+                
+                <div id="loading1" class="text-center py-4 text-muted">
+                    <div class="spinner-border spinner-border-sm text-black me-2" role="status"></div> 
+                    Carregando...
+                </div>
+
+                <div id="lista1" class="row g-4">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- ================================================================================================================= -->
 <section class="container">
 		<div class="row">
-			<div class="col-lg-10 mx-auto">
+			<div class="col-12 col-md-10 mx-auto text-center">
 
 				<div class="ad-container-wrapper text-center">
 					<!-- inarticle_meio1 -->
@@ -189,7 +190,7 @@ permalink: /
 <section class="py-5">
 	<div class="container">
   		<div class="row">
-        	<div class="col mx-auto text-center">
+        	<div class="col-12 col-md-10 mx-auto text-center">
   				<h2 class="fs-2 fw-bold mb-5">Waze ao vivo</h2>
 			</div>
   		</div>
@@ -261,13 +262,13 @@ permalink: /
  <section class="bg-light-subtle">
 	<div class="container py-5">
 		<div class="row justify-content-center text-center">
-			<div class="col mb-4">
+			<div class="col-12 col-md-10 mx-auto text-center mb-4">
 				<svg height="40px" width="40px" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
 					<path fill="#da3458" d="M270-80q-45 0-77.5-29.64Q160-139.27 160-183v-564q0-36.57 22.12-65.43Q204.24-841.3 240-849l380-79v620l-360 77q-17.14 3.69-28.57 17.54Q220-199.62 220-183q0 19 15 31t35 12h470v-660h60v720H270Zm70-228 220-47v-499l-220 45v501Zm-60 12.81V-796l-20 4q-17 4-28.5 15.83Q220-764.35 220-747v471q9.06-5.2 19.03-9.1Q249-289 260-291l20-4.19ZM220-787v511-511Z"/>
 				</svg>
           	</div>
   				<p class="mb-2">Código de Trânsito Brasileiro.</p>
-			<div class="col">
+			<div class="col-12 col-md-10 mx-auto text-center">
 				<p class="me-1">Veja as Novas Regras do CTB no site do 
 					<a class="link-externo" href="https://www.gov.br/transportes/pt-br/pt-br/assuntos/transito/conteudo-Senatran/novas-regras-do-ctb" rel="nofollow" target="_blank">Ministério dos Transportes</a>
 						<svg height="20px" width="20px" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
@@ -280,20 +281,22 @@ permalink: /
 </section>
 <!-- ============================================================================================= -->
 <section class="py-5">
-	<div class="container">
-		<div class="row">
-			<div class="col mx-auto">
-				<div class="mb-0">
-					<a class="link-interno" href="https://newsmotor.com.br/">
-					<h2 class="fs-2 border-bottom border-black border-3 pb-2 mb-4 text-cerise">News Motor</h2></a>
-						<div id="loading3" class="text-center py-4 text-muted">
-							<div class="spinner-border spinner-border-sm text-black me-2" role="status">
-							</div> Carregando...
-						</div>
-        				<div id="lista3" class="row g-4"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mx-auto">
+                <a aria-label="Notícias News Motor" class="link-interno" href="https://newsmotor.com.br/">
+                    <h2 class="fs-2 border-bottom border-black border-3 pb-2 mb-4 text-cerise">News Motor</h2>
+                </a>
+                
+                <div id="loading3" class="text-center py-4 text-muted">
+                    <div class="spinner-border spinner-border-sm text-black me-2" role="status"></div> 
+                    Carregando...
+                </div>
+
+                <div id="lista3" class="row g-4">
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- ============================================================================================= -->

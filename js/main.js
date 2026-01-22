@@ -270,7 +270,7 @@ async function carregarFeed(config) {
                           diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
 
             htmlItens.push(
-                '<div class="col-md-6 col-lg-4 mb-4">' +
+                '<div class="col-12 col-md-6 col-lg-4 mx-auto mb-4">' +
                 '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
                 '<div class="card card-liftshadow border-light-subtle h-100">' +
                 '<img alt="'+item.title.trim()+'" src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" ' +
