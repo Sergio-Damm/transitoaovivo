@@ -240,3 +240,9 @@ body.scrolled #btn-back-to-top {
     padding-right: 24px;
   }
 }
+
+.card-gray60x60 {
+    background-color: #f9f9f9;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
