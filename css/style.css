@@ -264,6 +264,6 @@ body.scrolled #btn-back-to-top {
 
 @media (max-width: 576px) {
   .section-spacing {
-    padding-block: 6rem;
+    padding-block: 4rem;
   }
 }
