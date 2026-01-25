@@ -270,7 +270,7 @@ body.scrolled #btn-back-to-top {
 
 /* tamanho base para mobile */
 .fs-responsive {
-  font-size: 1rem; /* equivalente aproximadamente a fs-6 */
+  font-size: 1.125rem; /* equivalente aproximadamente a fs-6 */
 }
 
 /* a partir de md (>=768px) */
