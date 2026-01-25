@@ -267,16 +267,3 @@ body.scrolled #btn-back-to-top {
     padding-block: 4rem;
   }
 }
-
-/* tamanho base para celular */
-.fs-responsive {
-  font-size: 1.125rem; /* font menor */
-}
-
-/* a partir de md (>=768px) telas maiores */
-@media (min-width: 768px) {
-  .fs-responsive {
-    font-size: 1.25rem; /* font maior */
-  }
-}
-
