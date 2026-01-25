@@ -268,15 +268,15 @@ body.scrolled #btn-back-to-top {
   }
 }
 
-/* tamanho base para mobile */
+/* tamanho base para celular */
 .fs-responsive {
-  font-size: 1.125rem; /* equivalente aproximadamente a fs-6 */
+  font-size: 1.125rem; /* font menor */
 }
 
-/* a partir de md (>=768px) */
+/* a partir de md (>=768px) telas maiores */
 @media (min-width: 768px) {
   .fs-responsive {
-    font-size: 1.25rem; /* equivalente próximo a fs-5 */
+    font-size: 1.25rem; /* font maior */
   }
 }
 
