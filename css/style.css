@@ -268,7 +268,15 @@ body.scrolled #btn-back-to-top {
   }
 }
 
+/* tamanho base para mobile */
 .fs-responsive {
-  font-size: clamp(1rem, 2.2vw, 1.25rem);
-  line-height: 1.5;
+  font-size: 1rem; /* equivalente aproximadamente a fs-6 */
 }
+
+/* a partir de md (>=768px) */
+@media (min-width: 768px) {
+  .fs-responsive {
+    font-size: 1.25rem; /* equivalente próximo a fs-5 */
+  }
+}
+
