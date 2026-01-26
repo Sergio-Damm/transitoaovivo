@@ -4,7 +4,7 @@ font-size: 16px !important;
 
 body {
   font-family: "Poppins", system-ui, Arial, sans-serif;
-  color: #373a40;
+  color: #373a40 !important;
   font-weight: 400;
   font-size: 1.0625rem;
   line-height: 1.6;
@@ -12,7 +12,7 @@ body {
 }
 
 h1, h2, h3, p, .card-text {
-    color: #373a40;
+    color: #373a40 !important;
 }
 
 .btn-secondary {
