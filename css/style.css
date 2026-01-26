@@ -48,14 +48,6 @@ a:not(.nav-link):not(.dropdown-item):not(.navbar-brand) {
     font-weight: 500;
 }
 
-.navbar-dark {
-    background-color: #da3458;
-}
-
-.navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-}
-
 .nav-item {
     position: relative;
 }
@@ -71,7 +63,7 @@ a:not(.nav-link):not(.dropdown-item):not(.navbar-brand) {
     display: block;
     width: 0;
     height: 2px;
-    background: #ffffff;
+    background: #fec400;
     transition: width 0.2s ease-in-out;
     position: absolute;
     bottom: 0;
@@ -80,27 +72,12 @@ a:not(.nav-link):not(.dropdown-item):not(.navbar-brand) {
 
 @media (min-width: 992px) {
   .nav-item::after {
-      background: #ffffff;
+      background: #fec400;
   }
 }
 
 .nav-item:hover::after {
     width: 100%;
-}
-
-.navbar-dark .dropdown-menu {
-    background-color: #da3458;
-    border: none;
-}
-
-.navbar-dark .dropdown-item {
-    color: #ffffff;
-}
-
-.navbar-dark .dropdown-item:hover,
-.navbar-dark .dropdown-item:focus {
-    background-color: rgba(255,255,255,0.12);
-    color: #ffff00;
 }
 
 .hunderline {
