@@ -60,6 +60,12 @@ a:not(.nav-link):not(.dropdown-item):not(.navbar-brand) {
     position: relative;
 }
 
+.navbar-dark .navbar-brand,
+.navbar-dark .nav-link,
+.navbar-dark .dropdown-item {
+    color: #ffffff;
+}
+
 .nav-item::after {
     content: '';
     display: block;
