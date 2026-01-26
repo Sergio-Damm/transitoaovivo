@@ -63,7 +63,7 @@ a:not(.nav-link):not(.dropdown-item):not(.navbar-brand) {
 .navbar-dark .navbar-brand,
 .navbar-dark .nav-link,
 .navbar-dark .dropdown-item {
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 .nav-item::after {
