@@ -82,7 +82,7 @@ a:not(.nav-link):not(.dropdown-item):not(.navbar-brand) {
 
 .hunderline {
     padding-bottom: 10px;
-    border-bottom: 0.1rem solid #ffffff;
+    border-bottom: 0.1rem solid #fec400;
     display: inline-block;
 }
 
