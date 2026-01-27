@@ -35,6 +35,20 @@ h1, h2, h3, p {
     }
 }
 
+.content-h2-title {
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 2.25rem;
+    margin-bottom: 0;
+}
+
+@media (min-width: 576px) {
+    .content-h2-title {
+        font-size: 2rem;
+        line-height: 3rem;
+    }
+}
+
 a {
   color: #373a40;
   text-decoration: none;
