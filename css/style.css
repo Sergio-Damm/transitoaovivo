@@ -281,6 +281,7 @@ body.scrolled #btn-back-to-top {
 @media (max-width: 576px) {
     .display-7 {
         font-size: 1.75rem;
+        font-weight: 700;
     }
 }
 
