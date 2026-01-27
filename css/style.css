@@ -32,11 +32,6 @@ a, .link-interno {
     color: #808080 !important;
 }
 
-a:not(.nav-link):not(.dropdown-item):not(.navbar-brand) {
-    color: #ffffff;
-    text-decoration: none;
-}
-
 .link-externo {
     color: #0000ee !important;
     text-decoration: underline !important;
