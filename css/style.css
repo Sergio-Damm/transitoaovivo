@@ -66,6 +66,10 @@ a, .link-interno {
     color: #ffffff !important;
 }
 
+@media (max-width: 768px) {
+    .nav-link { padding: 8px 5px; }
+}
+
 .nav-item::after {
     content: '';
     display: block;
@@ -231,9 +235,6 @@ body.scrolled #btn-back-to-top {
     visibility: hidden !important;
 }
 
-@media (max-width: 768px) {
-    .nav-link { padding: 8px 5px; }
-}
 
 @media (min-width: 1400px) {
     .container { max-width: 1200px; }
