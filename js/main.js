@@ -252,7 +252,7 @@ async function carregarFeed(config) {
 
         let htmlItens = []; 
 
-        itens.slice(0, 6).forEach(item => {
+        itens.slice(0, 6).forEach((item, index) => {
             let thumb = placeholder;
             
             if (item.enclosure?.link && item.enclosure.type?.includes('image')) {
@@ -273,8 +273,21 @@ async function carregarFeed(config) {
                 '<div class="col-12 col-md-6 col-lg-4 mx-auto mb-4">' +
                 '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
                 '<div class="card card-liftshadow border-light-subtle h-100">' +
-                '<img alt="'+item.title.trim()+'" src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" ' +
-                'onerror="this.onerror=null; this.src=\''+placeholder+'\'">' +
+                 '<img ' +
+'alt="'+item.title.trim()+'" ' +
+'src="'+thumb+'" ' +
+'class="card-img-top" ' +
+
+/* 👉 primeiros 2 cards: sem lazy + prioridade */
+(index < 2
+  ? 'loading="eager" fetchpriority="high"'
+  : 'loading="lazy"') +
+
+' decoding="async" ' +
+' width="400" height="200" ' +
+' style="height:200px;object-fit:cover;" ' +
+'onerror="this.onerror=null; this.src=\''+placeholder+'\'">'
++
                 '<div class="card-body d-flex flex-column">' +
                 '<p class="card-title link-interno mb-2" style="font-weight:500;">'+item.title.trim()+'</p>' +
                 '<p class="card-text mt-auto text-cerise" style="font-size:0.85rem;">'+config.nome+' • '+tempo+'</p>' +
