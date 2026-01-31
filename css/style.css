@@ -22,25 +22,8 @@ h1, h2, h3, p {
 }
 
 /* celular */
-.index-h2-posttitle {
-    font-size: 2rem;
-    font-weight: 600;
-    line-height: 3rem;
-}
-
-/* computador */
-@media (min-width: 576px) {
-    .index-h2-posttitle {
-      font-size: 2.5rem;
-      font-weight: 600;
-      line-height: 3.5rem;
-      letter-spacing: -0.03rem;
-    }
-}
-
-/* celular */
 .content-h1-title {
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 600;
     line-height: 2.5rem;
 }
@@ -81,6 +64,23 @@ h1, h2, h3, p {
         font-weight: 600;
         line-height: 2.8rem;
         letter-spacing: -0.03rem;
+    }
+}
+
+/* celular */
+.index-h2-posttitle {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 3rem;
+}
+
+/* computador */
+@media (min-width: 576px) {
+    .index-h2-posttitle {
+      font-size: 2.5rem;
+      font-weight: 600;
+      line-height: 3.5rem;
+      letter-spacing: -0.03rem;
     }
 }
 
