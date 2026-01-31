@@ -34,7 +34,7 @@ h1, h2, h3, p {
       font-size: 3rem;
       font-weight: 600;
       line-height: 4rem;
-      letter-spacing: 0.03rem;
+      letter-spacing: -0.03rem;
     }
 }
 
