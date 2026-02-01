@@ -11,78 +11,89 @@ body {
   min-height: 100vh;
 }
 
-@media (max-width: 576px) {
-  .hero-lead {
-    line-height: 1.5;
-  }
-}
-
 h1, h2, h3, p {
   color: #373a40;
 }
 
+/* h1 celular */
+.h1-title-index {
+font-size: 2.1rem;
+font-weight: 600;
+line-height: 2.5rem;
+}
+
+/* h1 computador */
+@media (min-width: 576px) {
+.h1-title-index {
+font-size: 3rem;
+font-weight: 600;
+line-height: 4rem;
+}
+}
+
+/* h2 celular */
+.h2-title-index {
+font-size: 2rem;
+font-weight: 600;
+line-height: 2.5rem;
+}
+
+/* h2 computador */
+@media (min-width: 576px) {
+.h2-title-index {
+font-size: 2.5rem;
+font-weight: 600;
+line-height: 2.5rem;
+}
+}
+
+/* h3 celular */
+.h3-title-index {
+font-size: 2rem;
+font-weight: 600;
+line-height: 2.5rem;
+}
+
+/* h3 computador */
+@media (min-width: 576px) {
+.h3-title-index {
+font-size: 2rem;
+font-weight: 600;
+line-height: 2rem;
+}
+}
+
 /* celular */
-.content-h1-title {
-    font-size: 2.1rem;
-    font-weight: 600;
-    line-height: 2.5rem;
+.h1-title-content{
+font-size: 2.1rem;
+font-weight: 600;
+line-height: 2.5rem;
+}
+
+
+/* computador */
+@media (min-width: 576px) {
+.h1-title-content{
+font-size: 3rem;
+font-weight: 600;
+line-height: 3.5rem;
+}
+}
+
+/* celular */
+.h2-title-content{
+font-size: 2rem;
+font-weight: 600;
+line-height: 2.5rem;
 }
 
 /* computador */
 @media (min-width: 576px) {
-    .content-h1-title {
-      font-size: 3rem;
-      font-weight: 600;
-      line-height: 4rem;
-      letter-spacing: -0.03rem;
-    }
+.h2-title-content{
+font-size: 2rem;
+font-weight: 600;
+line-height: 2.5rem;
 }
-
-.content-h2-title {
-    font-size: 1.375rem;
-    font-weight: 400;
-    line-height: 1.9rem;
-}
-
-@media (min-width: 576px) {
-    .content-h2-title {
-        font-size: 1.5rem;
-        font-weight: 400;
-        line-height: 1.2rem;
-        margin-bottom: .5rem;
-    }
-}
-
-.content-h3-title {
-    font-size: 1.625rem;
-    font-weight: 600;
-    line-height: 2rem;
-}
-
-@media (min-width: 576px) {
-    .content-h3-title {
-        font-size: 2rem;
-        font-weight: 600;
-        line-height: 2.8rem;
-        letter-spacing: -0.03rem;
-    }
-}
-
-/* celular */
-.index-h2-posttitle {
-    font-size: 2rem;
-    font-weight: 600;
-    line-height: 3rem;
-}
-
-/* computador */
-@media (min-width: 576px) {
-    .index-h2-posttitle {
-      font-size: 2.5rem;
-      font-weight: 600;
-      line-height: 3.5rem;
-      letter-spacing: -0.03rem;
-    }
 }
 
 a {
