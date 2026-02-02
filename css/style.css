@@ -19,6 +19,7 @@ h1, h2, h3, p {
   font-size: 1.25rem;
   color: #555;
   line-height: 1.6rem;
+  margin-bottom: 2rem;
 }
 
 /* h1 celular */
@@ -74,8 +75,9 @@ line-height: 2rem;
 font-size: 1.8rem;
 font-weight: 600;
 line-height: 2rem;
+margin-top: 2rem;
+margin-bottom: 2rem;
 }
-
 
 /* computador */
 @media (min-width: 576px) {
@@ -83,6 +85,8 @@ line-height: 2rem;
 font-size: 3rem;
 font-weight: 600;
 line-height: 3.5rem;
+margin-top: 2rem;
+margin-bottom: 2rem;
 }
 }
 
@@ -307,7 +311,6 @@ body.scrolled #btn-back-to-top {
     opacity: 0 !important;
     visibility: hidden !important;
 }
-
 
 @media (min-width: 1400px) {
     .container { max-width: 1200px; }
