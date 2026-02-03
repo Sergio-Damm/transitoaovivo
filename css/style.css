@@ -432,3 +432,19 @@ body.scrolled #btn-back-to-top {
     margin: 20px 0; /* Adiciona 20px de espaço superior e inferior */
     text-align: center; /* Centraliza o anúncio se ele for menor que a área */
 }
+
+/* celular */
+.customlead {
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.6rem;
+  margin-top: 1rem;
+}
+
+/* computador */
+@media (min-width: 576px) {
+.customlead {
+  font-size: 1.5rem;
+  color: #333;
+}
+}
