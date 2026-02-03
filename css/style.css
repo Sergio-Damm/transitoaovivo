@@ -413,3 +413,8 @@ body.scrolled #btn-back-to-top {
 .news-card-overlay .news-card-title {
   color: #ffffff !important;
 }
+
+.adsense-spacer {
+    margin: 20px 0; /* Adiciona 20px de espaço superior e inferior */
+    text-align: center; /* Centraliza o anúncio se ele for menor que a área */
+}

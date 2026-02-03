@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // --- 2. back to top button ---
-// --- Botão Voltar ao Topo ---
 function updateFooterStyle() {
   const button = document.getElementById("btn-back-to-top");
   const footer = document.getElementById("my-footer");
