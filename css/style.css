@@ -83,19 +83,19 @@ margin-top: 2rem;
 
 /* celular */
 .h2-title-content{
-font-size: 2rem;
-font-weight: 600;
-line-height: 2.5rem;
-margin-top: 1rem;
+  font-size: 1.25rem;
+  color: #555;
+  line-height: 1.6rem;
+  margin-top: 1rem;
 }
 
 /* computador */
 @media (min-width: 576px) {
 .h2-title-content{
-font-size: 2rem;
-font-weight: 600;
-line-height: 2.5rem;
-margin-top: 1rem;
+  font-size: 1.25rem;
+  color: #555;
+  line-height: 1.6rem;
+  margin-top: 1rem;
 }
 }
 
