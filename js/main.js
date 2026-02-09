@@ -276,12 +276,7 @@ async function carregarFeed(config) {
 'alt="'+item.title.trim()+'" ' +
 'src="'+thumb+'" ' +
 'class="card-img-top" ' +
-
-/* 👉 primeiros 2 cards: sem lazy + prioridade */
-(index < 2
-  ? 'loading="eager" fetchpriority="high"'
-  : 'loading="lazy"') +
-
+'loading="lazy" ' +
 ' decoding="async" ' +
 ' width="400" height="200" ' +
 ' style="height:200px;object-fit:cover;" ' +
