@@ -402,3 +402,37 @@ setInterval(() => window.location.reload(), 300000);
   }
 })();
 
+// botao compartilhar
+  var shareButton = document.getElementById('shareButton');
+  var feedback = document.getElementById('shareFeedback');
+
+  shareButton.addEventListener('click', function () {
+    var url = window.location.href;
+
+    // Caso 1: Web Share API (mobile)
+    if (navigator.share) {
+      navigator.share({
+        title: document.title,
+        url: url
+      }).catch(function () {
+        // usuário cancelou, segue fallback
+      });
+      return;
+    }
+
+    // Caso 2: fallback desktop – copiar link
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () {
+        feedback.classList.remove('visually-hidden');
+
+        setTimeout(function () {
+          feedback.classList.add('visually-hidden');
+        }, 2500);
+      }).catch(function () {
+        prompt('Copie o link abaixo:', url);
+      });
+    } else {
+      // Último recurso
+      prompt('Copie o link abaixo:', url);
+    }
+  });
