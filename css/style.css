@@ -448,35 +448,57 @@ body.scrolled #btn-back-to-top {
 }
 
 /* share button */
-.whatsapp-button {
-    display: inline-flex;
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #fff;
+.share-btn {
+    width: 200px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: background-color 0.3s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+    cursor: pointer;
+}
+
+@media (max-width: 576px) {
+
+    .share-btn {
+        width: 96px;
+        height: 42px;
+    }
+}
+
+.share-btn svg {
+    transition: color 0.3s ease;
+}
+
+.share-btn-whatsapp {
     color: #25d366;
 }
 
-.whatsapp-button:hover {
-    background-color: #25d366;
-    color: #ffffff;
-    transform: scale(1.1);
-}
-
-.whatsapp-button svg {
-    transition: fill 0.3s ease;
-}
-
-.whatsapp-button:hover svg {
-    fill: #ffffff;
+.share-btn-generic {
+    color: #000000;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .whatsapp-button {
-        border-radius: 0;
+
+    .share-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.15);
     }
 
-    .whatsapp-button:hover {
-        border-radius: 50%;
+    .share-btn-whatsapp:hover {
+        background-color: #25d366;
+        color: #ffffff;
+    }
+
+    .share-btn-generic:hover {
+        background-color: #555555;
+        color: #ffffff;
     }
 }
 
