@@ -402,32 +402,51 @@ setInterval(() => window.location.reload(), 300000);
   }
 })();
 
-  var shareButton = document.getElementById('shareButton');
-  var feedback = document.getElementById('shareFeedback');
+// share buttons
+document.addEventListener('DOMContentLoaded', () => {
 
-  shareButton.addEventListener('click', function () {
-    var url = window.location.href;
+    const whatsappBtn = document.getElementById('shareWhatsapp');
+    const genericBtn  = document.getElementById('shareGeneric');
 
-    if (navigator.share) {
-      navigator.share({
-        title: document.title,
-        url: url
-      }).catch(function () {
-      });
-      return;
+    const url   = window.location.href;
+    const title = document.title;
+
+    // WhatsApp
+    if (whatsappBtn) {
+        whatsappBtn.addEventListener('click', () => {
+            const whatsappUrl =
+                'https://wa.me/?text=' +
+                encodeURIComponent(title + ' - ' + url);
+
+            window.open(whatsappUrl, '_blank');
+        });
     }
 
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(function () {
-        feedback.classList.remove('visually-hidden');
+    // generic share
+    if (genericBtn) {
+        genericBtn.addEventListener('click', async () => {
 
-        setTimeout(function () {
-          feedback.classList.add('visually-hidden');
-        }, 2500);
-      }).catch(function () {
-        prompt('Copie o link abaixo:', url);
-      });
-    } else {
-      prompt('Copie o link abaixo:', url);
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: title,
+                        url: url
+                    });
+                } catch (err) {
+                    // usuário cancelou → não é erro
+                }
+            } else {
+                await navigator.clipboard.writeText(url);
+
+                const feedback = document.getElementById('shareFeedback');
+                if (feedback) {
+                    feedback.classList.remove('visually-hidden');
+                    setTimeout(() => {
+                        feedback.classList.add('visually-hidden');
+                    }, 2500);
+                }
+            }
+        });
     }
-  });
+
+});
