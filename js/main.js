@@ -317,9 +317,9 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarFeed({
         listaId: 'lista3', 
         loadingId: 'loading3', 
-        rss: 'https://newsmotor.com.br/feed/', 
-        nome: 'News Motor', 
-        letras: 'NM'
+        rss: 'https://motor1.uol.com.br/rss/articles/all/', 
+        nome: 'motor1.com', 
+        letras: 'MO'
     });
 
     // Estadao (Jornal do Carro)
