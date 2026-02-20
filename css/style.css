@@ -234,7 +234,7 @@ body.scrolled #btn-back-to-top {
 .card-liftshadow {
   min-height: auto;
   background-color: #fff;
-  border: 1px solid #eee;
+  border: 1px solid #ddd;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
