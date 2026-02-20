@@ -334,9 +334,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- 7. cameras cet-sp (obfuscated) ---
-if (document.querySelector('#cams220, #cams225, #cams184')) {
+if (document.querySelector('#cams220, #cams225, #cams190, #cams184')) {
     (function() {
-        var cams = [{id:'cams220',f:1},{id:'cams225',f:1},{id:'cams184',f:1}];
+        var cams = [{id:'cams220',f:1},{id:'cams225',f:1},{id:'cams190',f:1},{id:'cams184',f:1}];
         function upd() {
             cams.forEach(c => {
                 var img = document.getElementById(c.id);
