@@ -234,11 +234,17 @@ body.scrolled #btn-back-to-top {
 .card-liftshadow {
   min-height: auto;
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: box-shadow 0.3s ease;
+}
+
+@media (min-width: 576px) {
+.card-liftshadow {
+  border: 1px solid #ddd;
+}
 }
 
 .card-liftshadow:hover {
