@@ -120,6 +120,8 @@ a.link-interno:hover {
 
 .link-externo {
   color: #0000ee;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .link-externo:hover {

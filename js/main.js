@@ -284,7 +284,7 @@ async function carregarFeed(config) {
 +
                 '<div class="card-body d-flex flex-column">' +
                 '<p class="card-title link-interno mb-2">'+item.title.trim()+'</p>' +
-                '<p class="card-text mt-auto text-cerise">'+config.nome+' • '+tempo+'</p>' +
+                '<p class="card-text mt-auto text-cerise small">'+config.nome+' • '+tempo+'</p>' +
                 '</div>' +
                 '</div>' +
                 '</a>' +
