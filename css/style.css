@@ -1,24 +1,22 @@
-html {
-  font-size: 16px;
-}
-
 body {
-  font-family: "Poppins", system-ui, Arial, sans-serif;
-  color: #373a40;
-  font-weight: 400;
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-family: "Red Hat Text", system-ui, Arial, sans-serif;
+  font-optical-sizing: auto;
+  color: #212529;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
   min-height: 100vh;
 }
 
-h1, h2, h3, p {
-  color: #373a40;
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Red Hat Display", system-ui, Arial, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
 }
 
 /* h1 celular */
 .h1-title-index {
   font-size: 2.1rem;
-  font-weight: 600;
   line-height: 2.5rem;
 }
 
@@ -26,7 +24,6 @@ h1, h2, h3, p {
 @media (min-width: 576px) {
 .h1-title-index {
   font-size: 3rem;
-  font-weight: 600;
   line-height: 4rem;
 }
 }
@@ -34,7 +31,6 @@ h1, h2, h3, p {
 /* h2 celular */
 .h2-title-index {
   font-size: 2rem;
-  font-weight: 600;
   line-height: 2.5rem;
 }
 
@@ -42,7 +38,6 @@ h1, h2, h3, p {
 @media (min-width: 576px) {
 .h2-title-index {
   font-size: 2.5rem;
-  font-weight: 600;
   line-height: 2.5rem;
 }
 }
@@ -50,7 +45,6 @@ h1, h2, h3, p {
 /* h3 celular */
 .h3-title-index {
   font-size: 2rem;
-  font-weight: 600;
   line-height: 2.5rem;
 }
 
@@ -58,7 +52,6 @@ h1, h2, h3, p {
 @media (min-width: 576px) {
 .h3-title-index {
   font-size: 2rem;
-  font-weight: 600;
   line-height: 2rem;
 }
 }
@@ -66,7 +59,6 @@ h1, h2, h3, p {
 /* celular */
 .h1-title-content {
   font-size: 1.8rem;
-  font-weight: 600;
   line-height: 2rem;
   margin-top: 1rem;
 }
@@ -75,7 +67,6 @@ h1, h2, h3, p {
 @media (min-width: 576px) {
 .h1-title-content{
   font-size: 3rem;
-  font-weight: 600;
   line-height: 3.5rem;
   margin-top: 2rem;
 }
@@ -84,21 +75,19 @@ h1, h2, h3, p {
 /* celular */
 .h2-title-content {
   font-size: 1.6rem;
-  font-weight: 600;
 }
 
 /* computador */
 @media (min-width: 576px) {
 .h2-title-content{
   font-size: 1.9rem;
-  font-weight: 600;
 }
 }
 
 /* celular */
 .h1-subtitle-content {
   font-size: 1.2rem;
-  color: #555;
+  color: #212529;
   line-height: 1.6rem;
   margin-top: 1rem;
 }
@@ -107,19 +96,19 @@ h1, h2, h3, p {
 @media (min-width: 576px) {
 .h1-subtitle-content {
   font-size: 1.25rem;
-  color: #555;
+  color: #212529;
   line-height: 1.6rem;
   margin-top: 1rem;
 }
 }
 
 a {
-  color: #373a40;
+  color: #212529;
   text-decoration: none;
 }
 
 a.link-interno {
-  color: #373a40;
+  color: #212529;
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -135,8 +124,8 @@ a.link-interno:hover {
 
 .link-externo:hover {
   color: #0a58ca;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .text-cerise {
@@ -146,7 +135,7 @@ a.link-interno:hover {
 .navbar-dark .navbar-brand,
 .navbar-dark .nav-link,
 .navbar-dark .dropdown-item {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
@@ -353,19 +342,6 @@ body.scrolled #btn-back-to-top {
   padding-bottom: 60px;
 }
 
-.display-7 {
-  font-size: 2.25rem;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-@media (max-width: 576px) {
-    .display-7 {
-        font-size: 1.75rem;
-        font-weight: 700;
-    }
-}
-
 .section-spacing {
   padding-block-start: 1.5rem; /* top */
   padding-block-end: 2.5rem; /* bottom */
@@ -472,7 +448,6 @@ body.scrolled #btn-back-to-top {
 }
 
 @media (max-width: 576px) {
-
     .share-btn {
         width: 96px;
         height: 42px;
@@ -492,19 +467,16 @@ body.scrolled #btn-back-to-top {
 }
 
 @media (hover: hover) and (pointer: fine) {
-
     .share-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 18px rgba(0,0,0,0.15);
     }
-
     .share-btn-whatsapp:hover {
         background-color: #25d366;
         color: #ffffff;
     }
-
     .share-btn-generic:hover {
-        background-color: #555555;
+        background-color: #555;
         color: #ffffff;
     }
 }
