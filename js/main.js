@@ -283,8 +283,8 @@ async function carregarFeed(config) {
 'onerror="this.onerror=null; this.src=\''+placeholder+'\'">'
 +
                 '<div class="card-body d-flex flex-column">' +
-                '<p class="card-title link-interno mb-2" style="font-weight:500;">'+item.title.trim()+'</p>' +
-                '<p class="card-text mt-auto text-cerise" style="font-size:0.85rem;">'+config.nome+' • '+tempo+'</p>' +
+                '<p class="card-title link-interno mb-2">'+item.title.trim()+'</p>' +
+                '<p class="card-text mt-auto text-cerise">'+config.nome+' • '+tempo+'</p>' +
                 '</div>' +
                 '</div>' +
                 '</a>' +
