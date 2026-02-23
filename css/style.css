@@ -1,3 +1,7 @@
+html, body {
+  overflow-x: clip;
+}
+
 body {
   font-family: "Poppins", system-ui, Arial, sans-serif;
   color: #373a40;
@@ -5,10 +9,6 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   font-weight: 400;
-}
-
-* {
-  max-width: 100%;
 }
 
 /* h1 celular */
