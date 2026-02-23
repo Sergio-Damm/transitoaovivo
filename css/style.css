@@ -95,7 +95,7 @@ body {
 
 a {
   color: #373a40;
-  text-decoration: none;
+  text-decoration: under;
 }
 
 a.link-interno {
@@ -111,7 +111,7 @@ a.link-interno:hover {
 
 .link-externo {
   color: #0000ee;
-  text-decoration: none;
+  text-decoration: underline;
   text-underline-offset: 3px;
 }
 
@@ -215,7 +215,7 @@ body.scrolled #btn-back-to-top {
 }
 
 .card-liftshadow {
-  min-height: auto;
+ /* min-height: auto; */
   background-color: #fff;
   border: 1px solid #ccc;
   display: flex;
@@ -313,7 +313,7 @@ body.scrolled #btn-back-to-top {
 }
 
 @media (max-width: 576px) {
-  #btn-back-to-top { width: 48px; height: 48px; }
+ /* #btn-back-to-top { width: 48px; height: 48px; } */
   #btn-back-to-top svg { width: 24px; height: 24px; }
 }
 
