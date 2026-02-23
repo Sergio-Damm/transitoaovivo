@@ -331,13 +331,15 @@ body.scrolled #btn-back-to-top {
 }
 */
 
-.row {
-  --bs-gutter-x: 2rem; /* 32px total → 16px de cada lado */
+.container {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 @media (min-width: 768px) {
-  .row {
-    --bs-gutter-x: 3rem; /* 48px total → 24px de cada lado */
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 
