@@ -1,10 +1,14 @@
 body {
   font-family: "Poppins", system-ui, Arial, sans-serif;
-  color: #212529;
+  color: #373a40;
   font-size: 1.125rem;
   line-height: 1.6;
   min-height: 100vh;
   font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+color: #202124 !important;
 }
 
 /* h1 celular */
@@ -80,7 +84,6 @@ body {
 /* celular */
 .h1-subtitle-content {
   font-size: 1.2rem;
-  color: #212529;
   line-height: 1.6rem;
   margin-top: 1rem;
 }
@@ -89,14 +92,12 @@ body {
 @media (min-width: 576px) {
 .h1-subtitle-content {
   font-size: 1.25rem;
-  color: #212529;
   line-height: 1.6rem;
   margin-top: 1rem;
 }
 }
 
 a {
-  color: #212529;
   text-decoration: none;
 }
 
