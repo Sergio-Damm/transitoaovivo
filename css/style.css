@@ -369,7 +369,6 @@ body.scrolled #btn-back-to-top {
   height: auto;
   display: block;
   transition: transform 0.4s ease;
-  will-change: transform;
 }
 
 @media (hover: hover) {
