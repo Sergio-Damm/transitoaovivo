@@ -7,49 +7,45 @@ body {
   font-weight: 400;
 }
 
-h1, h2, h3, h4, h5, h6 {
-color: #373a40;
-}
-
 /* h1 celular */
 .h1-title-index {
-  font-size: 2.1rem;
-  line-height: 2.5rem;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  margin-top: 1rem;
 }
 
 /* h1 computador */
 @media (min-width: 576px) {
 .h1-title-index {
   font-size: 3rem;
-  line-height: 4rem;
+  line-height: 3.5rem;
+  margin-top: 2rem;
 }
 }
 
 /* h2 celular */
 .h2-title-index {
-  font-size: 2rem;
-  line-height: 2.5rem;
+  font-size: 1.6rem;
 }
 
 /* h2 computador */
 @media (min-width: 576px) {
 .h2-title-index {
-  font-size: 2.5rem;
-  line-height: 2.5rem;
+  font-size: 1.9rem;
 }
 }
 
 /* h3 celular */
 .h3-title-index {
   font-size: 1.8rem;
-  line-height: 2.5rem;
+  line-height: 2rem;
 }
 
 /* h3 computador */
 @media (min-width: 576px) {
 .h3-title-index {
   font-size: 2rem;
-  line-height: 2rem;
+  line-height: 2.3rem;
 }
 }
 
@@ -109,7 +105,7 @@ a.link-interno {
 }
 
 a.link-interno:hover {
-  color: #666666;
+  color: #111;
   text-decoration: none;
 }
 
@@ -321,6 +317,7 @@ body.scrolled #btn-back-to-top {
   #btn-back-to-top svg { width: 24px; height: 24px; }
 }
 
+/*
 .container .row > div {
   padding-left: 16px;
   padding-right: 16px;
@@ -330,6 +327,17 @@ body.scrolled #btn-back-to-top {
   .container .row > div {
     padding-left: 24px;
     padding-right: 24px;
+  }
+}
+*/
+
+.row {
+  --bs-gutter-x: 2rem; /* 32px total → 16px de cada lado */
+}
+
+@media (min-width: 768px) {
+  .row {
+    --bs-gutter-x: 3rem; /* 48px total → 24px de cada lado */
   }
 }
 
