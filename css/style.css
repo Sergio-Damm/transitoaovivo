@@ -7,6 +7,10 @@ body {
   font-weight: 400;
 }
 
+* {
+  max-width: 100%;
+}
+
 /* h1 celular */
 .h1-title-index {
   font-size: 1.8rem;
