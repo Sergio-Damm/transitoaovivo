@@ -317,20 +317,6 @@ body.scrolled #btn-back-to-top {
   #btn-back-to-top svg { width: 24px; height: 24px; }
 }
 
-/*
-.container .row > div {
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
-@media (min-width: 768px) {
-  .container .row > div {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-}
-*/
-
 .container {
   padding-left: 1rem;
   padding-right: 1rem;
