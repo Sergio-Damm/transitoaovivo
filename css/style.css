@@ -84,7 +84,7 @@ color: #202124 !important;
 /* celular */
 .h1-subtitle-content {
   font-size: 1.2rem;
-  line-height: 1.6rem;
+  line-height: 1.75rem;
   margin-top: 1rem;
 }
 
@@ -92,17 +92,18 @@ color: #202124 !important;
 @media (min-width: 576px) {
 .h1-subtitle-content {
   font-size: 1.25rem;
-  line-height: 1.6rem;
+  line-height: 1.75rem;
   margin-top: 1rem;
 }
 }
 
 a {
+  color: #373a40;
   text-decoration: none;
 }
 
 a.link-interno {
-  color: #212529;
+  color: #373a40;
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -242,7 +243,7 @@ body.scrolled #btn-back-to-top {
 }
 
 .my-footer {
-  background-color: #212529;
+  background-color: #202124;
 }
 
 .my-footer .text-white {
@@ -414,7 +415,7 @@ body.scrolled #btn-back-to-top {
 .customlead {
   font-size: 1.4rem;
   color: #333;
-  line-height: 1.6rem;
+  line-height: 1.75rem;
   margin-top: 1rem;
 }
 
