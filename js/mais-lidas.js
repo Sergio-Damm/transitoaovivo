@@ -1,8 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, child, get, update, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, get, update, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// 1. SUAS CONFIGURAÇÕES (Mantenha as suas aqui)
 const firebaseConfig = {
+  // MANTENHA SUAS CHAVES AQUI
   apiKey: "AIzaSyBWFgO92dBAzqMY3ms3qODbTCBWTfJIA4Q",
   authDomain: "transito-ao-vivo-web.firebaseapp.com",
   databaseURL: "https://transito-ao-vivo-web-default-rtdb.firebaseio.com/",
@@ -12,63 +12,61 @@ const firebaseConfig = {
   appId: "1:786310431073:web:515d5b18672a38b540c520"
 };
 
-// Inicializa o Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// --- LÓGICA 1: CONTAR A VISITA (VERSÃO REVISADA) ---
+// --- LÓGICA 1: CONTAR A VISITA ---
+// Removi o filtro rigoroso de domínio para facilitar seu teste
+const cleanUrl = window.location.origin + window.location.pathname;
 
-// Filtra a URL para ignorar sujeiras como ?utm_source ou links externos de teste
-const currentDomain = "transitoaovivo.com";
-const isMainDomain = window.location.hostname.includes(currentDomain);
+// Cria um ID único baseado no caminho da URL (ex: /cameras/cet-1.html vira cameras_cet-1_html)
+let path = window.location.pathname;
+if (path === "/" || path === "/index.html") {
+    path = "home";
+}
+const pageId = path.replace(/[/.]/g, "_").replace(/^_+|_+$/g, "");
 
-if (isMainDomain) {
-    // Pega apenas a URL limpa (ex: https://transitoaovivo.com/index.html)
-    const cleanUrl = window.location.origin + window.location.pathname;
-    
-    // Cria um ID simplificado para o banco (ex: _index_html)
-    const pageId = window.location.pathname.replace(/[/.]/g, "_") || "home";
-    const pageTitle = document.title;
-    const pageRef = ref(db, 'paginas/' + pageId);
+const pageTitle = document.title.split('|')[0].trim() || "Página Sem Título";
+const pageRef = ref(db, 'paginas/' + pageId);
 
-    // Soma +1 no contador do banco de dados
-    get(pageRef).then((snapshot) => {
-        let views = 1;
+get(pageRef).then((snapshot) => {
+    let views = 1;
+    if (snapshot.exists()) {
+        views = (snapshot.val().views || 0) + 1;
+    }
+    update(pageRef, {
+        titulo: pageTitle,
+        url: cleanUrl,
+        views: views
+    });
+});
+
+// --- LÓGICA 2: MOSTRAR AS 5 MAIS LIDAS ---
+const container = document.getElementById('mais-lidas-lista');
+if (container) {
+    const listaTop = query(ref(db, 'paginas'), orderByChild('views'), limitToLast(10)); // Buscamos 10 para garantir que temos 5 válidas
+
+    get(listaTop).then((snapshot) => {
         if (snapshot.exists()) {
-            views = (snapshot.val().views || 0) + 1;
+            let html = '<div class="list-group list-group-flush">';
+            let paginas = [];
+            
+            snapshot.forEach((childSnapshot) => {
+                paginas.push(childSnapshot.val());
+            });
+
+            // Inverte e pega as 5 primeiras
+            paginas.reverse().slice(0, 5).forEach(p => {
+                if(p.titulo && p.titulo !== "Bootstrap Example") {
+                    html += `
+                        <a href="${p.url}" class="list-group-item list-group-item-action border-0 py-2" style="font-size: 0.9rem;">
+                            <i class="bi bi-chevron-right small me-2 text-primary"></i>${p.titulo}
+                        </a>`;
+                }
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
         }
-        update(pageRef, {
-            titulo: pageTitle,
-            url: cleanUrl,
-            views: views
-        });
     });
 }
-
-// --- LÓGICA 2: MOSTRAR AS 5 MAIS LIDAS NO CARD ---
-
-const listaTop = query(ref(db, 'paginas'), orderByChild('views'), limitToLast(5));
-
-get(listaTop).then((snapshot) => {
-    const container = document.getElementById('mais-lidas-lista');
-    if (snapshot.exists() && container) {
-        let html = '<div class="list-group list-group-flush">';
-        const paginas = [];
-        
-        snapshot.forEach((childSnapshot) => {
-            paginas.push(childSnapshot.val());
-        });
-
-        // Ordena para que a maior apareça no topo
-        paginas.reverse().forEach(p => {
-            html += `
-                <a href="${p.url}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    <div class="text-truncate" style="max-width: 80%;">${p.titulo}</div>
-                    <span class="badge bg-primary rounded-pill">${p.views}</span>
-                </a>`;
-        });
-        
-        html += '</div>';
-        container.innerHTML = html;
-    }
-});
