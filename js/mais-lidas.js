@@ -40,7 +40,7 @@ get(pageRef).then((snapshot) => {
 // --- LÓGICA 2: MOSTRAR AS 5 MAIS LIDAS (APENAS LINKS) ---
 const container = document.getElementById('mais-lidas-lista');
 if (container) {
-    const listaTop = query(ref(db, 'paginas'), orderByChild('views'), limitToLast(10));
+    const listaTop = query(ref(db, 'paginas'), orderByChild('views'), limitToLast(15));
 
     get(listaTop).then((snapshot) => {
         if (snapshot.exists()) {
@@ -51,7 +51,7 @@ if (container) {
                 paginas.push(childSnapshot.val());
             });
 
-            paginas.reverse().slice(0, 5).forEach(p => {
+            paginas.reverse().slice(0, 10).forEach(p => {
                 if(p.titulo && p.titulo !== "Bootstrap Example") {
                     html += `
                         <a href="${p.url}" class="list-group-item list-group-item-action border-0 py-2" style="font-size: 0.95rem;">
