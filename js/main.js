@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
         letras: 'AE'
     });
 
-    // NewsMotor
+    // Motor1
     carregarFeed({
         listaId: 'lista3', 
         loadingId: 'loading3', 
@@ -342,11 +342,11 @@ if (document.querySelector('#cams220, #cams225, #cams184')) {
                 var img = document.getElementById(c.id);
                 if (img) {
                     img.src = "https://cameras.cetsp.com.br/Cams/"+c.id.replace('cams','')+"/"+c.f+".jpg?"+new Date().getTime();
-                    c.f = (c.f % 25) + 1;
+                    c.f = (c.f % 50) + 1;
                 }
             });
         }
-        setInterval(upd, 5000); upd();
+        setInterval(upd, 2000); upd();
     })();
 }
 
