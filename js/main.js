@@ -270,7 +270,7 @@ async function carregarFeed(config) {
 
             htmlItens.push(
                 '<div class="col-12 col-md-6 col-lg-4 mx-auto mb-4">' +
-                '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
+                '<a href="'+item.link+'" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-dark">' +
                 '<div class="card card-liftshadow h-100">' +
                  '<img ' +
 'alt="'+item.title.trim()+'" ' +
