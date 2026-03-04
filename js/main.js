@@ -350,10 +350,10 @@ document.addEventListener('DOMContentLoaded', () => {
 //    })();
 //}
 
-// auto-refresh geral
+// --- 8. auto-refresh geral ---
 setInterval(() => window.location.reload(), 300000);
 
-// weather forecast
+// --- 9. weather forecast ---
 (async function () {
   const card = document.getElementById("weather-card");
 
@@ -402,7 +402,7 @@ setInterval(() => window.location.reload(), 300000);
   }
 })();
 
-// share buttons
+// --- 10. share buttons ---
 document.addEventListener('DOMContentLoaded', () => {
 
     const whatsappBtn = document.getElementById('shareWhatsapp');
@@ -451,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// new CET code
+// --- 11. new CET code ---
 document.addEventListener("DOMContentLoaded", function () {
 
     var cams = [
