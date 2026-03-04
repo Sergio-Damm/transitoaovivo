@@ -467,6 +467,8 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: "cams23", cam: "23" }
     ];
 
+    var intervalo = null;
+
     function atualizarCameras() {
 
         var agora = new Date();
@@ -502,7 +504,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    setInterval(atualizarCameras, 5000);
-    atualizarCameras();
+    function iniciarAtualizacao() {
+        if (!intervalo) {
+            atualizarCameras();
+            intervalo = setInterval(atualizarCameras, 5000); // 5 segundos
+        }
+    }
+
+    function pararAtualizacao() {
+        if (intervalo) {
+            clearInterval(intervalo);
+            intervalo = null;
+        }
+    }
+
+    // Inicia quando carrega a página
+    iniciarAtualizacao();
+
+    // Pausa quando aba não está visível
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            pararAtualizacao();
+        } else {
+            iniciarAtualizacao();
+        }
+    });
 
 });
