@@ -333,22 +333,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// --- 7. cameras cet-sp (obfuscated) ---
-if (document.querySelector('#cams220, #cams225, #cams184')) {
-    (function() {
-        var cams = [{id:'cams220',f:1},{id:'cams225',f:1},{id:'cams184',f:1}];
-        function upd() {
-            cams.forEach(c => {
-                var img = document.getElementById(c.id);
-                if (img) {
-                    img.src = "https://cameras.cetsp.com.br/Cams/"+c.id.replace('cams','')+"/"+c.f+".jpg?"+new Date().getTime();
-                    c.f = (c.f % 50) + 1;
-                }
-            });
-        }
-        setInterval(upd, 2000); upd();
-    })();
-}
+// --- 7. old cet cams ---
+// if (document.querySelector('#cams220, #cams225, #cams184, #cams195, #cams210, #cams180,')) {
+//    (function() {
+//        var cams = [{id:'cams220',f:1},{id:'cams225',f:1},{id:'cams184',f:1},{id:'cams195',f:1}{id:'cams210',f:1}{id:'cams180',f:1}];
+//        function upd() {
+//            cams.forEach(c => {
+//                var img = document.getElementById(c.id);
+//                if (img) {
+//                    img.src = "https://cameras.cetsp.com.br/Cams/"+c.id.replace('cams','')+"/"+c.f+".jpg?"+new Date().getTime();
+//                    c.f = (c.f % 50) + 1;
+//                }
+//            });
+//        }
+//        setInterval(upd, 2000); upd();
+//    })();
+//}
 
 // auto-refresh geral
 setInterval(() => window.location.reload(), 300000);
@@ -448,5 +448,61 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+});
+
+// new CET code
+document.addEventListener("DOMContentLoaded", function () {
+
+    var cams = [
+        { id: "cams225", cam: "225" },
+        { id: "cams220", cam: "220" },
+        { id: "cams184", cam: "184" },
+        { id: "cams195", cam: "195" },
+        { id: "cams210", cam: "210" },
+        { id: "cams180", cam: "180" },
+        { id: "cams222", cam: "222" },
+        { id: "cams224", cam: "224" },
+        { id: "cams200", cam: "200" },
+        { id: "cams23", cam: "23" }
+    ];
+
+    function atualizarCameras() {
+
+        var agora = new Date();
+        var segundos = agora.getSeconds();
+        var frame = Math.floor((segundos / 60) * 50) + 1;
+
+        cams.forEach(function(c) {
+
+            var img = document.getElementById(c.id);
+            if (!img) return;
+
+            var novoSrc = "https://cet-proxy.sergiodamm1.workers.dev/"
+                + c.cam
+                + "/"
+                + frame
+                + "?t=" + agora.getTime();
+
+            img.onload = function () {
+                img.classList.add("loaded");
+                var fallback = img.nextElementSibling;
+                if (fallback) fallback.style.display = "none";
+            };
+
+            img.onerror = function () {
+                img.classList.remove("loaded");
+                var fallback = img.nextElementSibling;
+                if (fallback) fallback.style.display = "flex";
+            };
+
+            img.src = novoSrc;
+
+        });
+
+    }
+
+    setInterval(atualizarCameras, 5000);
+    atualizarCameras();
 
 });

@@ -99,13 +99,13 @@ a {
 }
 
 a.link-interno {
-  color: #373a40;
+  color: #444;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 a.link-interno:hover {
-  color: #111;
+  color: #000;
   text-decoration: none;
 }
 
@@ -122,7 +122,7 @@ a.link-interno:hover {
 }
 
 .text-cerise {
-  color: #da3458;
+  color: #d20a2e;
 }
 
 .navbar-dark .navbar-brand,
@@ -161,14 +161,14 @@ a.link-interno:hover {
 
 .hunderline {
   padding-bottom: 10px;
-  border-bottom: 0.1rem solid #fec400;
+  border-bottom: 0.15rem solid #fec400;
   display: inline-block;
 }
 
 .btn-secondary {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #da3458;
-  --bs-btn-border-color: #da3458;
+  --bs-btn-bg: #c30b4e;
+  --bs-btn-border-color: #c30b4e;
   --bs-btn-hover-bg: #c02e4f;
   --bs-btn-hover-border-color: #ae2a46;
 }
@@ -205,13 +205,13 @@ body.scrolled #btn-back-to-top {
 }
 
 #btn-back-to-top:hover, #btn-back-to-top.on-footer:hover {
-  background: #da3458;
+  background: #c30b4e;
   color: #ffffff;
 }
 
 #btn-back-to-top.on-footer {
   background: #fff;
-  color: #da3458;
+  color: #c30b4e;
 }
 
 .card-liftshadow {
@@ -290,7 +290,7 @@ body.scrolled #btn-back-to-top {
 
 .img-fallback-icon i {
   font-size: 6rem;
-  color: #da3458;
+  color: #c30b4e;
 }
 
 .fallback-message {
