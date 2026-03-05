@@ -480,35 +480,20 @@ document.addEventListener("DOMContentLoaded", function () {
             var img = document.getElementById(c.id);
             if (!img) return;
 
-            var novoSrc = "https://cet-proxy.sergiodamm1.workers.dev/"
+            img.src =
+                "https://cet-proxy.sergiodamm1.workers.dev/"
                 + c.cam
                 + "/"
                 + frame
                 + "?t=" + agora.getTime();
-
-            img.onload = function () {
-                img.classList.add("loaded");
-                var fallback = img.nextElementSibling;
-                if (fallback) fallback.style.display = "none";
-            };
-
-            img.onerror = function () {
-                img.classList.remove("loaded");
-                var fallback = img.nextElementSibling;
-                if (fallback) fallback.style.display = "flex";
-            };
-
-            img.src = novoSrc;
 
         });
 
     }
 
     function iniciarAtualizacao() {
-        if (!intervalo) {
-            atualizarCameras();
-            intervalo = setInterval(atualizarCameras, 5000); // 5 segundos
-        }
+        atualizarCameras();
+        intervalo = setInterval(atualizarCameras, 10000);
     }
 
     function pararAtualizacao() {
@@ -518,16 +503,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Inicia quando carrega a página
+    // inicia normalmente
     iniciarAtualizacao();
 
-    // Pausa quando aba não está visível
+    // controla quando a aba fica visível ou não
     document.addEventListener("visibilitychange", function () {
+
         if (document.hidden) {
             pararAtualizacao();
         } else {
             iniciarAtualizacao();
         }
+
     });
 
 });
