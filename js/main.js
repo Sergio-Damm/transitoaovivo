@@ -334,9 +334,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- 7. old cet cams ---
-// if (document.querySelector('#cams220, #cams225, #cams184, #cams195, #cams210, #cams180,')) {
-//    (function() {
-//        var cams = [{id:'cams220',f:1},{id:'cams225',f:1},{id:'cams184',f:1},{id:'cams195',f:1}{id:'cams210',f:1}{id:'cams180',f:1}];
+// if (document.querySelector('#cams220, #cams225, #cams184, #cams195, #cams210, #cams180')) {
+//  (function() {
+//      var cams = [
+//          {id:'cams220',f:1},
+//          {id:'cams225',f:1},
+//          {id:'cams184',f:1},
+//          {id:'cams195',f:1},
+//          {id:'cams210',f:1},
+//          {id:'cams180',f:1}
+//          ];
 //        function upd() {
 //            cams.forEach(c => {
 //                var img = document.getElementById(c.id);
@@ -451,7 +458,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// --- 11. new CET code ---
+// --- 11. new CET code I ---
+/*
 document.addEventListener("DOMContentLoaded", function () {
 
     var cams = [
@@ -531,3 +539,38 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+*/
+
+// --- new cetsp cams II ---
+if (document.querySelector('#cams220, #cams222, #cams225, #cams184, #cams195, #cams210, #cams180')) {
+    (function() {
+        var cams = [
+            {id:'cams220',f:1},
+            {id:'cams222',f:1},
+            {id:'cams225',f:1},
+            {id:'cams184',f:1},
+            {id:'cams195',f:1},
+            {id:'cams210',f:1},
+            {id:'cams180',f:1}
+        ];
+
+        function upd() {
+            cams.forEach(c => {
+                var img = document.getElementById(c.id);
+                if (img) {
+                    img.src = "https://cameras.cetsp.com.br/Cams/" 
+                        + c.id.replace('cams','') 
+                        + "/" 
+                        + c.f 
+                        + ".jpg?" 
+                        + new Date().getTime();
+
+                    c.f = (c.f % 50) + 1;
+                }
+            });
+        }
+
+        setInterval(upd, 2000);
+        upd();
+    })();
+}
