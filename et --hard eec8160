@@ -1,0 +1,143 @@
+[33m533afd8[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m add to js cams atualizarCameras();
+[33meec8160[m adjusts card principal homepage and removed text-muted from footer
+[33m075f33f[m revision CSS cards formats and display: flex;
+[33m688acea[m new CET code
+[33m1b288a3[m cet1 change img paulista to consolacao
+[33mdf5838e[m Text correction, such as: the names of the monitored roads are displayed just below each image.
+[33mebbbbe6[m removed video cet change link color and adjusts css and js
+[33m2d51f6a[m add links in the cards
+[33m22ca5f4[m target="_blank" rel="noopener noreferrer" review 3
+[33m0aedf4a[m target="_blank" rel="noopener noreferrer" link revisao preventiva
+[33m6cf7589[m target="_blank" rel="noopener noreferrer" homepage
+[33mdd5770c[m change external links from rel="noopener" to rel="noopener noreferrer"
+[33m03f6416[m review alt, title and aria-label
+[33mc3f4787[m text-cerise in titles cards homepage
+[33m8592a70[m new card vai viajar
+[33ma2e00ee[m color text homepage
+[33m3b3de0c[m new card waze ao vivo
+[33md553c98[m change trafego to transito
+[33m3b7d298[m removed html commented Art esp
+[33m7ca4ef1[m removed firebase and worker art esp
+[33m6eda4ea[m cet3 each 2 seconds and c.f = (c.f % 25) + 1; to c.f = (c.f % 50) + 1;
+[33m5e4ebcb[m return var cams = [{id:'cams220',f:1},{id:'cams225',f:1},{id:'cams184',f:1}];
+[33m12b5a89[m removed cam22 cet3
+[33m8ad9e8e[m Add cam cet 3 Av. Paulista x Metrô Consolação
+[33m48265fc[m test 9 firebase app
+[33m495ad52[m test 8 firebase app
+[33mdef0c3c[m test 7 firebase app
+[33m46e4440[m test 6 firebase app
+[33m25b3bd8[m test 5 firebase app
+[33m7ccf0a8[m test 4 firebase app
+[33m060e64e[m test 3 firebase app
+[33m48f5cbb[m test 2 firebase app
+[33mfc0e988[m test firebase app
+[33m625f9b9[m Lei do farol
+[33mfd7f0a6[m text correction cet3
+[33me4bb536[m text correction cet3 and more cams
+[33m6e7ebc4[m removed aria-label from link waze
+[33me3f90a1[m </a> moved to the end SVG Ministerio dos Transportes
+[33m9f98f97[m removed arial-label from link Ministerio dos Transportes
+[33m38d0fdc[m aria-label="Veja as últimas alterações no CTB no site do Ministério dos Transportes"
+[33m54bcf20[m link Ministerio dos Transportes arial label
+[33m289f9fa[m link "no site do Ministério dos Transportes"
+[33m9ea8a30[m link color #000066 text-decoration: underline
+[33m30cafa4[m removed from CSS will-change: transform
+[33mac8b71a[m adsens after h1
+[33m166bf0b[m removed html, body overflow-x clip
+[33m28d70ed[m html, body { overflow-x: clip; }
+[33md878371[m test * {max-width: 100%;}
+[33m6521fc1[m .container { padding-left: 1rem; padding-right: 1rem; }
+[33m4926954[m CSS adjustments
+[33m9c9c7cc[m h3-title-index { font-size: 1.8rem;
+[33mc0c2421[m homepage sub titles .h2-title-content
+[33m671d201[m <h3 class="h3-title-index card-title pt-3">Belo Horizonte</h3>
+[33m58a866c[m removed !important from h1, h2, h3, h4, h5, h6 { color: #373a40;
+[33mf6730ad[m mais cameras link para site de terceiros
+[33md526184[m Mais cameras title= Link para site de terceiros
+[33m5faa8e9[m <p class="h1-subtitle-content mb-4">Consulte o mapa do Waze com trânsito
+[33m1e80ade[m <p class="h1-subtitle-content mb-4">Câmeras de monitoramento ao vivo em diversas
+[33m186aaef[m h1, h2, h3, h4, h5, h6 { color: #373a40 !important
+[33m877da88[m removed <strong> and line-height: 1.6rem; to line-height: 1.75rem;
+[33m51cf4d6[m font color: #373a40;
+[33md42214c[m customlead { font-size: 1.4rem
+[33ma2a8b37[m return poppins font
+[33m7518c13[m .link-externo text-decoration: underline; text-underline-offset: 3px;
+[33m6be4a65[m Google's fonts have been changed from Poppins to Red Hat Text and Red Hat Display.
+[33mb73122e[m change a.link-interno { color: #373a40;
+[33m16009b2[m change from h3 to span mais cameras and waze cities
+[33m6281f70[m new card mais cameras ao vivo
+[33m5aea40c[m Waze <div class="d-flex align-items-center justify-content-center flex-grow-1 p-4">
+[33m3aa9003[m removed border-light-subtle
+[33m4f8ba5d[m mb-4 before share buttons, adjusts links colors and footer bg
+[33m39658e3[m removed border-light-subtle from cards
+[33me72434d[m card-liftshadow border #ccc and #ddd
+[33m7b20971[m card-liftshadow { border: 1px solid #ddd;
+[33m8ec9512[m adjusts cards waze by cities
+[33m0dd525d[m change link cam recife
+[33m72e7428[m new card img ctb index homepage
+[33mbae0fdd[m new card waze-transito-em-tempo-real
+[33m64dd10c[m cam raposo km 10 and 31
+[33m400f759[m change name to capital carioca, paulista, etc
+[33m0f08206[m text iframes waze
+[33md68abbf[m change to x.com/ecoviasnortemg
+[33m3477e2c[m fixed buttons JavaScript
+[33med4e768[m restore cams cet2
+[33m65ff79f[m add share buttons
+[33m7e2f62f[m remove comments from js
+[33m1fe1a20[m share button svg color #25d366
+[33m9b46605[m button share whatsapp
+[33mf69eeef[m change fs-5 to <h2 class="fs-4 news-card-title fw-semibold"> text card homepage
+[33m5de7903[m removed (index < 2 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"') + from JS
+[33m87e2b1c[m padronizacao fetchpriority="high" na primeira img
+[33mfcc26bc[m Remove loading="lazy" from fetchpriority="high"
+[33m278a3b1[m include ecovias camera 3
+[33m1116805[m <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
+[33m0270a07[m cet 3 adsense moved to top
+[33m8c72cab[m 19 pages adsense moved to top
+[33m9ee2958[m rio adsense moved to top
+[33md9d4660[m transito minas adsense moved to top
+[33m96d0fdb[m tempo adsense moved to top
+[33mfab8871[m mais cameras adsense moved to top
+[33mf4a7b3c[m cet 2 adsense moved to top
+[33m252fc61[m .h1-title-content margin-top: 1rem;
+[33m9fe346e[m cet 1 adsense move to top
+[33m6bd38a4[m section-spacing adjusts homepage
+[33m0c85ab0[m .section-spacing { padding-block-start:
+[33m5b3eb5b[m customlead x lead
+[33m3c615f3[m from <p class="h2-title-content"> to <p class="h1-subtitle-content">
+[33m3e4c608[m adjust space adsense imigrantes and anchieta
+[33m1a76d91[m homepage removed <h2 class="content-subtitle"> inserted <h2 class="fs-4">
+[33md0784f1[m removed <div class="ad-container-wrapper text-center"> and inserted <div class="adsense-spacer">
+[33mce4e4a6[m removed fw-semibold from <p class="news-card-text py-2">
+[33m403866b[m h2-title-content{ font-size: 1.25rem;
+[33me8a2c58[m h2-title-content removed h2-title-content
+[33m8caeb88[m adjusts content-subtitle { margin-top: 1rem;
+[33meb40028[m adjust margin-top margin-bottom from h1-title-content
+[33m106be9c[m remove  margin-top: 2rem; from .content-subtitle
+[33m26f9721[m Forçar novo deploy GitHub Pages
+[33mf514526[m re ove line spaces from homepage
+[33m4c7554a[m reenviando commit e push anterior
+[33m6c3d801[m change imgs homepage
+[33mb1a8896[m <h1 class="h1-title-content">Imagens dos Satélites GOES</h1>
+[33mb5aba0a[m .content-subtitle { margin-top: 2rem;
+[33m81ad671[m <section class="container my-3"><h1 class="h1-title-content"><p class="content-subtitle">
+[33m3e3e0c3[m content-subtitle { font-size: 1.25rem;
+[33mfe7e411[m change <p class fs-4 to content-subtitle
+[33mf98174f[m h1-title-content font-size: 1.8rem; line-height: 2rem;
+[33m64f22dd[m content-subtitle
+[33m4220ec4[m review all h1 h2 and h3
+[33mba6cbf1[m content-h2-title { font-size: 1.375rem;
+[33m95f0b49[m content-h1-title { font-size: 2.1rem;
+[33m6e9172e[m <h2 class="index-h2-posttitle text-center">Mais acessadas</h2>
+[33m8fb2373[m .content-h1-title 2rem
+[33m5fdc708[m index-h2-posttitle
+[33me7005ac[m content-h3-title index.html
+[33m8ddd907[m remove space cet 2 and 3
+[33mca96b66[m removed link to ccm artesp from h2
+[33mda6c449[m content-h3-title cet 3 and rio
+[33mdb3afed[m content-h3-title cet 1 and 2
+[33m9be2db8[m review sizes .content-h3-title {
+[33mb72ecc0[m <h2 class="fs-4"> index.html
+[33mad55c88[m h2 fs-2 fw-semibold and removed comments index html
+[33mf3ca3db[m remocao <div class="col-12 col-md-10 mx-auto"> duplicado img rio
+[33m740acf3[m review text card cor
