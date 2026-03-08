@@ -7,52 +7,9 @@ body {
   font-weight: 400;
 }
 
-/* h1 celular */
-.h1-title-index {
-  font-size: 1.8rem;
-  line-height: 2rem;
-  margin-top: 1rem;
-}
-
-/* h1 computador */
-@media (min-width: 576px) {
-.h1-title-index {
-  font-size: 3rem;
-  line-height: 3.5rem;
-  margin-top: 2rem;
-}
-}
-
-/* h2 celular */
-.h2-title-index {
-  font-size: 1.6rem;
-}
-
-/* h2 computador */
-@media (min-width: 576px) {
-.h2-title-index {
-  font-size: 1.9rem;
-}
-}
-
-/* h3 celular */
-.h3-title-index {
-  font-size: 1.8rem;
-  line-height: 2rem;
-}
-
-/* h3 computador */
-@media (min-width: 576px) {
-.h3-title-index {
-  font-size: 2rem;
-  line-height: 2.3rem;
-}
-}
-
 /* celular */
 .h1-title-content {
   font-size: 1.8rem;
-  line-height: 2rem;
   margin-top: 1rem;
 }
 
@@ -80,7 +37,6 @@ body {
 /* celular */
 .h1-subtitle-content {
   font-size: 1.2rem;
-  line-height: 1.75rem;
   margin-top: 1rem;
 }
 
@@ -303,7 +259,6 @@ body.scrolled #btn-back-to-top {
 }
 
 @media (max-width: 576px) {
- /* #btn-back-to-top { width: 48px; height: 48px; } */
   #btn-back-to-top svg { width: 24px; height: 24px; }
 }
 
@@ -326,8 +281,8 @@ body.scrolled #btn-back-to-top {
 }
 
 .section-spacing {
-  padding-block-start: 1.5rem; /* top */
-  padding-block-end: 2.5rem; /* bottom */
+  padding-block-start: 1.5rem;
+  padding-block-end: 2.5rem;
 }
 
 @media (max-width: 576px) {
@@ -402,22 +357,6 @@ body.scrolled #btn-back-to-top {
 .adsense-spacer {
   margin: 20px 0;
   text-align: center;
-}
-
-/* celular */
-.customlead {
-  font-size: 1.4rem;
-  color: #333;
-  line-height: 1.75rem;
-  margin-top: 1rem;
-}
-
-/* computador */
-@media (min-width: 576px) {
-.customlead {
-  font-size: 1.5rem;
-  color: #333;
-}
 }
 
 /* share button */
