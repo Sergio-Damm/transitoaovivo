@@ -11,14 +11,15 @@ body {
 .h1-title-content {
   font-size: 1.8rem;
   margin-top: 1rem;
+  line-height: 2.25rem;
 }
 
 /* computador */
 @media (min-width: 576px) {
 .h1-title-content{
   font-size: 3rem;
-  line-height: 3.5rem;
   margin-top: 2rem;
+  line-height: 3.5rem;
 }
 }
 
