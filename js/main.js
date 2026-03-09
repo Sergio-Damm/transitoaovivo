@@ -330,6 +330,15 @@ document.addEventListener('DOMContentLoaded', () => {
         nome: 'Quatro Rodas', 
         letras: 'QR', 
     });
+
+    // Google News
+    carregarFeed({
+    listaId: 'lista7',
+    loadingId: 'loading7',
+    rss: 'https://feed-transito.sergiodamm1.workers.dev/transito',
+    nome: 'Trânsito hoje',
+    letras: 'TR'
+    });
 });
 
 // --- 8. weather forecast ---
