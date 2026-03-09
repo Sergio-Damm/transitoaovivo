@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         letras: 'MO'
     });
 
-    // Estadao (Jornal do Carro)
+    // Quatro Rodas
     carregarFeed({
         listaId: 'lista5', 
         loadingId: 'loading5', 
