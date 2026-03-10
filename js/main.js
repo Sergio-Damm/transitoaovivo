@@ -440,16 +440,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- 10. new cetsp cams II ---
-if (document.querySelector('#cams220, #cams222, #cams225, #cams184, #cams195, #cams210, #cams180')) {
+if (document.querySelector('#cams23, #cams180, #cams184, #cams195, #cams200, #cams210, #cams220, #cams222, #cams224, #cams225')) {
     (function() {
         var cams = [
-            {id:'cams220',f:1},
-            {id:'cams222',f:1},
-            {id:'cams225',f:1},
+            {id:'cams23',f:1},
+            {id:'cams180',f:1},
             {id:'cams184',f:1},
             {id:'cams195',f:1},
+            {id:'cams200',f:1},
             {id:'cams210',f:1},
-            {id:'cams180',f:1}
+            {id:'cams220',f:1},
+            {id:'cams222',f:1},
+            {id:'cams224',f:1},
+            {id:'cams225',f:1}
         ];
 
         function upd() {
