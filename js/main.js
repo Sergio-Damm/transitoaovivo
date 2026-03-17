@@ -197,7 +197,11 @@ async function atualizarCardLentidao(attempts = 3) {
                              <li class="list-group-item">Zona Centro: ${data.regioes.centro} km</li>
                              <li class="list-group-item">Zona Leste: ${data.regioes.leste} km</li>
                              <li class="list-group-item">Zona Sul: ${data.regioes.sul} km</li>`;
-        dataHora.innerText = "Atualizado em: " + data.dataHora.replace("São Paulo, ", "");
+     /*   dataHora.innerText = "Atualizado em: " + data.dataHora.replace("São Paulo, ", ""); */
+
+        const textoData = data.dataHora.replace("São Paulo, ", "");
+        dataHora.innerText = `Atualizado em: ${textoData} • Atualização a cada 30 minutos`;
+
     } catch (error) {
         if (attempts > 1) atualizarCardLentidao(attempts - 1);
         else totalLentidao.innerText = "Dados indisponíveis";
