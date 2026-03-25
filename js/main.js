@@ -213,6 +213,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- 6. feed de noticias (rss) ---
+function gerarIniciais(nome) {
+    if (!nome) return 'XX';
+
+    // remove números e caracteres especiais
+    const limpo = nome.replace(/[^a-zA-Z\s]/g, '').trim();
+
+    const partes = limpo.split(' ').filter(Boolean);
+
+    if (partes.length === 1) {
+        // ex: "Motor1" → "MO"
+        return partes[0].substring(0, 2).toUpperCase();
+    }
+
+    // ex: "Quatro Rodas" → "QR"
+    return (partes[0][0] + partes[1][0]).toUpperCase();
+}
+
 async function carregarFeed(config) {
     const lista = document.getElementById(config.listaId);
     const loading = document.getElementById(config.loadingId);
@@ -221,18 +238,24 @@ async function carregarFeed(config) {
     lista.innerHTML = ''; 
     loading.style.display = 'block';
 
-    const placeholders = {
-        'AE': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NmNjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BRTwvdGV4dD48L3N2Zz4=',
-        'MO': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA2NDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5OTTwvdGV4dD48L3N2Zz4=',
-        'QR': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2MwMDAwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5FUzwvdGV4dD48L3N2Zz4='
-    };
-    const placeholder = placeholders[config.letras] || placeholders['AE'];
+    const iniciais = gerarIniciais(config.nome);
+
+    const svg = `
+<svg xmlns='http://www.w3.org/2000/svg' width='400' height='200'>
+<rect width='100%' height='100%' fill='#333'/>
+<text x='50%' y='50%' font-size='40' fill='white' text-anchor='middle' dy='.3em'>
+${iniciais}
+</text>
+</svg>
+`;
+
+const placeholder = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
 
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 12000);
 
-        const res = await fetch(config.rss, {
+        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(config.rss)}`, {
             signal: controller.signal,
             cache: 'no-store'
         });
@@ -261,7 +284,8 @@ async function carregarFeed(config) {
             } else if (item.thumbnail) {
                 thumb = item.thumbnail;
             } else if (item.description) {
-                const m = item.description.match(/src=["']([^"']+\.(jpe?g|png|gif|webp))["']/i);
+      /*          const m = item.description.match(/src=["']([^"']+\.(jpe?g|png|gif|webp))["']/i); */
+                const m = item.description.match(/<img[^>]+src=["']([^"']+)["']/i);
                 if (m) thumb = m[1];
             }
 
@@ -271,19 +295,11 @@ async function carregarFeed(config) {
                           diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
 
             htmlItens.push(
-                '<div class="col-12 col-md-6 col-lg-4 mx-auto mb-4">' +
-                '<a href="'+item.link+'" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-dark">' +
-                '<div class="card card-liftshadow h-100">' +
-                 '<img ' +
-'alt="'+item.title.trim()+'" ' +
-'src="'+thumb+'" ' +
-'class="card-img-top" ' +
-'loading="lazy" ' +
-' decoding="async" ' +
-' width="400" height="200" ' +
-' style="height:200px;object-fit:cover;" ' +
-'onerror="this.onerror=null; this.src=\''+placeholder+'\'">'
-+
+                '<div class="col-md-6 col-lg-4 mb-4">' +
+                '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
+                '<div class="card card-liftshadow border-light-subtle h-100">' +
+                '<img alt="'+item.title.trim()+'" src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" ' +
+                'onerror="this.onerror=null; this.src=\''+placeholder+'\'">' +
                 '<div class="card-body d-flex flex-column">' +
                 '<p class="card-title link-interno mb-2">'+item.title.trim()+'</p>' +
                 '<p class="card-text mt-auto text-cerise small">'+config.nome+' • '+tempo+'</p>' +
@@ -310,8 +326,8 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarFeed({
         listaId: 'lista1', 
         loadingId: 'loading1', 
-        rss: 'https://feed-transito.sergiodamm1.workers.dev/autoesporte', 
-        nome: 'Autoesporte', 
+        rss: 'https://pox.globo.com/rss/autoesporte/', 
+        nome: 'AutoEsporte', 
         letras: 'AE'
     });
 
@@ -319,8 +335,8 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarFeed({
         listaId: 'lista3', 
         loadingId: 'loading3', 
-        rss: 'https://feed-transito.sergiodamm1.workers.dev/motor1', 
-        nome: 'motor1.com', 
+        rss: 'https://motor1.uol.com.br/rss/articles/all/', 
+        nome: 'Motor1', 
         letras: 'MO'
     });
 
@@ -328,18 +344,9 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarFeed({
         listaId: 'lista5', 
         loadingId: 'loading5', 
-        rss: 'https://feed-transito.sergiodamm1.workers.dev/quatrorodas', 
+        rss: 'https://quatrorodas.abril.com.br/ultimas-noticias/rss/', 
         nome: 'Quatro Rodas', 
         letras: 'QR', 
-    });
-
-    // Google News
-    carregarFeed({
-    listaId: 'lista7',
-    loadingId: 'loading7',
-    rss: 'https://feed-transito.sergiodamm1.workers.dev/transito',
-    nome: 'Trânsito hoje',
-    letras: 'TR'
     });
 });
 
