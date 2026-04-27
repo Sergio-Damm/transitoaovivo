@@ -161,7 +161,7 @@ function setupHlsCamera(videoElement, videoSrc) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const hlsCams = [
-        { id: 'video1', url: 'https://34.104.32.249.nip.io/SP123-KM046/stream.m3u8' },
+        { id: 'video1', url: 'https://34.104.32.249.nip.io/SP008-KM095/stream.m3u8' },
         { id: 'video2', url: 'https://34.104.32.249.nip.io/SP055-KM092/stream.m3u8' },
         { id: 'video3', url: 'https://34.104.32.249.nip.io/SP125-KM093B/stream.m3u8' },
         { id: 'video4', url: 'https://34.104.32.249.nip.io/SP055-KM211A/stream.m3u8' }
