@@ -411,3 +411,12 @@ body.scrolled #btn-back-to-top {
     }
 }
 
+.waze-container {
+  width: 100%;
+  height: 820px;
+}
+.waze-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
