@@ -50,10 +50,10 @@ description: Acompanhe ao vivo o trânsito em São Paulo, Rio de Janeiro e outra
 
 <body>
 <!-- ============================================================================================= -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
+<nav class="navbar navbar-expand-lg bg-dark w-100" data-bs-theme="dark">
   <div class="container-md">
     <a class="navbar-brand d-flex align-items-center" href="/">
-      <svg class="mx-3" width="40" height="40" viewBox="0 0 400 400" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+      <svg class="mx-3" width="40" height="40" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
         <path fill="#000" d="M100,80h200v30H100V80z" />
         <path fill="#fff" fill-rule="evenodd" d="M392.886,52.24c-4.422-2.734-9.945-2.981-14.594-0.656L330,75.731V65
                  c0-8.284-6.716-15-15-15H85c-8.284,0-15,6.716-15,15v120
@@ -298,24 +298,19 @@ description: Acompanhe ao vivo o trânsito em São Paulo, Rio de Janeiro e outra
   </div>
 </div>
 <!-- ============================================================================================= -->
-<div class='my-footer'>
-  <div class='container'>
-    <footer class='py-5' id='my-footer'>
-      <ul class='fs-sm nav justify-content-center'>
-        <li class='nav-item'><small><a class='text-white link-navbar nav-link px-2' href='/'>Home</a></small></li>
-        <li class='nav-item'><small><a class='text-white small link-navbar nav-link px-2'
-                href="/politicas/">Políticas</a></small></li>
-        <li class='nav-item'><small><a class='text-white small link-navbar nav-link px-2'
-                href='/creditos/'>Créditos</a></small></li>
-        <li class='nav-item'><small><a class='text-white small link-navbar nav-link px-2'
-                href='mailto:transitoaovivo.contato@gmail.com'>Contato</a></small></li>
-      </ul>
-      <ul class='fs-sm nav justify-content-center'>
-        <li class='pt-3 text-white'>© <small>Trânsito ao Vivo</small></li>
-      </ul>
-    </footer>
+<footer class="py-5 small bg-dark" data-bs-theme="dark">
+  <div class="container" id="my-footer">
+    <ul class="nav justify-content-center">
+      <li class='nav-item'><a class='text-white text-opacity-75 nav-link px-2' href='/'>Home</a></li>
+      <li class='nav-item'><a class='text-white text-opacity-75 nav-link px-2' href="/politicas/">Políticas</a></li>
+      <li class='nav-item'><a class='text-white text-opacity-75 nav-link px-2' href='/creditos/'>Créditos</a></li>
+      <li class='nav-item'><a class='text-white text-opacity-75 nav-link px-2' href='mailto:transitoaovivo.contato@gmail.com'>Contato</a></li>
+    </ul>
+    <ul class='nav justify-content-center'>
+      <li class='text-white text-opacity-75 pt-3'>© Trânsito ao Vivo</li>
+    </ul>
   </div>
-</div>
+</footer>
 <!-- ============================================================================================= -->
 <a aria-label='Voltar ao topo' class='top btn btn-floating rounded-circle shadow d-flex justify-content-center align-items-center' href='#' id='btn-back-to-top' title='Voltar ao topo'>
   <svg height='24' viewBox='0 -960 960 960' width='24' xmlns='http://www.w3.org/2000/svg'>
