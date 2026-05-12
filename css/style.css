@@ -7,14 +7,12 @@ body {
   font-weight: 400;
 }
 
-/* celular */
 .h1-title-content {
   font-size: 1.8rem;
   margin-top: 1rem;
   line-height: 2.25rem;
 }
 
-/* computador */
 @media (min-width: 576px) {
 .h1-title-content{
   font-size: 3rem;
@@ -23,36 +21,32 @@ body {
 }
 }
 
-/* celular */
 .h2-title-content {
   font-size: 1.6rem;
 }
 
-/* computador */
 @media (min-width: 576px) {
 .h2-title-content{
   font-size: 1.9rem;
 }
 }
 
-/* celular */
 .h1-subtitle-content {
   font-size: 1.2rem;
   margin-top: 1rem;
 }
 
-/* computador */
 @media (min-width: 576px) {
 .h1-subtitle-content {
   font-size: 1.25rem;
   line-height: 1.75rem;
   margin-top: 1rem;
-}
+  }
 }
 
 a {
   color: #373a40;
-  text-decoration: under;
+  text-decoration: underline;
 }
 
 a.link-interno {
@@ -192,10 +186,6 @@ body.scrolled #btn-back-to-top {
 .card-footer {
   background: transparent;
   border-top: 0px;
-}
-
-.my-footer {
-  background-color: #202124;
 }
 
 .img-wrapper {
@@ -360,7 +350,6 @@ body.scrolled #btn-back-to-top {
   text-align: center;
 }
 
-/* share button */
 .share-btn {
     width: 200px;
     height: 42px;
