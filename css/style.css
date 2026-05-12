@@ -76,12 +76,6 @@ a.link-interno:hover {
   color: #d20a2e;
 }
 
-.navbar-dark .navbar-brand,
-.navbar-dark .nav-link,
-.navbar-dark .dropdown-item {
-  color: #ffffff;
-}
-
 @media (max-width: 768px) {
   .nav-link {
     padding: 8px 5px;
@@ -246,11 +240,16 @@ body.scrolled #btn-back-to-top {
 }
 
 @media (min-width: 1400px) {
-  .container { max-width: 1200px; }
+  .container { 
+    max-width: 1200px; 
+  }
 }
 
 @media (max-width: 576px) {
-  #btn-back-to-top svg { width: 24px; height: 24px; }
+  #btn-back-to-top svg { 
+    width: 24px; 
+    height: 24px; 
+  }
 }
 
 .container {
@@ -271,19 +270,6 @@ body.scrolled #btn-back-to-top {
   padding-bottom: 60px;
 }
 
-.section-spacing {
-  padding-block-start: 1.5rem;
-  padding-block-end: 2.5rem;
-}
-
-@media (max-width: 576px) {
-  .section-spacing {
-    padding-block-start: 2.5rem;
-    padding-block-end: 3.5rem;
-  }
-}
-
-/* card principal homepage */
 .news-card {
   overflow: hidden;
   background: #fff;
