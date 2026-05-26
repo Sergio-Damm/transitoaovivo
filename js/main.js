@@ -235,10 +235,10 @@ async function carregarFeed(config) {
     const loading = document.getElementById(config.loadingId);
     if (!lista || !loading) return;
 
-    lista.innerHTML = ''; 
+    lista.innerHTML = '';
     loading.style.display = 'block';
 
-    const iniciais = gerarIniciais(config.nome);
+    const iniciais = config.letras || 'FI'; // Ajustado para usar a propriedade correta do config
 
     const svg = `
 <svg xmlns='http://www.w3.org/2000/svg' width='400' height='200'>
@@ -249,11 +249,11 @@ ${iniciais}
 </svg>
 `;
 
-const placeholder = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    const placeholder = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
 
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 12000);
+        const timeoutId = setTimeout(() => controller.abort(), 8500);
 
         const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(config.rss)}`, {
             signal: controller.signal,
@@ -274,35 +274,41 @@ const placeholder = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg
             });
         }
 
-        let htmlItens = []; 
+        let htmlItens = [];
 
-        itens.slice(0, 6).forEach((item, index) => {
+        itens.slice(0, 6).forEach(item => {
             let thumb = placeholder;
-            
+
             if (item.enclosure?.link && item.enclosure.type?.includes('image')) {
                 thumb = item.enclosure.link;
             } else if (item.thumbnail) {
                 thumb = item.thumbnail;
             } else if (item.description) {
-      /*          const m = item.description.match(/src=["']([^"']+\.(jpe?g|png|gif|webp))["']/i); */
                 const m = item.description.match(/<img[^>]+src=["']([^"']+)["']/i);
                 if (m) thumb = m[1];
             }
 
+            // OTIMIZAÇÃO PAGESPEED: Se a imagem não for o SVG placeholder, passa pelo proxy gratuito weserv.nl
+            // Ele redimensiona para 400px de largura e 200px de altura automaticamente e converte para WebP leve.
+            if (thumb !== placeholder) {
+                thumb = 'https://images.weserv.nl/?url=' + encodeURIComponent(thumb) + '&w=400&h=200&fit=cover';
+            }
+
             const diff = Math.floor((Date.now() - new Date(item.pubDate || Date.now())) / 1000);
-            const tempo = diff < 3600 ? Math.floor(Math.max(1, diff/60))+' min atrás' :
-                          diff < 86400 ? Math.floor(diff/3600)+'h atrás' :
-                          diff < 172800 ? 'ontem' : Math.floor(diff/86400)+' dias atrás';
+            const tempo = diff < 3600 ? Math.floor(Math.max(1, diff / 60)) + ' min atrás' :
+                diff < 86400 ? Math.floor(diff / 3600) + 'h atrás' :
+                    diff < 172800 ? 'ontem' : Math.floor(diff / 86400) + ' dias atrás';
 
             htmlItens.push(
-                '<div class="col-md-6 col-lg-4 mb-4">' +
-                '<a href="'+item.link+'" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
+                '<div class="col-sm-6 col-lg-4 mb-4">' + // Alterado de col-md-6 para col-sm-6 garantindo 2 cards no celular/tablet menor se a tela permitir
+                '<a href="' + item.link + '" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
                 '<div class="card card-liftshadow border-light-subtle h-100">' +
-                '<img alt="'+item.title.trim()+'" src="'+thumb+'" class="card-img-top" loading="lazy" style="height:200px;object-fit:cover;" ' +
-                'onerror="this.onerror=null; this.src=\''+placeholder+'\'">' +
+                // Adicionado width="400" e height="200" nativos e classes do Bootstrap 5 (img-fluid)
+                '<img alt="' + item.title.trim() + '" src="' + thumb + '" width="400" height="200" class="card-img-top img-fluid" loading="lazy" style="object-fit:cover; aspect-ratio: 2 / 1;" ' +
+                'onerror="this.onerror=null; this.src=\'' + placeholder + '\'">' +
                 '<div class="card-body d-flex flex-column">' +
-                '<p class="card-title link-interno mb-2">'+item.title.trim()+'</p>' +
-                '<p class="card-text mt-auto text-cerise small">'+config.nome+' • '+tempo+'</p>' +
+                '<p class="card-title link-interno mb-2">' + item.title.trim() + '</p>' +
+                '<p class="card-text mt-auto text-cerise small">' + config.nome + ' • ' + tempo + '</p>' +
                 '</div>' +
                 '</div>' +
                 '</a>' +
