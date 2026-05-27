@@ -1,7 +1,3 @@
-// Cache-Control para versão
-// const cacheBuster = Date.now();
-// console.log('Main script loaded - v' + cacheBuster);
-
 // --- 1. Adsense space control ---
 document.addEventListener('DOMContentLoaded', function() {
     var adContainers = document.querySelectorAll('.ad-container-wrapper');
@@ -70,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
   updateFooterStyle();
   updateScrollStyle();
 });
-
 
 // --- 3. imagens (fallback e delay de 5 segundos) ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -216,17 +211,14 @@ document.addEventListener('DOMContentLoaded', () => {
 function gerarIniciais(nome) {
     if (!nome) return 'XX';
 
-    // remove números e caracteres especiais
     const limpo = nome.replace(/[^a-zA-Z\s]/g, '').trim();
 
     const partes = limpo.split(' ').filter(Boolean);
 
     if (partes.length === 1) {
-        // ex: "Motor1" → "MO"
         return partes[0].substring(0, 2).toUpperCase();
     }
 
-    // ex: "Quatro Rodas" → "QR"
     return (partes[0][0] + partes[1][0]).toUpperCase();
 }
 
@@ -238,7 +230,7 @@ async function carregarFeed(config) {
     lista.innerHTML = '';
     loading.style.display = 'block';
 
-    const iniciais = config.letras || 'FI'; // Ajustado para usar a propriedade correta do config
+    const iniciais = config.letras || 'FI';
 
     const svg = `
 <svg xmlns='http://www.w3.org/2000/svg' width='400' height='200'>
@@ -288,10 +280,8 @@ ${iniciais}
                 if (m) thumb = m[1];
             }
 
-            // OTIMIZAÇÃO PAGESPEED: Se a imagem não for o SVG placeholder, passa pelo proxy gratuito weserv.nl
-            // Ele redimensiona para 400px de largura e 200px de altura automaticamente e converte para WebP leve.
             if (thumb !== placeholder) {
-                thumb = 'https://images.weserv.nl/?url=' + encodeURIComponent(thumb) + '&w=400&h=200&fit=cover';
+                thumb = 'https://images.weserv.nl/?url=' + encodeURIComponent(thumb) + '&w=600&h=400&fit=cover';
             }
 
             const diff = Math.floor((Date.now() - new Date(item.pubDate || Date.now())) / 1000);
@@ -300,11 +290,10 @@ ${iniciais}
                     diff < 172800 ? 'ontem' : Math.floor(diff / 86400) + ' dias atrás';
 
             htmlItens.push(
-                '<div class="col-sm-6 col-lg-4 mb-4">' + // Alterado de col-md-6 para col-sm-6 garantindo 2 cards no celular/tablet menor se a tela permitir
+                '<div class="col-sm-6 col-lg-4 mb-4">' +
                 '<a href="' + item.link + '" target="_blank" rel="noopener" class="text-decoration-none text-dark">' +
                 '<div class="card card-liftshadow border-light-subtle h-100">' +
-                // Adicionado width="400" e height="200" nativos e classes do Bootstrap 5 (img-fluid)
-                '<img alt="' + item.title.trim() + '" src="' + thumb + '" width="400" height="200" class="card-img-top img-fluid" loading="lazy" style="object-fit:cover; aspect-ratio: 2 / 1;" ' +
+                '<img alt="' + item.title.trim() + '" src="' + thumb + '" width="600" height="400" class="card-img-top img-fluid" loading="lazy" style="object-fit:cover; aspect-ratio: 3 / 2;" ' +
                 'onerror="this.onerror=null; this.src=\'' + placeholder + '\'">' +
                 '<div class="card-body d-flex flex-column">' +
                 '<p class="card-title link-interno mb-2">' + item.title.trim() + '</p>' +
@@ -328,7 +317,6 @@ ${iniciais}
 
 // --- 7. Feed - execucao das chamadas ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Autoesporte
     carregarFeed({
         listaId: 'lista1', 
         loadingId: 'loading1', 
@@ -337,7 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
         letras: 'AE'
     });
 
-    // Motor1
     carregarFeed({
         listaId: 'lista3', 
         loadingId: 'loading3', 
@@ -346,7 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
         letras: 'MO'
     });
 
-    // Quatro Rodas
     carregarFeed({
         listaId: 'lista5', 
         loadingId: 'loading5', 
@@ -436,7 +422,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         url: url
                     });
                 } catch (err) {
-                    // usuário cancelou → não é erro
                 }
             } else {
                 await navigator.clipboard.writeText(url);
