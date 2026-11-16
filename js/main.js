@@ -143,7 +143,11 @@ function setupHlsCamera(videoElement, videoSrc) {
             videoElement.play().catch(() => {});
             toggleVideoStatus(videoElement, false);
         });
-        hls.on(Hls.Events.ERROR, () => toggleVideoStatus(videoElement, true));
+        hls.on(Hls.Events.ERROR, (event, data) => {
+            if (data.fatal) {
+                toggleVideoStatus(videoElement, true);
+            }
+        });
     } else if (videoElement.canPlayType('application/x-mpegURL')) {
         videoElement.src = videoSrc;
         videoElement.addEventListener('loadedmetadata', () => {
@@ -156,7 +160,7 @@ function setupHlsCamera(videoElement, videoSrc) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const hlsCams = [
-        { id: 'video1', url: 'https://34.104.32.249.nip.io/SP008-KM095/stream.m3u8' },
+        { id: 'video1', url: 'https://34.104.32.249.nip.io/SP055-KM055/stream.m3u8' },
         { id: 'video2', url: 'https://34.104.32.249.nip.io/SP304-KM157/stream.m3u8' },
         { id: 'video3', url: 'https://34.104.32.249.nip.io/SP046-KM167/stream.m3u8' },
         { id: 'video4', url: 'https://34.104.32.249.nip.io/SP360-KM110/stream.m3u8' }
