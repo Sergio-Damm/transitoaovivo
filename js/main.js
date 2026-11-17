@@ -146,6 +146,8 @@ function setupHlsCamera(videoElement, videoSrc) {
         hls.on(Hls.Events.ERROR, (event, data) => {
             if (data.fatal) {
                 toggleVideoStatus(videoElement, true);
+                hls.destroy();
+                setTimeout(() => setupHlsCamera(videoElement, videoSrc), 10000);
             }
         });
     } else if (videoElement.canPlayType('application/x-mpegURL')) {
